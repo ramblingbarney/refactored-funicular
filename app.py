@@ -20,7 +20,13 @@ def insert_category():
     categories = mongo.db.categories
     category_doc = {'category_name': request.form['category_name']}
     categories.insert_one(category_doc)
-    return redirect(url_for('new_category'))
+    return redirect(url_for('get_categories'))
+
+
+@app.route('/get_categories')
+def get_categories():
+    return render_template('categories.html',
+                            categories=mongo.db.categories.find())
 
 
 if __name__ == '__main__':
