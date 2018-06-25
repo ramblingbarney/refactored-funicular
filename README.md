@@ -23,6 +23,12 @@ You will need the following things properly installed on your computer.
 * ```python3 -m unittest tests/test_front_end.py```
 * ```python3 -m unittest tests/test_back_end.py```
 
+* Create an mongo db instance called 'recipe_buddy_test' using mLab with;
+  * User 'recipeapp' with read/write permissions
+  * Collections
+    * 'category'
+
+
 ## Acceptance tests
 
 
