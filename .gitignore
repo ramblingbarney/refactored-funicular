@@ -1,6 +1,5 @@
 __pycache__
 ngrok
-geckodriver
 lib*
 bin*
 selenium*

@@ -18,16 +18,11 @@ You will need the following things properly installed on your computer.
 
 ### Running Tests
 
-* Download the latest phantomjs binary: http://phantomjs.org, update line 52 of 'test_front_end.py' to the location of the pantomjs binary.
-* ```phantomjs-1.9.8-linux-x86_64/bin/phantomjs --webdriver=9134```
-* ```python3 -m unittest tests/test_front_end.py```
-* ```python3 -m unittest tests/test_back_end.py```
+* Download the latest chromedriver binary: https://sites.google.com/a/chromium.org/chromedriver/downloads, for linux ensure the binary is in your path or for windows provide a full path 'c:\< >.exe' on line 21 of 'test_front_end.py'.  
 
-* Create an mongo db instance called 'recipe_buddy_test' using mLab with;
-  * User 'recipeapp' with read/write permissions
-  * Collections
-    * 'category'
-
+* Run the following commands
+  * ```chromedriver --port=9515```
+  * ```python3 -m unittest tests/test_front_end.py```
 
 ## Acceptance tests
 
