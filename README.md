@@ -43,6 +43,13 @@ You will need the following things properly installed on your computer.
   * An input box with the existing category text
   * links/buttons to create a 'Cancel' the amendment and 'Edit' (save) the category
 
+* As a user I want to click on the 'Edit' link/button for a category and that category will be shown individually on a page where it can be cancelled and then all categories will be shown.
+
+  * Example acceptance criteria:
+    * Each category created will have a 'Delete' and 'Edit' link/button
+    * Clicking on Edit will show that category individually with the text in an input box
+    * Clicking will return the user to the all categories shown page
+
 ### Delete A Category
 
   * As a user I want to click on the 'Delete' link/button for a category, the page refreshes and it disappears
