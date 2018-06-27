@@ -20,7 +20,8 @@ class RecipeBuddyUITests(unittest.TestCase):
     def setUp(self):
         # create selenium browser instance
         options = Options()
-        options.set_headless(headless=True)
+        options.add_argument("--headless")
+        # options.set_headless(headless=True)
         self.driver = webdriver.Chrome(options=options)
         self.today = datetime.date.today()
         self.elements = []
