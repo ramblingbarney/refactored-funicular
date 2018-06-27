@@ -87,3 +87,17 @@ class RecipeBuddyUITests(unittest.TestCase):
             self.elements.append(line.text.strip())
         one_element_sting = ''.join(self.elements)
         self.assertIn('EditCategoryTest' + str(self.today), one_element_sting)
+
+    def test_cancel_edit_category(self):
+        ''' Test cancelling editing a Category'''
+        page = self.driver.get("http://localhost:5000/get_categories")
+        time.sleep(3)
+        element = self.driver.find_elements_by_class_name(
+            "edit_category_button")
+        time.sleep(3)
+        element[0].click()
+        time.sleep(3)
+        self.driver.find_element_by_id("cancel_category").click()
+        time.sleep(3)
+        self.assertEqual(self.driver.current_url,
+                    'http://localhost:5000/get_categories')
