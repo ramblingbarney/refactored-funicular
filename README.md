@@ -35,13 +35,21 @@ You will need the following things properly installed on your computer.
     * Each category created will have a 'Delete' and 'Edit' link/button
     * A link/button to create a 'Add Category' is below the created Categories
 
+### Edit Category
+
+* As a user I want to click on the 'Edit' link/button for a category and that category will be shown individually on a page where it can be edited, cancelled and amendments saved.
+
+* Example acceptance criteria:
+  * An input box with the existing category text
+  * links/buttons to create a 'Cancel' the amendment and 'Edit' (save) the category
+
 ### Delete A Category
 
   * As a user I want to click on the 'Delete' link/button for a category, the page refreshes and it disappears
 
-    * Example acceptance criteria:
-      * Click on the 'Delete' link/button for the category line
-      * The category entry is no longer shown
+  * Example acceptance criteria:
+    * Click on the 'Delete' link/button for the category line
+    * The category entry is no longer shown
 
 ## Manual Testing
 

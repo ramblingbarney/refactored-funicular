@@ -20,7 +20,7 @@ class RecipeBuddyUITests(unittest.TestCase):
     def setUp(self):
         # create selenium browser instance
         options = Options()
-        # options.set_headless(headless=True)
+        options.set_headless(headless=True)
         self.driver = webdriver.Chrome(options=options)
         self.today = datetime.date.today()
         self.elements = []
@@ -48,8 +48,8 @@ class RecipeBuddyUITests(unittest.TestCase):
             self.elements.append(line.text.strip())
         self.assertIn('PPPPPPPPPPPP' + str(self.today), self.elements)
 
-    def test_delete_all_categories(self):
-        ''' Test Deleting all Categories'''
+    def test_delete_a_category(self):
+        ''' Test Deleting a Categories item'''
         page = self.driver.get("http://localhost:5000/get_categories")
         time.sleep(3)
         delete_buttons = self.driver.find_elements_by_class_name(
@@ -66,3 +66,24 @@ class RecipeBuddyUITests(unittest.TestCase):
                 'span', {'class': 'category_list_item'}):
             self.elements.append(line.text.strip())
         assert delete_buttons_before_count - len(self.elements) == 1
+
+    def test_edit_category(self):
+        ''' Test editing a Category'''
+        page = self.driver.get("http://localhost:5000/get_categories")
+        time.sleep(3)
+        element = self.driver.find_elements_by_class_name("edit_category_button")
+        time.sleep(3)
+        element[0].click()
+        time.sleep(3)
+        self.driver.find_element_by_id("category_name").send_keys(
+                                            'EditCategoryTest' + str(self.today))
+        time.sleep(3)
+        edit_category_button = self.driver.find_element_by_id("edit_category")
+        edit_category_button.click()
+        time.sleep(3)
+        soup = BeautifulSoup(self.driver.page_source, 'html5lib')
+        for line in soup.find('div', {'class': 'category_container'}).find_all(
+                'span', {'class': 'category_list_item'}):
+            self.elements.append(line.text.strip())
+        one_element_sting = ''.join(self.elements)
+        self.assertIn('EditCategoryTest' + str(self.today), one_element_sting)
