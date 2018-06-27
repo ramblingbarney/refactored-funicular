@@ -1,21 +1,22 @@
 {% extends 'base.html'%} {% block content %}
-<div class="container">
+<div class="container category_container">
 
   {% for category in categories %}
 
     <div class="row">
 
-      <li>
+      <li><span class="category_list_item">
         {{category.category_name}}
-        <a href="{{url_for('delete_category', category_id=category._id)}}" class="waves-effect waves-light btn btn_small">Delete</a>
-        <a href="{{url_for('edit_category', category_id=category._id)}}" class="waves-effect waves-light btn btn_small blue">Edit</a>
+      </span>
+        <a href="{{url_for('delete_category', category_id=category._id)}}" class="waves-effect waves-light btn btn_small delete_category_button">Delete</a>
+        <a href="{{url_for('edit_category', category_id=category._id)}}" class="waves-effect waves-light btn btn_small blue edit_category_button">Edit</a>
       </li>
     </div>
   {% endfor %}
 
   <div class="row">
     <a href="{{ url_for('new_category') }}" class="waves-effect waves-light btn">
-        <i class="material-icons right">playlist_add</i>Add Category
+        <i class="material-icons right" id="add_category">playlist_add</i>Add Category
     </a>
   </div>
   {% endblock %}
