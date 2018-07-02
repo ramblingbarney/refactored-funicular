@@ -1,11 +1,15 @@
 import os
+import config
 from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
-app.config["MONGO_DBNAME"] = 'recipe_buddy'
-app.config["MONGO_URI"] = 'mongodb://recipeapp:Changethis$3d@ds261570.mlab.com:61570/recipe_buddy'
+app.config.from_object('config.DevelopmentConfig')
+app.config.from_envvar('YOURAPPLICATION_SETTINGS')
+
+# app.config["MONGO_DBNAME"] = config.DevelopmentConfig.MONGO_DBNAME
+# app.config["MONGO_URI"] = config.DevelopmentConfig.MONGO_URI
 
 mongo = PyMongo(app)
 
@@ -48,6 +52,18 @@ def delete_category(category_id):
     mongo.db.categories.remove({'_id': ObjectId(category_id)})
     return redirect(url_for("get_categories"))
 
+
+@app.route('/add_recipe')
+def add_recipe():
+    return render_template('add_recipe.html',
+    categories=mongo.db.categories.find())
+
+
+@app.route('/insert_recipe', methods=['POST'])
+def insert_recipe():
+    recipes =  mongo.db.recipes
+    recipies.insert_one(request.form.to_dict())
+    return redirect(url_for('get_recipes'))
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
