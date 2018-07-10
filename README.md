@@ -26,14 +26,30 @@ You will need the following things properly installed on your computer.
 
 ## Acceptance tests
 
+### Get Category (Show all fixture categories)
 
-### Get Category (Show all categories)
-
-* As a user I want to see the categories that have been created.
+* As a user I want to see the categories that have been created from fixtures ['Thai','Chinese','Indian'].
 
   * Example acceptance criteria:
-    * Each category created will have a 'Delete' and 'Edit' link/button
-    * A link/button to create a 'Add Category' is below the created Categories
+    * 3 categories will be shown on the page ['Thai','Chinese','Indian']
+
+### Get Category (Show all fixture categories with Delete button)
+
+* As a user I want to see the categories that have been created and each one will be shown with a 'Delete' button.
+
+  * Example acceptance criteria:
+    * Each category created will have a 'Delete' link/button
+    * The page will have 3 'Delete' link/buttons
+
+### Get Category (Show all fixture categories with Edit button)
+
+* As a user I want to see the categories that have been created and each one will be shown with a 'Edit' button.
+
+  * Example acceptance criteria:
+    * Each category created will have a 'Edit' link/button
+    * The page will have 3 'Edit' link/buttons
+
+
 
 ### Edit Category
 

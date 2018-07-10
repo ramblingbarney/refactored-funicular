@@ -87,3 +87,23 @@ class RecipeBuddyUITests(unittest.TestCase):
             li_span_text.append(element.text)
 
         self.assertListEqual(test_list, li_span_text)
+
+    def test_categories_delete_buttons(self):
+        ''' Test 3 delete buttons present '''
+
+        page = self.driver.get("http://localhost:5000/get_categories")
+        self.driver.implicitly_wait(0) # seconds
+
+        self.elements = self.driver.find_elements_by_class_name("delete_category_button")
+
+        self.assertEqual(len(self.elements), 3)
+
+    def test_categories_edit_buttons(self):
+        ''' Test 3 edit buttons present '''
+
+        page = self.driver.get("http://localhost:5000/get_categories")
+        self.driver.implicitly_wait(0) # seconds
+
+        self.elements = self.driver.find_elements_by_class_name("edit_category_button")
+
+        self.assertEqual(len(self.elements), 3)
