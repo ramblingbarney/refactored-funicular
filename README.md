@@ -57,18 +57,27 @@ You will need the following things properly installed on your computer.
     * Click on the 'Delete' link/button for the first category line
     * The category entry is no longer shown
 
-### Delete the first Category
+### Delete all the Categories
 
 * As a user I want to click on the 'Delete' link/button for all categories, the page refreshes and it disappears
 
-      * Example acceptance criteria:
-        * Click on the 'Delete' link/button for the categories shown
-        * All deleted categories will disappear
-        * No category entries will exist to be shown
+  * Example acceptance criteria:
+    * Click on the 'Delete' link/button for the categories shown
+    * All deleted categories will disappear
+    * No category entries will exist to be shown
 
-### Edit Category
+### Delete the last Category
 
-* As a user I want to click on the 'Edit' link/button for a category and that category will be shown individually on a page where it can be edited, cancelled and amendments saved.
+* As a user I want to click on the 'Delete' link/button for the last category, the page refreshes and it disappears
+
+  * Example acceptance criteria:
+    * Click on the 'Delete' link/button for the last category line
+    * The category entry is no longer shown
+
+
+### Edit Last Category
+
+* As a user I want to click on the 'Edit' link/button on the last category and that category will be shown individually on a page where it can be edited, cancelled and amendments saved.
 
 * Example acceptance criteria:
   * An input box with the existing category text

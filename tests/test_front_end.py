@@ -173,3 +173,62 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertEqual(len(self.driver.find_elements_by_class_name(
                                                 "delete_category_button")), 0)
+
+    def test_delete_last_category(self):
+        ''' Test Deleting the first Category item'''
+
+        self.driver.get("http://localhost:5000/get_categories")
+        self.driver.implicitly_wait(0)  # seconds
+        try:
+            elements = self.driver.find_elements_by_class_name(
+                                                    "delete_category_button")
+            elements[2].click()
+
+        except NoSuchElementException:
+            True
+
+        self.elements = self.driver.find_elements_by_class_name(
+                                                        "category_list_item")
+
+        test_list = ['Thai', 'Chinese']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_edit_last_category(self):
+        ''' Test editing the last Category'''
+        self.driver.get("http://localhost:5000/get_categories")
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_elements_by_class_name(
+                                                        "edit_category_button")
+        element[2].click()
+        self.driver.implicitly_wait(0)  # seconds
+        self.driver.find_element_by_id("category_name").send_keys('1')
+        edit_category_button = self.driver.find_element_by_id("edit_category")
+        edit_category_button.click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_class_name(
+                                                        "category_list_item")
+
+        test_list = ['Thai', 'Chinese', 'Indian1']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_cancel_edit_category(self):
+        ''' Test cancelling editing a Category'''
+        self.driver.get("http://localhost:5000/get_categories")
+        elements = self.driver.find_elements_by_class_name(
+                                                        "edit_category_button")
+        elements[1].click()
+        self.driver.implicitly_wait(0)  # seconds
+        self.driver.find_element_by_id("cancel_category").click()
+        self.driver.implicitly_wait(0)  # seconds
+        self.assertEqual(self.driver.current_url,
+                        'http://localhost:5000/get_categories')
