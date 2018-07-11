@@ -49,6 +49,13 @@ You will need the following things properly installed on your computer.
     * Each category created will have a 'Edit' link/button
     * The page will have 3 'Edit' link/buttons
 
+### Delete the first Category
+
+* As a user I want to click on the 'Delete' link/button for the first category, the page refreshes and it disappears
+
+  * Example acceptance criteria:
+    * Click on the 'Delete' link/button for the first category line
+    * The category entry is no longer shown
 
 
 ### Edit Category
@@ -65,14 +72,6 @@ You will need the following things properly installed on your computer.
     * Each category created will have a 'Delete' and 'Edit' link/button
     * Clicking on Edit will show that category individually with the text in an input box
     * Clicking will return the user to the all categories shown page
-
-### Delete A Category
-
-  * As a user I want to click on the 'Delete' link/button for a category, the page refreshes and it disappears
-
-  * Example acceptance criteria:
-    * Click on the 'Delete' link/button for the category line
-    * The category entry is no longer shown
 
 ## Manual Testing
 

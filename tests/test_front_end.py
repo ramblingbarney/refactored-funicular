@@ -10,8 +10,9 @@ from bson.objectid import ObjectId
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions
 import helper_Web_Driver_Wait_CSS_Element
 
 
@@ -66,6 +67,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver = webdriver.Chrome(options=options)
 
         self.elements = []
+        self.li_span_text = []
 
     def tearDown(self):
         # delete categories collection
@@ -75,23 +77,22 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_three_categories(self):
         ''' Test 3 categories present '''
 
-        page = self.driver.get("http://localhost:5000/get_categories")
+        self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0) # seconds
 
         self.elements = self.driver.find_elements_by_class_name("category_list_item")
 
-        li_span_text = []
         test_list = ['Thai','Chinese','Indian']
 
         for element in self.elements:
-            li_span_text.append(element.text)
+            self.li_span_text.append(element.text)
 
-        self.assertListEqual(test_list, li_span_text)
+        self.assertListEqual(test_list, self.li_span_text)
 
     def test_categories_delete_buttons(self):
         ''' Test 3 delete buttons present '''
 
-        page = self.driver.get("http://localhost:5000/get_categories")
+        self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0) # seconds
 
         self.elements = self.driver.find_elements_by_class_name("delete_category_button")
@@ -101,9 +102,57 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_categories_edit_buttons(self):
         ''' Test 3 edit buttons present '''
 
-        page = self.driver.get("http://localhost:5000/get_categories")
+        self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0) # seconds
 
         self.elements = self.driver.find_elements_by_class_name("edit_category_button")
 
         self.assertEqual(len(self.elements), 3)
+
+
+    def test_add_category(self):
+        ''' Test Adding a Category'''
+
+        self.driver.get("http://localhost:5000/get_categories")
+        self.driver.implicitly_wait(0) # seconds
+        element = self.driver.find_element_by_id("add_category")
+        element.click()
+        self.driver.implicitly_wait(0) # seconds
+        self.driver.find_element_by_id("category_name").send_keys(
+                                            'Spanish')
+        self.driver.implicitly_wait(0) # seconds
+        added_category_button = self.driver.find_element_by_id("add_category")
+        added_category_button.click()
+        self.driver.implicitly_wait(0) # seconds
+
+        self.elements = self.driver.find_elements_by_class_name("category_list_item")
+
+        test_list = ['Thai','Chinese','Indian','Spanish']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+
+    def test_delete_first_category(self):
+        ''' Test Deleting the first Category item'''
+
+        self.driver.get("http://localhost:5000/get_categories")
+        self.driver.implicitly_wait(0) # seconds
+        try:
+            element = self.driver.find_element_by_class_name("delete_category_button")
+            element.click()
+
+        except NoSuchElementException:
+            True
+
+        self.elements = self.driver.find_elements_by_class_name("category_list_item")
+
+        test_list = ['Chinese','Indian']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+            print(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
