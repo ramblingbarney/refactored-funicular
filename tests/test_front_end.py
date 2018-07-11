@@ -5,15 +5,10 @@ from app import app
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import urllib.parse
-from bson.objectid import ObjectId
-
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
-import helper_Web_Driver_Wait_CSS_Element
 
 
 class RecipeBuddyUITests(unittest.TestCase):
@@ -52,8 +47,8 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         # insert categories collection
         new_result = self.collection_categories.insert_many([category_1,
-                                                        category_2,
-                                                        category_3])
+                                                            category_2,
+                                                            category_3])
 
         # creates a test client
         self.app = app.test_client()
@@ -78,11 +73,12 @@ class RecipeBuddyUITests(unittest.TestCase):
         ''' Test 3 categories present '''
 
         self.driver.get("http://localhost:5000/get_categories")
-        self.driver.implicitly_wait(0) # seconds
+        self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_class_name("category_list_item")
+        self.elements = self.driver.find_elements_by_class_name(
+                                                        "category_list_item")
 
-        test_list = ['Thai','Chinese','Indian']
+        test_list = ['Thai', 'Chinese', 'Indian']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -93,9 +89,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         ''' Test 3 delete buttons present '''
 
         self.driver.get("http://localhost:5000/get_categories")
-        self.driver.implicitly_wait(0) # seconds
+        self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_class_name("delete_category_button")
+        self.elements = self.driver.find_elements_by_class_name(
+                                                    "delete_category_button")
 
         self.assertEqual(len(self.elements), 3)
 
@@ -103,56 +100,76 @@ class RecipeBuddyUITests(unittest.TestCase):
         ''' Test 3 edit buttons present '''
 
         self.driver.get("http://localhost:5000/get_categories")
-        self.driver.implicitly_wait(0) # seconds
+        self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_class_name("edit_category_button")
+        self.elements = self.driver.find_elements_by_class_name(
+                                                        "edit_category_button")
 
         self.assertEqual(len(self.elements), 3)
-
 
     def test_add_category(self):
         ''' Test Adding a Category'''
 
         self.driver.get("http://localhost:5000/get_categories")
-        self.driver.implicitly_wait(0) # seconds
+        self.driver.implicitly_wait(0)  # seconds
         element = self.driver.find_element_by_id("add_category")
         element.click()
-        self.driver.implicitly_wait(0) # seconds
+        self.driver.implicitly_wait(0)  # seconds
         self.driver.find_element_by_id("category_name").send_keys(
                                             'Spanish')
-        self.driver.implicitly_wait(0) # seconds
+        self.driver.implicitly_wait(0)  # seconds
         added_category_button = self.driver.find_element_by_id("add_category")
         added_category_button.click()
-        self.driver.implicitly_wait(0) # seconds
+        self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_class_name("category_list_item")
+        self.elements = self.driver.find_elements_by_class_name(
+                                                        "category_list_item")
 
-        test_list = ['Thai','Chinese','Indian','Spanish']
+        test_list = ['Thai', 'Chinese', 'Indian', 'Spanish']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
 
         self.assertListEqual(test_list, self.li_span_text)
-
 
     def test_delete_first_category(self):
         ''' Test Deleting the first Category item'''
 
         self.driver.get("http://localhost:5000/get_categories")
-        self.driver.implicitly_wait(0) # seconds
+        self.driver.implicitly_wait(0)  # seconds
         try:
-            element = self.driver.find_element_by_class_name("delete_category_button")
+            element = self.driver.find_element_by_class_name(
+                                                    "delete_category_button")
             element.click()
 
         except NoSuchElementException:
             True
 
-        self.elements = self.driver.find_elements_by_class_name("category_list_item")
+        self.elements = self.driver.find_elements_by_class_name(
+                                                        "category_list_item")
 
-        test_list = ['Chinese','Indian']
+        test_list = ['Chinese', 'Indian']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
-            print(element.text)
 
         self.assertListEqual(test_list, self.li_span_text)
+
+    def test_delete_all_categories(self):
+        ''' Test Deleting the first Category item'''
+
+        self.driver.get("http://localhost:5000/get_categories")
+        self.driver.implicitly_wait(0)  # seconds
+
+        while len(self.driver.find_elements_by_class_name(
+                                                "delete_category_button")) > 0:
+            try:
+                element = self.driver.find_element_by_class_name(
+                                                    "delete_category_button")
+                element.click()
+
+            except NoSuchElementException:
+                True
+
+        self.assertEqual(len(self.driver.find_elements_by_class_name(
+                                                "delete_category_button")), 0)

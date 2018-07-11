@@ -57,6 +57,14 @@ You will need the following things properly installed on your computer.
     * Click on the 'Delete' link/button for the first category line
     * The category entry is no longer shown
 
+### Delete the first Category
+
+* As a user I want to click on the 'Delete' link/button for all categories, the page refreshes and it disappears
+
+      * Example acceptance criteria:
+        * Click on the 'Delete' link/button for the categories shown
+        * All deleted categories will disappear
+        * No category entries will exist to be shown
 
 ### Edit Category
 
