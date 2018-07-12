@@ -12,12 +12,13 @@ $(document).ready(function() {
     var add_button_ingredients = $(".add_field_button_ingredients"); //Add button ID ingredients
     var add_button_instructions = $(".add_field_button_instructions"); //Add button ID insstructions
 
-    var x = 1; //initlal text box count
+    var x = 1; //initlal text box count & used for instruction field name instruction[x]
+    var y = 1; //initlal text box count & used for ingredient field name ingredient[x]
 
     $(add_button_instructions).click(function(e){ //on add input button click
         e.preventDefault();
         if(x < max_fields){ //max input box allowed
-            inputField_instructions = `<li><input type="text" name="instructions[${x}]"/><a href="#" class="remove_field_instructions">Remove</a></li>`
+            inputField_instructions = `<li><input type="text" name="instruction[${x}]"/><a href="#" class="remove_field_instructions">Remove</a></li>`
             $(wrapper_instructions).append(inputField_instructions); //add input box
             x++; //text box increment
         }
@@ -25,10 +26,10 @@ $(document).ready(function() {
 
     $(add_button_ingredients).click(function(e){ //on add input button click
         e.preventDefault();
-        if(x < max_fields){ //max input box allowed
-            input_fields_ingredients = `<li><input type="text" name="ingredient[${x}]"/><a href="#" class="remove_field_ingredients">Remove</a></li>`
+        if(y < max_fields){ //max input box allowed
+            input_fields_ingredients = `<li><input type="text" name="ingredient[${y}]"/><a href="#" class="remove_field_ingredients">Remove</a></li>`
             $(wrapper_ingredients).append(input_fields_ingredients); //add input box
-            x++; //text box increment
+            y++; //text box increment
         }
     });
 
