@@ -1,24 +1,43 @@
 {% extends 'base.html' %} {% block content %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+// Add remove input text box dynamically taken from here
+// https://www.sanwebe.com/2013/03/addremove-input-fields-dynamically-with-jquery
+// I have modified it adding 'inputField' variable to allow varible 'x' string interpollation
+
 $(document).ready(function() {
-    var max_fields      = 50; //maximum input boxes allowed
-    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
-    var add_button      = $(".add_field_button"); //Add button ID
+    var max_fields      = 100; //maximum input boxes allowed
+    var wrapper_ingredients = $(".input_fields_wrap_ingredients"); //Fields wrapper ingredients
+    var wrapper_instructions = $(".input_fields_wrap_instructions"); //Fields wrapper insstructions
+    var add_button_ingredients = $(".add_field_button_ingredients"); //Add button ID ingredients
+    var add_button_instructions = $(".add_field_button_instructions"); //Add button ID insstructions
 
     var x = 1; //initlal text box count
-    $(add_button).click(function(e){ //on add input button click
+
+    $(add_button_instructions).click(function(e){ //on add input button click
         e.preventDefault();
         if(x < max_fields){ //max input box allowed
-            inputField = `<div><input type="text" name="ingredient[${x}]"/><a href="#" class="remove_field">Remove</a></div>`
-            console.log(inputField);
-            $(wrapper).append(inputField); //add input box
+            inputField_instructions = `<li><input type="text" name="instructions[${x}]"/><a href="#" class="remove_field_instructions">Remove</a></li>`
+            $(wrapper_instructions).append(inputField_instructions); //add input box
             x++; //text box increment
         }
     });
 
-    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-        e.preventDefault(); $(this).parent('div').remove(); x--;
+    $(add_button_ingredients).click(function(e){ //on add input button click
+        e.preventDefault();
+        if(x < max_fields){ //max input box allowed
+            input_fields_ingredients = `<li><input type="text" name="ingredient[${x}]"/><a href="#" class="remove_field_ingredients">Remove</a></li>`
+            $(wrapper_ingredients).append(input_fields_ingredients); //add input box
+            x++; //text box increment
+        }
+    });
+
+    $(wrapper_ingredients).on("click",".remove_field_ingredients", function(e){ //user click on remove text
+        e.preventDefault(); $(this).parent('li').remove(); x--;
+    })
+
+    $(wrapper_instructions).on("click",".remove_field_instructions", function(e){ //user click on remove text
+        e.preventDefault(); $(this).parent('li').remove(); x--;
     })
 });
 </script>
@@ -53,13 +72,24 @@ $(document).ready(function() {
         </div>
 
         <div class="row">
-          <div class="input_fields_wrap input-field col s12">
-            <button class="add_field_button" type="button">Add More Ingredients</button>
-            <div><input type="text" name="ingredient[0]"></div>
+          <div class="input-field col s12">
+            <button class="add_field_button_instructions" type="button">Add More Instructions</button>
+            <div>
+              <ol class="input_fields_wrap_instructions">
+                <li><input type="text" name="instructions[0]"></li>
+              </ol>
+            </div>
           </div>
-
-              <!-- <input type="text" name="tree[tree1][fruit]"> -->
-
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <button class="add_field_button_ingredients" type="button">Add More Ingredients</button>
+            <div>
+              <ol class="input_fields_wrap_ingredients">
+                <li><input type="text" name="ingredient[0]"></li>
+              </ol>
+            </div>
+          </div>
         </div>
         <div class="row">
             <button class="btn waves-effect waves-light" type="submit" name="action">Add Recipe
