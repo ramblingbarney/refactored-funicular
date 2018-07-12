@@ -68,11 +68,16 @@ def add_recipe():
     return render_template('add_recipe.html',
     categories=mongo.db.categories.find())
 
+@app.route('/get_recipes')
+def get_recipes():
+    return render_template('get_recipes.html',
+    categories=mongo.db.recipes.find())
 
 @app.route('/insert_recipe', methods=['POST'])
 def insert_recipe():
     recipes =  mongo.db.recipes
-    recipies.insert_one(request.form.to_dict())
+    recipes.insert_one(request.form.to_dict())
+    print(request.form.to_dict())
     return redirect(url_for('get_recipes'))
 
 if __name__ == '__main__':
