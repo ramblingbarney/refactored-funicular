@@ -15,13 +15,63 @@ You will need the following things properly installed on your computer.
 * ```git clone git@github.com:ramblingbarney/refactored-funicular.git```
 * ```cd refactored-funicular```
 * ```pip3 install -r /path/to/requirements.txt```
+* ```export FLASK_CONFIG=development```
+* ```export YOURAPPLICATION_SETTINGS=config.py```
 
 ### Running Tests
 
 * Download the latest chromedriver binary: https://sites.google.com/a/chromium.org/chromedriver/downloads, for linux ensure the binary is in your path or for windows provide a full path 'c:\< >.exe' on line 21 of 'test_front_end.py'.  
+* Install and run MongoDB (community edition) locally on the default port: https://docs.mongodb.com/manual/administration/install-community/
+  * ```sudo chown -R <user>:<user> /data/db```
+  * ```mkdir ~/mongo```
+  * ```mkdir ~/mongo/mongodb```
+  * ```cp /etc/mongo.conf ~/mongo/```
+  * Update paths in mongo.conf to the absolute user path e.g. /home/<user>/mongo
+  * ```mongo --host localhost``` Mongo Shell
+  * ```use admin```
+  * ```db.runCommand({getCmdLineOpts: 1})``` Verify setup of running local Mongo instance with expected output below
+    ```
+    {
+    	"argv" : [
+    		"mongod",
+    		"--config",
+    		"/home/<user>/mongo/mongod.conf"
+    	],
+    	"parsed" : {
+    		"config" : "/home/<user>/mongo/mongod.conf",
+    		"net" : {
+    			"bindIp" : "127.0.0.1",
+    			"port" : 27017
+    		},
+    		"processManagement" : {
+    			"timeZoneInfo" : "/usr/share/zoneinfo"
+    		},
+    		"storage" : {
+    			"dbPath" : "/home/<user>/mongo/mongodb",
+    			"journal" : {
+    				"enabled" : true
+    			}
+    		},
+    		"systemLog" : {
+    			"destination" : "file",
+    			"logAppend" : true,
+    			"path" : "/home/<user>/mongo/mongod.log"
+    		}
+    	},
+    	"ok" : 1
+    }
+    ```
+
+  * ```use recipe_app_testing```
+  * ```db.createUser({user:"recipeapptester", pwd:"changeme5", roles:[{role: "dbOwner", db: "recipe_app_testing" }]})```
 
 * Run the following commands
   * ```chromedriver --port=9515```
+  * ```export FLASK_CONFIG=testing```
+  * ```mongod --config ~/mongo/mongod.conf```
+  * ```mongo --host localhost```
+    * ```use recipe_app_testing``` Mongo Shell command
+    * ```db.createUser( { user: "recipeapptester", pwd: "changeme5", roles: [ "readWrite", "dbAdmin" ] } )``` Mongo Shell command
   * ```python3 -m unittest tests/test_front_end.py```
 
 ## Acceptance tests
@@ -95,3 +145,7 @@ You will need the following things properly installed on your computer.
 
 
 ## Known Issues
+
+* Mongo DB admin password has not been set & database setup is for local testing only
+
+<!-- TODO: no checks are made for duplicate categories or recipies -->

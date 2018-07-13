@@ -16,7 +16,7 @@ class RecipeBuddyUITests(unittest.TestCase):
     USERNAME = urllib.parse.quote_plus(config.MONGO_USERNAME)
     PASSWORD = urllib.parse.quote_plus(config.MONGO_PASSWORD)
 
-    CLIENT = MongoClient('mongodb://%s:%s@ds131721.mlab.com:31721/recipe_app_testing' % (USERNAME, PASSWORD))
+    CLIENT = MongoClient('mongodb://%s:%s@127.0.0.1:27017/recipe_app_testing' % (USERNAME, PASSWORD))
 
     DB = CLIENT.recipe_app_testing
 
@@ -232,3 +232,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
         self.assertEqual(self.driver.current_url,
                         'http://localhost:5000/get_categories')
+
+# TODO: copy tests for category to time_estimates
+
+# TODO: tests for add recipes -> get recipes
+# TODO: tests for show recipies
