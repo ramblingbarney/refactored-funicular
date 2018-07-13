@@ -2,7 +2,6 @@ import os
 import unittest
 import config
 from app import app
-from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import urllib.parse
 from selenium import webdriver

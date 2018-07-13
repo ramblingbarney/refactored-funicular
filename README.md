@@ -68,6 +68,7 @@ You will need the following things properly installed on your computer.
 * Run the following commands
   * ```chromedriver --port=9515```
   * ```export FLASK_CONFIG=testing```
+  * ```export YOURAPPLICATION_SETTINGS=config.py```
   * ```mongod --config ~/mongo/mongod.conf```
   * ```mongo --host localhost```
     * ```use recipe_app_testing``` Mongo Shell command
