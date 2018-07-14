@@ -141,6 +141,20 @@ You will need the following things properly installed on your computer.
     * Clicking on Edit will show that category individually with the text in an input box
     * Clicking will return the user to the all categories shown page
 
+### Get Recipes Headings (Show all fixture recipes headings)
+
+* As a user I want to see the recipe headings that have been created from fixtures ['Avocado and Tuna Tapas', 'Chinese Pepper Steak', 'Moroccan Chicken with Saffron and Preserved Lemon'].
+
+* Example acceptance criteria:
+  * 3 recipes headings will be shown on the page ['Avocado and Tuna Tapas', 'Chinese Pepper Steak', 'Moroccan Chicken with Saffron and Preserved Lemon']
+
+### Get Recipes Descriptions (Show all fixture recipes descriptions)
+
+* As a user I want to see the recipe descriptions that have been created from fixtures.
+
+* Example acceptance criteria:
+  * 3 recipe descriptions will be shown on the page
+
 ## Manual Testing
 
 

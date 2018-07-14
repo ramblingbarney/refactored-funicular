@@ -49,6 +49,27 @@ class RecipeBuddyUITests(unittest.TestCase):
                                                             category_2,
                                                             category_3])
 
+        # create the 'recipes' collection in MongoDB
+        self.collection_recipes = self.DB.recipes
+
+        # recipes to insert
+
+        recipe_1 = {'recipe_name': 'Avocado and Tuna Tapas',
+                'recipe_description': 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.'}
+
+
+        recipe_2 = {'recipe_name': 'Chinese Pepper Steak',
+                'recipe_description': 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.'}
+
+
+        recipe_3 = {'recipe_name': 'Moroccan Chicken with Saffron and Preserved Lemon',
+                'recipe_description': 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.'}
+
+        # insert recipes collection
+        new_result = self.collection_recipes.insert_many([recipe_1,
+                                                            recipe_2,
+                                                            recipe_3])
+
         # creates a test client
         self.app = app.test_client()
 
@@ -66,6 +87,7 @@ class RecipeBuddyUITests(unittest.TestCase):
     def tearDown(self):
         # delete categories collection
         self.DB.categories.delete_many({})
+        self.DB.recipes.delete_many({})
         self.driver.quit()
 
     def test_three_categories(self):
@@ -232,7 +254,47 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertEqual(self.driver.current_url,
                         'http://localhost:5000/get_categories')
 
+
+    def test_three_recipes_headings(self):
+        ''' Test 3 recipes headings present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Avocado and Tuna Tapas',
+                    'Chinese Pepper Steak',
+                    'Moroccan Chicken with Saffron and Preserved Lemon']
+        #
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_three_recipes_description(self):
+        ''' Test 3 recipes headings present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[contains(@class, 'recipe-description')]/span")
+
+        self.assertEqual(len(self.elements), 3)
+
+
+
+
+
+# elements = driver.find_elements_by_css_selector('selector_required')
+#
+# findElement(By.cssSelector("div.recipe_header>span>")).getText();
+
+
 # TODO: copy tests for category to time_estimates
 
 # TODO: tests for add recipes -> get recipes
-# TODO: tests for show recipies
+
+
+
+# TODO: tests for show recipes

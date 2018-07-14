@@ -95,10 +95,10 @@ def add_recipe():
                         categories=mongo.db.categories.find())
 
 
-@app.route('/get_recipies')
+@app.route('/get_recipes')
 def get_recipes():
-    return render_template('get_recipies.html',
-                            recipies=mongo.db.recipes.find())
+    return render_template('get_recipes.html',
+                            recipes=mongo.db.recipes.find())
 
 
 @app.route('/insert_recipe', methods=['POST'])
