@@ -29,6 +29,12 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def setUp(self):
 
+        # delete fixture collections
+        # self.DB.categories.delete_many({})
+        self.DB.recipes.delete_many({})
+        self.DB.instructions.delete_many({})
+        self.DB.ingredients.delete_many({})
+
         # create the 'categories' collection in MongoDB
         self.collection_categories = self.DB.categories
 
@@ -65,10 +71,34 @@ class RecipeBuddyUITests(unittest.TestCase):
         recipe_3 = {'recipe_name': 'Moroccan Chicken with Saffron and Preserved Lemon',
                 'recipe_description': 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.'}
 
+
         # insert recipes collection
-        new_result = self.collection_recipes.insert_many([recipe_1,
-                                                            recipe_2,
-                                                            recipe_3])
+
+        insert_recipe_1 = self.collection_recipes.insert_one(recipe_1)
+        insert_recipe_2 = self.collection_recipes.insert_one(recipe_2)
+        insert_recipe_3 = self.collection_recipes.insert_one(recipe_3)
+
+        instructions_1 = {'recipe_id': insert_recipe_1.inserted_id, 'instructions' : [ "mix 3 eggs", "whisk", "put on low heat"]}
+
+        ingredients_1 = {'recipe_id': insert_recipe_1.inserted_id, 'ingredients' : [ "3 eggs", "100g butter", "0.5l water"]}
+
+        instructions_2 = {'recipe_id': insert_recipe_2.inserted_id, 'instructions' : [ "peel 2 oranges", 'add flour', "put on high heat"]}
+
+        ingredients_2 = {'recipe_id': insert_recipe_2.inserted_id, 'ingredients' : [ "2 oranges", "100g butter", "1l water", "200g flour"]}
+
+        instructions_3 = {'recipe_id': insert_recipe_3.inserted_id, 'instructions' : [ "chop carrots", "fry on high heat with olive oil", "chop onions", "add onions once carrots soft"]}
+
+        ingredients_3 = {'recipe_id': insert_recipe_3.inserted_id, 'ingredients' : [ "200g carrots", "drop of olive oil", "200g brown onions"]}
+
+        # create the 'instructions' collection in MongoDB
+        self.collection_instructions = self.DB.instructions
+        # insert
+        self.collection_instructions.insert_many([instructions_1, instructions_2, instructions_3])
+
+        # create the 'ingredients' collection in MongoDB
+        self.collection_ingredients = self.DB.ingredients
+        # insert
+        self.collection_ingredients.insert_many([ingredients_1, ingredients_2, ingredients_3])
 
         # creates a test client
         self.app = app.test_client()
@@ -85,9 +115,11 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.li_span_text = []
 
     def tearDown(self):
-        # delete categories collection
-        self.DB.categories.delete_many({})
-        self.DB.recipes.delete_many({})
+        # delete fixture collections
+        # self.DB.categories.delete_many({})
+        # self.DB.recipes.delete_many({})
+        # self.DB.instructions.delete_many({})
+        # self.DB.ingredients.delete_many({})
         self.driver.quit()
 
     def test_three_categories(self):

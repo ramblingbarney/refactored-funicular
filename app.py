@@ -123,10 +123,11 @@ def insert_recipe():
 @app.route('/show_recipe/<recipe_id>')
 def show_recipe(recipe_id):
     recipe=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
-    # category=mongo.db.categories.find_one({'_id': ObjectId(recipe_id)})
+    # TODO: category=mongo.db.categories.find_one({'_id': ObjectId(recipe_id)})
     ingredients=mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
     instructions=mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
-    # print(instructions['instructions'])
+    print(ingredients)
+    print(instructions)
     return render_template('show_recipe.html',
         name=recipe['recipe_name'],
         description=recipe['recipe_description'],
