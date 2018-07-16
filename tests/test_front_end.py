@@ -30,7 +30,7 @@ class RecipeBuddyUITests(unittest.TestCase):
     def setUp(self):
 
         # delete fixture collections
-        # self.DB.categories.delete_many({})
+        self.DB.categories.delete_many({})
         self.DB.recipes.delete_many({})
         self.DB.instructions.delete_many({})
         self.DB.ingredients.delete_many({})
@@ -116,10 +116,10 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def tearDown(self):
         # delete fixture collections
-        # self.DB.categories.delete_many({})
-        # self.DB.recipes.delete_many({})
-        # self.DB.instructions.delete_many({})
-        # self.DB.ingredients.delete_many({})
+        self.DB.categories.delete_many({})
+        self.DB.recipes.delete_many({})
+        self.DB.instructions.delete_many({})
+        self.DB.ingredients.delete_many({})
         self.driver.quit()
 
     def test_three_categories(self):
@@ -357,6 +357,103 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.elements = self.driver.find_elements_by_xpath("//div[contains(@class, 'recipe-description')]/span")
 
         self.assertEqual(len(self.elements), 4)
+
+    def test_first_show_recipe_heading(self):
+        ''' Test first show recipe headings present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.element = self.driver.find_element_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+        self.assertEqual('Avocado and Tuna Tapas', self.element.text)
+
+    def test_first_show_recipe_description(self):
+        ''' Test first show recipe description present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        description_text = 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.'
+
+        self.element = self.driver.find_element_by_xpath("//div[contains(@class, 'recipe-description')]/span")
+
+        self.assertEqual(self.element.text, description_text)
+
+    def test_second_show_recipe_heading(self):
+        ''' Test first show recipe headings present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[1].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.element = self.driver.find_element_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+        self.assertEqual('Chinese Pepper Steak', self.element.text)
+
+    def test_second_show_recipe_description(self):
+        ''' Test second show recipe description present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[1].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        description_text = 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.'
+
+        self.element = self.driver.find_element_by_xpath("//div[contains(@class, 'recipe-description')]/span")
+
+        self.assertEqual(self.element.text, description_text)
+
+    def test_third_show_recipe_heading(self):
+        ''' Test third show recipe headings present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[2].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.element = self.driver.find_element_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+        self.assertEqual('Moroccan Chicken with Saffron and Preserved Lemon', self.element.text)
+
+    def test_third_show_recipe_description(self):
+        ''' Test third show recipe description present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[2].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        description_text = 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.'
+
+        self.element = self.driver.find_element_by_xpath("//div[contains(@class, 'recipe-description')]/span")
+
+        self.assertEqual(self.element.text, description_text)
+
+
+
+
 
 # TODO: copy tests for category to time_estimates
 
