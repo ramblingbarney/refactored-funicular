@@ -1,0 +1,36 @@
+{% extends 'base.html'%} {% block content %}
+<div class="row">
+    <div class="recipe-header col s9">Recipe Name
+        <strong>{{name}}</strong>
+    </div>
+    <div class="recipe-description">Description
+      <span>
+        {{description}}
+      </span>
+    </div>
+</div>
+<div class="row">
+  <div class="instruction-header col s9">
+      <strong>Instructions</strong>
+  </div>
+</div>
+<div class="row">
+  <ol class="input_fields_wrap_instructions">
+    {% for i in instructions %}
+      <li>{{i}}</li>
+    {% endfor %}
+  </ol>
+</div>
+<div class="row">
+  <div class="ingredients-header col s9">
+      <strong>Ingredients</strong>
+  </div>
+</div>
+<div class="row">
+  <ol class="input_fields_wrap_instructions">
+    {% for ing in ingredients %}
+      <li>{{ing}}</li>
+    {% endfor %}
+  </ol>
+</div>
+{% endblock %}
