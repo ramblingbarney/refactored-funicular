@@ -2,7 +2,6 @@ import os
 import unittest
 import config
 from app import app
-from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import urllib.parse
 from selenium import webdriver
@@ -16,7 +15,7 @@ class RecipeBuddyUITests(unittest.TestCase):
     USERNAME = urllib.parse.quote_plus(config.MONGO_USERNAME)
     PASSWORD = urllib.parse.quote_plus(config.MONGO_PASSWORD)
 
-    CLIENT = MongoClient('mongodb://%s:%s@ds131721.mlab.com:31721/recipe_app_testing' % (USERNAME, PASSWORD))
+    CLIENT = MongoClient('mongodb://%s:%s@127.0.0.1:27017/recipe_app_testing' % (USERNAME, PASSWORD))
 
     DB = CLIENT.recipe_app_testing
 
@@ -50,6 +49,27 @@ class RecipeBuddyUITests(unittest.TestCase):
                                                             category_2,
                                                             category_3])
 
+        # create the 'recipes' collection in MongoDB
+        self.collection_recipes = self.DB.recipes
+
+        # recipes to insert
+
+        recipe_1 = {'recipe_name': 'Avocado and Tuna Tapas',
+                'recipe_description': 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.'}
+
+
+        recipe_2 = {'recipe_name': 'Chinese Pepper Steak',
+                'recipe_description': 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.'}
+
+
+        recipe_3 = {'recipe_name': 'Moroccan Chicken with Saffron and Preserved Lemon',
+                'recipe_description': 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.'}
+
+        # insert recipes collection
+        new_result = self.collection_recipes.insert_many([recipe_1,
+                                                            recipe_2,
+                                                            recipe_3])
+
         # creates a test client
         self.app = app.test_client()
 
@@ -67,6 +87,7 @@ class RecipeBuddyUITests(unittest.TestCase):
     def tearDown(self):
         # delete categories collection
         self.DB.categories.delete_many({})
+        self.DB.recipes.delete_many({})
         self.driver.quit()
 
     def test_three_categories(self):
@@ -199,6 +220,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_edit_last_category(self):
         ''' Test editing the last Category'''
+
         self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -232,3 +254,78 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
         self.assertEqual(self.driver.current_url,
                         'http://localhost:5000/get_categories')
+
+
+    def test_three_recipes_headings(self):
+        ''' Test 3 recipes headings present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Avocado and Tuna Tapas',
+                    'Chinese Pepper Steak',
+                    'Moroccan Chicken with Saffron and Preserved Lemon']
+        #
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_three_recipes_description(self):
+        ''' Test 3 recipes headings present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[contains(@class, 'recipe-description')]/span")
+
+        self.assertEqual(len(self.elements), 3)
+
+
+    def test_add_recipe_headings(self):
+        ''' Test Adding a Recipe Heading'''
+
+        self.driver.get("http://localhost:5000/add_recipe")
+        self.driver.implicitly_wait(0)  # seconds
+        self.driver.find_element_by_id("recipe-name").send_keys(
+                                            'Vietnamese Grilled Lemongrass Chicken')
+        self.driver.find_element_by_id("recipe-description").send_keys('Chicken marinated with lemongrass and grilled. Garnish with rice paper, lettuce, cucumber, bean sprouts, mint, and ground peanut.')
+        self.driver.implicitly_wait(0)  # seconds
+        added_category_button = self.driver.find_element_by_id("add-recipe")
+        added_category_button.click()
+        self.driver.implicitly_wait(3)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Avocado and Tuna Tapas',
+                        'Chinese Pepper Steak',
+                        'Moroccan Chicken with Saffron and Preserved Lemon',
+                        'Vietnamese Grilled Lemongrass Chicken']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_add_recipe_descriptions(self):
+        ''' Test Adding a Recipe Description'''
+
+        self.driver.get("http://localhost:5000/add_recipe")
+        self.driver.implicitly_wait(0)  # seconds
+        self.driver.find_element_by_id("recipe-name").send_keys(
+                                            'Vietnamese Grilled Lemongrass Chicken')
+        self.driver.find_element_by_id("recipe-description").send_keys('Chicken marinated with lemongrass and grilled. Garnish with rice paper, lettuce, cucumber, bean sprouts, mint, and ground peanut.')
+        self.driver.implicitly_wait(0)  # seconds
+        added_category_button = self.driver.find_element_by_id("add-recipe")
+        added_category_button.click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[contains(@class, 'recipe-description')]/span")
+
+        self.assertEqual(len(self.elements), 4)
+
+# TODO: copy tests for category to time_estimates
+
+# TODO: tests for show recipes

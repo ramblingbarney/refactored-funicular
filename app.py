@@ -23,6 +23,31 @@ elif os.getenv('FLASK_CONFIG') == "testing":
 
 mongo = PyMongo(app)
 
+# TODO: insert, update and delete category update a constant dict of id : category name
+
+def insert_ingredients(inserted_recipe_id, recipe_dict):
+
+    ingredients_filtered = {k: v for (k, v) in recipe_dict
+                                                if 'ingredient' in k}
+
+    ingredients_doc = {'recipe_id': inserted_recipe_id,
+                        'ingredients': list(ingredients_filtered.values())}
+
+    ingredients = mongo.db.ingredients
+    ingredients.insert_one(ingredients_doc)
+
+
+def insert_instructions(inserted_recipe_id, recipe_dict):
+
+    instructions_filtered = {k: v for (k, v) in recipe_dict
+                                                if 'instruction' in k}
+
+    instructions_doc = {'recipe_id': inserted_recipe_id,
+                        'instructions': list(instructions_filtered.values())}
+
+    instructions = mongo.db.instructions
+    instructions.insert_one(instructions_doc)
+
 
 @app.route('/new_category')
 def new_category():
@@ -40,7 +65,7 @@ def insert_category():
 @app.route('/get_categories')
 def get_categories():
     return render_template('categories.html',
-                            categories=mongo.db.categories.find())
+                        categories=mongo.db.categories.find())
 
 
 @app.route('/edit_category/<category_id>')
@@ -52,8 +77,8 @@ def edit_category(category_id):
 @app.route('/category_item/<category_id>', methods=["POST"])
 def update_category(category_id):
     category_items = mongo.db.categories
-    category_items.update( {'_id': ObjectId(category_id)},
-                            { 'category_name': request.form['category_name'] })
+    category_items.update({'_id': ObjectId(category_id)},
+                            {'category_name': request.form['category_name']})
     return redirect(url_for('get_categories'))
 
 
@@ -62,18 +87,38 @@ def delete_category(category_id):
     mongo.db.categories.remove({'_id': ObjectId(category_id)})
     return redirect(url_for("get_categories"))
 
+# TODO: copy category to time to cook, 30 min slots
 
 @app.route('/add_recipe')
 def add_recipe():
     return render_template('add_recipe.html',
-    categories=mongo.db.categories.find())
+                        categories=mongo.db.categories.find())
+
+
+@app.route('/get_recipes')
+def get_recipes():
+    return render_template('get_recipes.html',
+                            recipes=mongo.db.recipes.find())
 
 
 @app.route('/insert_recipe', methods=['POST'])
 def insert_recipe():
-    recipes =  mongo.db.recipes
-    recipies.insert_one(request.form.to_dict())
+
+    # recipe record
+    recipes = mongo.db.recipes
+    recipe_doc = {'recipe_name': request.form.to_dict()['recipe_name'],
+            'recipe_description': request.form.to_dict()['recipe_description']}
+
+    _recipe_id = recipes.insert_one(recipe_doc)
+
+    # ingredients record insertion
+    insert_ingredients(_recipe_id.inserted_id, request.form.to_dict().items())
+
+    # instructions record insertion
+    insert_instructions(_recipe_id.inserted_id, request.form.to_dict().items())
+
     return redirect(url_for('get_recipes'))
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), debug=True)

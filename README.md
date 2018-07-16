@@ -18,14 +18,62 @@ You will need the following things properly installed on your computer.
 * ```export YOURAPPLICATION_SETTINGS=config.py``` to load app configuration file to the environment variables
 * ```export FLASK_CONFIG=development``` to create FLASK_CONFIG environment variable for development version of the app
 * ```export FLASK_CONFIG=production``` to create FLASK_CONFIG environment variable for production version of the app
-* ```export FLASK_CONFIG=testing``` to create FLASK_CONFIG environment variable for testing version of the app and run unit tests with test fixtures
 
 ### Running Tests
 
 * Download the latest chromedriver binary: https://sites.google.com/a/chromium.org/chromedriver/downloads, for linux ensure the binary is in your path or for windows provide a full path 'c:\< >.exe' on line 21 of 'test_front_end.py'.  
+* Install and run MongoDB (community edition) locally on the default port: https://docs.mongodb.com/manual/administration/install-community/
+  * ```sudo chown -R <user>:<user> /data/db```
+  * ```mkdir ~/mongo```
+  * ```mkdir ~/mongo/mongodb```
+  * ```cp /etc/mongo.conf ~/mongo/```
+  * Update paths in mongo.conf to the absolute user path e.g. /home/<user>/mongo
+  * ```mongo --host localhost``` Mongo Shell
+  * ```use admin```
+  * ```db.runCommand({getCmdLineOpts: 1})``` Verify setup of running local Mongo instance with expected output below
+    ```
+    {
+    	"argv" : [
+    		"mongod",
+    		"--config",
+    		"/home/<user>/mongo/mongod.conf"
+    	],
+    	"parsed" : {
+    		"config" : "/home/<user>/mongo/mongod.conf",
+    		"net" : {
+    			"bindIp" : "127.0.0.1",
+    			"port" : 27017
+    		},
+    		"processManagement" : {
+    			"timeZoneInfo" : "/usr/share/zoneinfo"
+    		},
+    		"storage" : {
+    			"dbPath" : "/home/<user>/mongo/mongodb",
+    			"journal" : {
+    				"enabled" : true
+    			}
+    		},
+    		"systemLog" : {
+    			"destination" : "file",
+    			"logAppend" : true,
+    			"path" : "/home/<user>/mongo/mongod.log"
+    		}
+    	},
+    	"ok" : 1
+    }
+    ```
+
+  * ```use recipe_app_testing```
+  * ```db.createUser({user:"recipeapptester", pwd:"changeme5", roles:[{role: "dbOwner", db: "recipe_app_testing" }]})```
 
 * Run the following commands
   * ```chromedriver --port=9515```
+  * ```export FLASK_CONFIG=testing```
+  * ```export YOURAPPLICATION_SETTINGS=config.py```
+  * ```mongod --config ~/mongo/mongod.conf```
+  * ```mongo --host localhost```
+    * ```use recipe_app_testing``` Mongo Shell command
+    * ```db.createUser( { user: "recipeapptester", pwd: "changeme5", roles: [ "readWrite", "dbAdmin" ] } )``` Mongo Shell command
   * ```python3 -m unittest tests/test_front_end.py```
 
 ## Acceptance tests
@@ -78,7 +126,6 @@ You will need the following things properly installed on your computer.
     * Click on the 'Delete' link/button for the last category line
     * The category entry is no longer shown
 
-
 ### Edit Last Category
 
 * As a user I want to click on the 'Edit' link/button on the last category and that category will be shown individually on a page where it can be edited, cancelled and amendments saved.
@@ -94,7 +141,54 @@ You will need the following things properly installed on your computer.
     * Clicking on Edit will show that category individually with the text in an input box
     * Clicking will return the user to the all categories shown page
 
+### Add Category
+
+* As a user I want to add a category.
+
+* Example acceptance criteria:
+  * Entering text into the input box Category Name
+  * Clicking button 'Add Category'
+  * The recipe name will appear on the 'get_categories' page
+
+
+### Get Recipes Headings (Show all fixture recipes headings)
+
+* As a user I want to see the recipe headings that have been created from fixtures ['Avocado and Tuna Tapas', 'Chinese Pepper Steak', 'Moroccan Chicken with Saffron and Preserved Lemon'].
+
+* Example acceptance criteria:
+  * 3 recipes headings will be shown on the page ['Avocado and Tuna Tapas', 'Chinese Pepper Steak', 'Moroccan Chicken with Saffron and Preserved Lemon']
+
+### Get Recipes Descriptions (Show all fixture recipes descriptions)
+
+* As a user I want to see the recipe descriptions that have been created from fixtures.
+
+* Example acceptance criteria:
+  * 3 recipe descriptions will be shown on the page
+
+### Add Recipe Name
+
+* As a user I want to add a recipe name.
+
+* Example acceptance criteria:
+  * Entering text into the input box Recipe Name
+  * Clicking button 'Add Recipe'
+  * The recipe name will appear on the 'get_recipes' page
+
+### Add Recipe Description
+
+* As a user I want to add a recipe description.
+
+* Example acceptance criteria:
+  * Entering text into the input box Recipe Description
+  * Clicking button 'Add Recipe'
+  * The recipe description will appear on the 'get_recipes' page
+
+
 ## Manual Testing
 
 
 ## Known Issues
+
+* Mongo DB admin password has not been set & database setup is for local testing only
+
+<!-- TODO: no checks are made for duplicate categories or recipies -->
