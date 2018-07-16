@@ -64,7 +64,7 @@ def insert_category():
 
 @app.route('/get_categories')
 def get_categories():
-    return render_template('categories.html',
+    return render_template('get_categories.html',
                         categories=mongo.db.categories.find())
 
 
