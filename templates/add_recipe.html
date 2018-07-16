@@ -60,14 +60,14 @@ $(document).ready(function() {
             </div>
             <div class="input-field col s12">
                 <i class="material-icons prefix">assignment</i>
-                <input id="recipe_name" name="recipe_name" type="text">
+                <input id="recipe-name" name="recipe_name" type="text">
                 <label for="icon_prefix">Recipe Name</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">subject</i>
-                <textarea name="recipe_description" id="recipe_description" class="materialize-textarea"></textarea>
+                <textarea id="recipe-description" name="recipe_description"  class="materialize-textarea"></textarea>
                 <label for="icon_telephone">Recipe Description</label>
             </div>
         </div>
@@ -93,7 +93,7 @@ $(document).ready(function() {
           </div>
         </div>
         <div class="row">
-            <button class="btn waves-effect waves-light" type="submit" name="action">Add Recipe
+            <button class="btn waves-effect waves-light" id="add-recipe" type="submit" name="action">Add Recipe
                 <i class="material-icons right">playlist_add</i>
              </button>
         </div>

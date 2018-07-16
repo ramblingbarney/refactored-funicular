@@ -220,6 +220,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_edit_last_category(self):
         ''' Test editing the last Category'''
+
         self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -283,18 +284,48 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertEqual(len(self.elements), 3)
 
 
+    def test_add_recipe_headings(self):
+        ''' Test Adding a Recipe Heading'''
 
+        self.driver.get("http://localhost:5000/add_recipe")
+        self.driver.implicitly_wait(0)  # seconds
+        self.driver.find_element_by_id("recipe-name").send_keys(
+                                            'Vietnamese Grilled Lemongrass Chicken')
+        self.driver.find_element_by_id("recipe-description").send_keys('Chicken marinated with lemongrass and grilled. Garnish with rice paper, lettuce, cucumber, bean sprouts, mint, and ground peanut.')
+        self.driver.implicitly_wait(0)  # seconds
+        added_category_button = self.driver.find_element_by_id("add-recipe")
+        added_category_button.click()
+        self.driver.implicitly_wait(3)  # seconds
 
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
 
-# elements = driver.find_elements_by_css_selector('selector_required')
-#
-# findElement(By.cssSelector("div.recipe_header>span>")).getText();
+        test_list = ['Avocado and Tuna Tapas',
+                        'Chinese Pepper Steak',
+                        'Moroccan Chicken with Saffron and Preserved Lemon',
+                        'Vietnamese Grilled Lemongrass Chicken']
 
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_add_recipe_descriptions(self):
+        ''' Test Adding a Recipe Description'''
+
+        self.driver.get("http://localhost:5000/add_recipe")
+        self.driver.implicitly_wait(0)  # seconds
+        self.driver.find_element_by_id("recipe-name").send_keys(
+                                            'Vietnamese Grilled Lemongrass Chicken')
+        self.driver.find_element_by_id("recipe-description").send_keys('Chicken marinated with lemongrass and grilled. Garnish with rice paper, lettuce, cucumber, bean sprouts, mint, and ground peanut.')
+        self.driver.implicitly_wait(0)  # seconds
+        added_category_button = self.driver.find_element_by_id("add-recipe")
+        added_category_button.click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[contains(@class, 'recipe-description')]/span")
+
+        self.assertEqual(len(self.elements), 4)
 
 # TODO: copy tests for category to time_estimates
-
-# TODO: tests for add recipes -> get recipes
-
-
 
 # TODO: tests for show recipes

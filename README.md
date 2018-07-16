@@ -125,7 +125,6 @@ You will need the following things properly installed on your computer.
     * Click on the 'Delete' link/button for the last category line
     * The category entry is no longer shown
 
-
 ### Edit Last Category
 
 * As a user I want to click on the 'Edit' link/button on the last category and that category will be shown individually on a page where it can be edited, cancelled and amendments saved.
@@ -141,6 +140,16 @@ You will need the following things properly installed on your computer.
     * Clicking on Edit will show that category individually with the text in an input box
     * Clicking will return the user to the all categories shown page
 
+### Add Category
+
+* As a user I want to add a category.
+
+* Example acceptance criteria:
+  * Entering text into the input box Category Name
+  * Clicking button 'Add Category'
+  * The recipe name will appear on the 'get_categories' page
+
+
 ### Get Recipes Headings (Show all fixture recipes headings)
 
 * As a user I want to see the recipe headings that have been created from fixtures ['Avocado and Tuna Tapas', 'Chinese Pepper Steak', 'Moroccan Chicken with Saffron and Preserved Lemon'].
@@ -154,6 +163,25 @@ You will need the following things properly installed on your computer.
 
 * Example acceptance criteria:
   * 3 recipe descriptions will be shown on the page
+
+### Add Recipe Name
+
+* As a user I want to add a recipe name.
+
+* Example acceptance criteria:
+  * Entering text into the input box Recipe Name
+  * Clicking button 'Add Recipe'
+  * The recipe name will appear on the 'get_recipes' page
+
+### Add Recipe Description
+
+* As a user I want to add a recipe description.
+
+* Example acceptance criteria:
+  * Entering text into the input box Recipe Description
+  * Clicking button 'Add Recipe'
+  * The recipe description will appear on the 'get_recipes' page
+
 
 ## Manual Testing
 
