@@ -116,10 +116,10 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def tearDown(self):
         # delete fixture collections
-        self.DB.categories.delete_many({})
-        self.DB.recipes.delete_many({})
-        self.DB.instructions.delete_many({})
-        self.DB.ingredients.delete_many({})
+        # self.DB.categories.delete_many({})
+        # self.DB.recipes.delete_many({})
+        # self.DB.instructions.delete_many({})
+        # self.DB.ingredients.delete_many({})
         self.driver.quit()
 
     def test_three_categories(self):

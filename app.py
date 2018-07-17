@@ -122,17 +122,42 @@ def insert_recipe():
 
 @app.route('/show_recipe/<recipe_id>')
 def show_recipe(recipe_id):
-    recipe=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
     # TODO: category=mongo.db.categories.find_one({'_id': ObjectId(recipe_id)})
     ingredients=mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
     instructions=mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
     print(ingredients)
     print(instructions)
     return render_template('show_recipe.html',
-        name=recipe['recipe_name'],
-        description=recipe['recipe_description'],
+        recipes=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)}),
         instructions=instructions['instructions'],
         ingredients=ingredients['ingredients'])
+
+
+@app.route('/edit_recipe/<recipe_id>')
+def edit_recipe(recipe_id):
+    # TODO: category=mongo.db.categories.find_one({'_id': ObjectId(recipe_id)})
+    ingredients=mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
+    instructions=mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
+    return render_template('edit_recipe.html',
+        recipes=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)}),
+        instructions=instructions['instructions'],
+        ingredients=ingredients['ingredients'])
+
+
+@app.route('/recipe_item/<recipe_id>', methods=["POST"])
+def update_recipe(recipe_id):
+    recipe_item = mongo.db.recipes
+    # TODO: category_item = mongo.db.categories
+    instruction_items = mongo.db.instructions
+    ingredient_items = mongo.db.ingredients
+    recipe_item.update({'_id': ObjectId(recipe_id)},
+                        {'recipe_name': request.form['recipe_name']},
+                        {'recipe_description': request.form['recipe_description']})
+    instruction_items.update({'recipe_id': ObjectId(recipe_id)},
+                        {'instructions': request.form['instructions']})
+    ingredient_items.update({'recipe_id': ObjectId(recipe_id)},
+                        {'ingredients': request.form['ingredients']})
+    return redirect(url_for('get_recipes'))
 
 
 if __name__ == '__main__':
