@@ -25,6 +25,12 @@ mongo = PyMongo(app)
 
 # TODO: insert, update and delete category update a constant dict of id : category name
 
+def get_category_id(category_name):
+
+    category_record = mongo.db.categories.find_one({'category_name': category_name})
+
+    return category_record['_id']
+
 def insert_ingredients(inserted_recipe_id, recipe_dict):
 
     ingredients_filtered = {k: v for (k, v) in recipe_dict
@@ -53,6 +59,7 @@ def insert_instructions(inserted_recipe_id, recipe_dict):
 def new_category():
     return render_template('add_category.html')
 
+# TODO:change new route to add
 
 @app.route('/insert_category', methods=['POST'])
 def insert_category():
@@ -87,7 +94,7 @@ def delete_category(category_id):
     mongo.db.categories.remove({'_id': ObjectId(category_id)})
     return redirect(url_for("get_categories"))
 
-# TODO: copy category to time to cook, 30 min slots
+# TODO: category will become time to cook 'quick get home late' 'Sunday Lunch for 2', 'Sunday Lunch for all the Family' and then create a copy category as 'cuisine'
 
 @app.route('/add_recipe')
 def add_recipe():
@@ -106,8 +113,15 @@ def insert_recipe():
 
     # recipe record
     recipes = mongo.db.recipes
+
+    category_id = get_category_id(request.form.to_dict()['category_name'])
+
+    # TODO: request.form.to_dict()['cusine']
+
     recipe_doc = {'recipe_name': request.form.to_dict()['recipe_name'],
-            'recipe_description': request.form.to_dict()['recipe_description']}
+            'recipe_description': request.form.to_dict()['recipe_description'],
+            'category_id': category_id,
+            'cuisine_id': '9999999'}
 
     _recipe_id = recipes.insert_one(recipe_doc)
 
@@ -122,24 +136,25 @@ def insert_recipe():
 
 @app.route('/show_recipe/<recipe_id>')
 def show_recipe(recipe_id):
-    # TODO: category=mongo.db.categories.find_one({'_id': ObjectId(recipe_id)})
+    recipe_record=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
     ingredients=mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
     instructions=mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
-    print(ingredients)
-    print(instructions)
     return render_template('show_recipe.html',
         recipes=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)}),
+        category=mongo.db.categories.find_one({'_id': recipe_record['category_id']}),
         instructions=instructions['instructions'],
         ingredients=ingredients['ingredients'])
 
 
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
-    # TODO: category=mongo.db.categories.find_one({'_id': ObjectId(recipe_id)})
+    recipe_record=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
     ingredients=mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
     instructions=mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
     return render_template('edit_recipe.html',
         recipes=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)}),
+        categories=mongo.db.categories.find(),
+        selected_category=mongo.db.categories.find_one({'_id': recipe_record['category_id']}),
         instructions=instructions['instructions'],
         ingredients=ingredients['ingredients'])
 

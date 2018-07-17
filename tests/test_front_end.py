@@ -571,4 +571,4 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertListEqual(test_list, self.li_span_text)
 
-# TODO: copy tests for category to time_estimates
+# TODO: copy tests for category to cuisine, see other to do for examples of category now being treated as time to cook

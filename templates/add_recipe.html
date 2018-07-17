@@ -46,23 +46,11 @@ $(document).ready(function() {
 <div class="row">
     <form action="{{ url_for('insert_recipe') }}" method="POST" class="col s12">
         <div class="row">
-            <div class="row">
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">poll</i>
-                    <select id="category" name="category_name">
-                  <option value="" disabled selected>Choose Category</option>
-                  {% for cat in categories %}
-                      <option value="{{cat.category_name}}">{{cat.category_name}}</option>
-                  {% endfor %}
-                </select>
-                    <label>Recipe Category</label>
-                </div>
-            </div>
-            <div class="input-field col s12">
-                <i class="material-icons prefix">assignment</i>
-                <input id="recipe-name" name="recipe_name" type="text">
-                <label for="icon_prefix">Recipe Name</label>
-            </div>
+          <div class="input-field col s12">
+              <i class="material-icons prefix">assignment</i>
+              <input id="recipe-name" name="recipe_name" type="text">
+              <label for="icon_prefix">Recipe Name</label>
+          </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
@@ -71,7 +59,18 @@ $(document).ready(function() {
                 <label for="icon_telephone">Recipe Description</label>
             </div>
         </div>
-
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">poll</i>
+            <select id="category" name="category_name">
+              <option value="" disabled selected>Choose Category</option>
+              {% for cat in categories %}
+              <option value="{{cat.category_name}}">{{cat.category_name}}</option>
+              {% endfor %}
+            </select>
+            <label>Recipe Category</label>
+          </div>
+        </div>
         <div class="row">
           <div class="input-field col s12">
             <button class="add_field_button_instructions" type="button">Add More Instructions</button>

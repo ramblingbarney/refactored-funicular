@@ -17,6 +17,18 @@
         </div>
       </div>
       <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">poll</i>
+          <select id="category" name="category_name">
+            <option value="">Choose Category</option>
+            {% for cat in categories %}
+            <option value="{{cat.category_name}}"{% if cat.category_name==selected_category['category_name'] %} selected{% endif %}>{{cat.category_name}}</option>
+            {% endfor %}
+          </select>
+          <label>Recipe Category</label>
+        </div>
+      </div>
+      <div class="row">
         <div class="instruction-header col s9">
           <strong>Instructions</strong>
         </div>
