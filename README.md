@@ -183,6 +183,16 @@ You will need the following things properly installed on your computer.
   * Clicking button 'Add Recipe'
   * The recipe description will appear on the 'get_recipes' page
 
+### Show Recipe
+
+* As a user I want to click on the 'show' recipe link/button and be shown the full recipe (name, description, instructions and ingredients).
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
 
 ## Manual Testing
 
@@ -190,5 +200,7 @@ You will need the following things properly installed on your computer.
 ## Known Issues
 
 * Mongo DB admin password has not been set & database setup is for local testing only
+* When running all tests a resource warning is displayed for a number of unclosed sockets
+  "ResourceWarning: unclosed <socket.socket fd=9, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 55958), raddr=('127.0.0.1', 55261)>"
 
 <!-- TODO: no checks are made for duplicate categories or recipies -->

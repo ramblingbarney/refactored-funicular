@@ -78,17 +78,17 @@ class RecipeBuddyUITests(unittest.TestCase):
         insert_recipe_2 = self.collection_recipes.insert_one(recipe_2)
         insert_recipe_3 = self.collection_recipes.insert_one(recipe_3)
 
-        instructions_1 = {'recipe_id': insert_recipe_1.inserted_id, 'instructions' : [ "mix 3 eggs", "whisk", "put on low heat"]}
+        instructions_1 = {'recipe_id': insert_recipe_1.inserted_id, 'instructions' : ["mix 3 eggs", "whisk", "put on low heat"]}
 
-        ingredients_1 = {'recipe_id': insert_recipe_1.inserted_id, 'ingredients' : [ "3 eggs", "100g butter", "0.5l water"]}
+        ingredients_1 = {'recipe_id': insert_recipe_1.inserted_id, 'ingredients' : ["3 eggs", "100g butter", "0.5l water"]}
 
-        instructions_2 = {'recipe_id': insert_recipe_2.inserted_id, 'instructions' : [ "peel 2 oranges", 'add flour', "put on high heat"]}
+        instructions_2 = {'recipe_id': insert_recipe_2.inserted_id, 'instructions' : ["peel 2 oranges", "add flour", "put on high heat"]}
 
-        ingredients_2 = {'recipe_id': insert_recipe_2.inserted_id, 'ingredients' : [ "2 oranges", "100g butter", "1l water", "200g flour"]}
+        ingredients_2 = {'recipe_id': insert_recipe_2.inserted_id, 'ingredients' : ["2 oranges", "100g butter", "1l water", "200g flour"]}
 
-        instructions_3 = {'recipe_id': insert_recipe_3.inserted_id, 'instructions' : [ "chop carrots", "fry on high heat with olive oil", "chop onions", "add onions once carrots soft"]}
+        instructions_3 = {'recipe_id': insert_recipe_3.inserted_id, 'instructions' : ["chop carrots", "fry on high heat with olive oil", "chop onions", "add onions once carrots soft"]}
 
-        ingredients_3 = {'recipe_id': insert_recipe_3.inserted_id, 'ingredients' : [ "200g carrots", "drop of olive oil", "200g brown onions"]}
+        ingredients_3 = {'recipe_id': insert_recipe_3.inserted_id, 'ingredients' : ["200g carrots", "drop of olive oil", "200g brown onions"]}
 
         # create the 'instructions' collection in MongoDB
         self.collection_instructions = self.DB.instructions
@@ -451,10 +451,124 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertEqual(self.element.text, description_text)
 
+    def test_first_show_recipe_instructions(self):
+        ''' Test first show recipe instructions present '''
 
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
 
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
 
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+
+        test_list = ['mix 3 eggs', 'whisk', 'put on low heat']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_first_show_recipe_ingredients(self):
+        ''' Test first show recipe ingredients present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
+
+        test_list = ['3 eggs', '100g butter', '0.5l water']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_second_show_recipe_instructions(self):
+        ''' Test second show recipe instructions present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[1].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+
+        test_list = ['peel 2 oranges', 'add flour', 'put on high heat']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_second_show_recipe_ingredients(self):
+        ''' Test second show recipe ingredients present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[1].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
+
+        test_list = ['2 oranges', '100g butter', '1l water', '200g flour']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_third_show_recipe_instructions(self):
+        ''' Test third show recipe instructions present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[2].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+
+        test_list = ['chop carrots', 'fry on high heat with olive oil', 'chop onions', 'add onions once carrots soft']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_third_show_recipe_ingredients(self):
+        ''' Test third show recipe ingredients present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[2].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
+
+        test_list = ['200g carrots', 'drop of olive oil', '200g brown onions']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
 
 # TODO: copy tests for category to time_estimates
-
-# TODO: tests for show recipes
