@@ -137,6 +137,7 @@ def insert_recipe():
 @app.route('/show_recipe/<recipe_id>')
 def show_recipe(recipe_id):
     recipe_record=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
+    print(recipe_record)
     ingredients=mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
     instructions=mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
     return render_template('show_recipe.html',

@@ -41,19 +41,20 @@ class RecipeBuddyUITests(unittest.TestCase):
         # categores to insert
 
         category_1 = {
-            'category_name': 'Thai'
+            'category_name': 'Meal for 1'
         }
         category_2 = {
-            'category_name': 'Chinese'
+            'category_name': 'Evening Meal for 2'
         }
         category_3 = {
-            'category_name': 'Indian'
+            'category_name': 'Sunday Lunch for all the family'
         }
 
         # insert categories collection
-        new_result = self.collection_categories.insert_many([category_1,
-                                                            category_2,
-                                                            category_3])
+
+        insert_category_1 = self.collection_categories.insert_one(category_1)
+        insert_category_2 = self.collection_categories.insert_one(category_2)
+        insert_category_3 = self.collection_categories.insert_one(category_3)
 
         # create the 'recipes' collection in MongoDB
         self.collection_recipes = self.DB.recipes
@@ -61,16 +62,20 @@ class RecipeBuddyUITests(unittest.TestCase):
         # recipes to insert
 
         recipe_1 = {'recipe_name': 'Avocado and Tuna Tapas',
-                'recipe_description': 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.'}
+                'recipe_description': 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.',
+                'category_id': insert_category_1.inserted_id,
+                'cuisine_id': '9999999'}
 
 
         recipe_2 = {'recipe_name': 'Chinese Pepper Steak',
-                'recipe_description': 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.'}
-
+                'recipe_description': 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.',
+                'category_id': insert_category_2.inserted_id,
+                'cuisine_id': '9999999'}
 
         recipe_3 = {'recipe_name': 'Moroccan Chicken with Saffron and Preserved Lemon',
-                'recipe_description': 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.'}
-
+                'recipe_description': 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.',
+                'category_id': insert_category_3.inserted_id,
+                'cuisine_id': '9999999'}
 
         # insert recipes collection
 
@@ -116,10 +121,10 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def tearDown(self):
         # delete fixture collections
-        self.DB.categories.delete_many({})
-        self.DB.recipes.delete_many({})
-        self.DB.instructions.delete_many({})
-        self.DB.ingredients.delete_many({})
+        # self.DB.categories.delete_many({})
+        # self.DB.recipes.delete_many({})
+        # self.DB.instructions.delete_many({})
+        # self.DB.ingredients.delete_many({})
         self.driver.quit()
 
     def test_three_categories(self):
@@ -131,7 +136,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.elements = self.driver.find_elements_by_class_name(
                                                         "category_list_item")
 
-        test_list = ['Thai', 'Chinese', 'Indian']
+        test_list = ['Meal for 1', 'Evening Meal for 2', 'Sunday Lunch for all the family']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -169,7 +174,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         element.click()
         self.driver.implicitly_wait(0)  # seconds
         self.driver.find_element_by_id("category_name").send_keys(
-                                            'Spanish')
+                                            'Quick evening meal for 2')
         self.driver.implicitly_wait(0)  # seconds
         added_category_button = self.driver.find_element_by_id("add_category")
         added_category_button.click()
@@ -178,7 +183,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.elements = self.driver.find_elements_by_class_name(
                                                         "category_list_item")
 
-        test_list = ['Thai', 'Chinese', 'Indian', 'Spanish']
+        test_list = ['Meal for 1', 'Evening Meal for 2', 'Sunday Lunch for all the family', 'Quick evening meal for 2']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -201,7 +206,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.elements = self.driver.find_elements_by_class_name(
                                                         "category_list_item")
 
-        test_list = ['Chinese', 'Indian']
+        test_list = ['Evening Meal for 2', 'Sunday Lunch for all the family']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -243,7 +248,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.elements = self.driver.find_elements_by_class_name(
                                                         "category_list_item")
 
-        test_list = ['Thai', 'Chinese']
+        test_list = ['Meal for 1', 'Evening Meal for 2']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -268,7 +273,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.elements = self.driver.find_elements_by_class_name(
                                                         "category_list_item")
 
-        test_list = ['Thai', 'Chinese', 'Indian1']
+        test_list = ['Meal for 1', 'Evening Meal for 2', 'Sunday Lunch for all the family1']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
