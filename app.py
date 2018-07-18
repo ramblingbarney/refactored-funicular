@@ -55,7 +55,7 @@ def insert_instructions(inserted_recipe_id, recipe_dict):
     instructions.insert_one(instructions_doc)
 
 
-@app.route('/new_category')
+@app.route('/add_category')
 def new_category():
     return render_template('add_category.html')
 
