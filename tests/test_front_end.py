@@ -7,6 +7,7 @@ import urllib.parse
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 
 
@@ -121,10 +122,10 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def tearDown(self):
         # delete fixture collections
-        # self.DB.categories.delete_many({})
-        # self.DB.recipes.delete_many({})
-        # self.DB.instructions.delete_many({})
-        # self.DB.ingredients.delete_many({})
+        self.DB.categories.delete_many({})
+        self.DB.recipes.delete_many({})
+        self.DB.instructions.delete_many({})
+        self.DB.ingredients.delete_many({})
         self.driver.quit()
 
     def test_three_categories(self):
@@ -329,10 +330,16 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("recipe-name").send_keys(
                                             'Vietnamese Grilled Lemongrass Chicken')
         self.driver.find_element_by_id("recipe-description").send_keys('Chicken marinated with lemongrass and grilled. Garnish with rice paper, lettuce, cucumber, bean sprouts, mint, and ground peanut.')
+
+        select = Select(self.driver.find_element_by_id("category"))
+        select.select_by_visible_text('Evening Meal for 2')
+
+        self.driver.find_element_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li/input").send_keys('Heat oil in frying pan')
+        self.driver.find_element_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li/input").send_keys('30 ml olive oil')
         self.driver.implicitly_wait(0)  # seconds
-        added_category_button = self.driver.find_element_by_id("add-recipe")
-        added_category_button.click()
-        self.driver.implicitly_wait(3)  # seconds
+
+        self.driver.find_element_by_id("add-recipe").click()
+        self.driver.implicitly_wait(0)  # seconds
 
         self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
 
@@ -354,9 +361,15 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("recipe-name").send_keys(
                                             'Vietnamese Grilled Lemongrass Chicken')
         self.driver.find_element_by_id("recipe-description").send_keys('Chicken marinated with lemongrass and grilled. Garnish with rice paper, lettuce, cucumber, bean sprouts, mint, and ground peanut.')
+
+        select = Select(self.driver.find_element_by_id("category"))
+        select.select_by_visible_text('Evening Meal for 2')
+
+        self.driver.find_element_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li/input").send_keys('Heat oil in frying pan')
+        self.driver.find_element_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li/input").send_keys('30 ml olive oil')
+
         self.driver.implicitly_wait(0)  # seconds
-        added_category_button = self.driver.find_element_by_id("add-recipe")
-        added_category_button.click()
+        self.driver.find_element_by_id("add-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.elements = self.driver.find_elements_by_xpath("//div[contains(@class, 'recipe-description')]/span")

@@ -196,6 +196,7 @@ You will need the following things properly installed on your computer.
 
 ## Manual Testing
 
+* Open '/add_recipe.html' template, add text to all fields and select an option in the category select box, leave a different field empty or unselected select box each time and attempt to submit the form, a hover message should appear on the empty field or unselected select box stating input text required or selection required.
 
 ## Known Issues
 

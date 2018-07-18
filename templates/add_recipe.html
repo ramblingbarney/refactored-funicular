@@ -48,21 +48,21 @@ $(document).ready(function() {
         <div class="row">
           <div class="input-field col s12">
               <i class="material-icons prefix">assignment</i>
-              <input id="recipe-name" name="recipe_name" type="text">
+              <input id="recipe-name" name="recipe_name" type="text" required>
               <label for="icon_prefix">Recipe Name</label>
           </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">subject</i>
-                <textarea id="recipe-description" name="recipe_description"  class="materialize-textarea"></textarea>
+                <textarea id="recipe-description" name="recipe_description"  class="materialize-textarea" required></textarea>
                 <label for="icon_telephone">Recipe Description</label>
             </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix">poll</i>
-            <select id="category" name="category_name">
+            <select id="category" name="category_name" required>
               <option value="" disabled selected>Choose Category</option>
               {% for cat in categories %}
               <option value="{{cat.category_name}}">{{cat.category_name}}</option>
@@ -76,7 +76,7 @@ $(document).ready(function() {
             <button class="add_field_button_instructions" type="button">Add More Instructions</button>
             <div>
               <ol class="input_fields_wrap_instructions">
-                <li><input type="text" name="instructions[0]"></li>
+                <li><input type="text" name="instructions[0]" required></li>
               </ol>
             </div>
           </div>
@@ -86,7 +86,7 @@ $(document).ready(function() {
             <button class="add_field_button_ingredients" type="button">Add More Ingredients</button>
             <div>
               <ol class="input_fields_wrap_ingredients">
-                <li><input type="text" name="ingredient[0]"></li>
+                <li><input type="text" name="ingredient[0]" required></li>
               </ol>
             </div>
           </div>

@@ -94,7 +94,6 @@ def delete_category(category_id):
     mongo.db.categories.remove({'_id': ObjectId(category_id)})
     return redirect(url_for("get_categories"))
 
-# TODO: category will become time to cook 'quick get home late' 'Sunday Lunch for 2', 'Sunday Lunch for all the Family' and then create a copy category as 'cuisine'
 
 @app.route('/add_recipe')
 def add_recipe():
