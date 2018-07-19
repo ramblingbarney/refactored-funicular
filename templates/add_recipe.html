@@ -73,6 +73,18 @@ $(document).ready(function() {
         </div>
         <div class="row">
           <div class="input-field col s12">
+            <i class="material-icons prefix">poll</i>
+            <select id="cuisine" name="cuisine_name" required>
+              <option value="" disabled selected>Choose Cuisine</option>
+              {% for cui in cuisines %}
+              <option value="{{cui.cuisine_name}}">{{cui.cuisine_name}}</option>
+              {% endfor %}
+            </select>
+            <label>Recipe Cuisine</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
             <button class="add_field_button_instructions" type="button">Add More Instructions</button>
             <div>
               <ol class="input_fields_wrap_instructions">

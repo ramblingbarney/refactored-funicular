@@ -23,8 +23,6 @@ elif os.getenv('FLASK_CONFIG') == "testing":
 
 mongo = PyMongo(app)
 
-# TODO: insert, update and delete category update a constant dict of id : category name
-
 def get_category_id(category_name):
 
     category_record = mongo.db.categories.find_one({'category_name': category_name})
@@ -59,7 +57,11 @@ def insert_instructions(inserted_recipe_id, recipe_dict):
 def add_category():
     return render_template('add_category.html')
 
-# TODO:change new route to add
+
+@app.route('/add_cuisine')
+def add_cuisine():
+    return render_template('add_cuisine.html')
+
 
 @app.route('/insert_category', methods=['POST'])
 def insert_category():
@@ -69,16 +71,36 @@ def insert_category():
     return redirect(url_for('get_categories'))
 
 
+@app.route('/insert_cuisine', methods=['POST'])
+def insert_cuisine():
+    cuisines = mongo.db.cuisines
+    cuisine_doc = {'cuisine_name': request.form['cuisine_name']}
+    cuisines.insert_one(cuisine_doc)
+    return redirect(url_for('get_cuisines'))
+
+
 @app.route('/get_categories')
 def get_categories():
     return render_template('get_categories.html',
                         categories=mongo.db.categories.find())
 
 
+@app.route('/get_cuisines')
+def get_cuisines():
+    return render_template('get_cuisines.html',
+                        cuisines=mongo.db.cuisines.find())
+
+
 @app.route('/edit_category/<category_id>')
 def edit_category(category_id):
     return render_template('edit_category.html',
         category=mongo.db.categories.find_one({'_id': ObjectId(category_id)}))
+
+
+@app.route('/edit_cuisine/<cuisine_id>')
+def edit_cuisine(cuisine_id):
+    return render_template('edit_cuisine.html',
+        cuisine=mongo.db.cuisines.find_one({'_id': ObjectId(cuisine_id)}))
 
 
 @app.route('/category_item/<category_id>', methods=["POST"])
@@ -89,16 +111,31 @@ def update_category(category_id):
     return redirect(url_for('get_categories'))
 
 
+@app.route('/cuisine_item/<cuisine_id>', methods=["POST"])
+def update_cuisine(cuisine_id):
+    cuisine_items = mongo.db.cuisines
+    cuisine_items.update({'_id': ObjectId(cuisine_id)},
+                            {'cuisine_name': request.form['cuisine_name']})
+    return redirect(url_for('get_cuisines'))
+
+
 @app.route('/delete_category/<category_id>')
 def delete_category(category_id):
     mongo.db.categories.remove({'_id': ObjectId(category_id)})
     return redirect(url_for("get_categories"))
 
 
+@app.route('/delete_cuisine/<cuisine_id>')
+def delete_cuisine(cuisine_id):
+    mongo.db.cuisines.remove({'_id': ObjectId(cuisine_id)})
+    return redirect(url_for("get_cuisines"))
+
+
 @app.route('/add_recipe')
 def add_recipe():
     return render_template('add_recipe.html',
-                        categories=mongo.db.categories.find())
+                        categories=mongo.db.categories.find(),
+                        cuisines=mongo.db.cuisines.find())
 
 
 @app.route('/get_recipes')
@@ -115,12 +152,12 @@ def insert_recipe():
 
     category_id = get_category_id(request.form.to_dict()['category_name'])
 
-    # TODO: request.form.to_dict()['cusine']
+    cuisine_id = get_category_id(request.form.to_dict()['cuisine_name'])
 
     recipe_doc = {'recipe_name': request.form.to_dict()['recipe_name'],
             'recipe_description': request.form.to_dict()['recipe_description'],
             'category_id': category_id,
-            'cuisine_id': '9999999'}
+            'cuisine_id': cuisine_id}
 
     _recipe_id = recipes.insert_one(recipe_doc)
 
@@ -136,12 +173,12 @@ def insert_recipe():
 @app.route('/show_recipe/<recipe_id>')
 def show_recipe(recipe_id):
     recipe_record=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
-    print(recipe_record)
     ingredients=mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
     instructions=mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
     return render_template('show_recipe.html',
         recipes=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)}),
         category=mongo.db.categories.find_one({'_id': recipe_record['category_id']}),
+        cuisines=mongo.db.cuisines.find_one({'_id': recipe_record['cuisine_id']}),
         instructions=instructions['instructions'],
         ingredients=ingredients['ingredients'])
 
@@ -154,7 +191,9 @@ def edit_recipe(recipe_id):
     return render_template('edit_recipe.html',
         recipes=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)}),
         categories=mongo.db.categories.find(),
+        cuisines=mongo.db.cuisines.find(),
         selected_category=mongo.db.categories.find_one({'_id': recipe_record['category_id']}),
+        selected_cuisine=mongo.db.cuisines.find_one({'_id': recipe_record['cuisine_id']}),
         instructions=instructions['instructions'],
         ingredients=ingredients['ingredients'])
 

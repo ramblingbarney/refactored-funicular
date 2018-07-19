@@ -29,6 +29,18 @@
         </div>
       </div>
       <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">poll</i>
+          <select id="category" name="category_name">
+            <option value="">Choose Cuisine</option>
+            {% for cui in cuisines %}
+            <option value="{{cui.cuisine_name}}"{% if cui.cuisine_name==selected_cuisine['cuisine_name'] %} selected{% endif %}>{{cui.cuisine_name}}</option>
+            {% endfor %}
+          </select>
+          <label>Recipe Cuisine</label>
+        </div>
+      </div>
+      <div class="row">
         <div class="instruction-header col s9">
           <strong>Instructions</strong>
         </div>

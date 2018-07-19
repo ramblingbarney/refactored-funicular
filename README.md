@@ -80,10 +80,10 @@ You will need the following things properly installed on your computer.
 
 ### Get Category (Show all fixture categories)
 
-* As a user I want to see the categories that have been created from fixtures ['Thai','Chinese','Indian'].
+* As a user I want to see the categories that have been created from fixtures ['Meal for 1', 'Evening Meal for 2', 'Sunday Lunch for all the family'].
 
   * Example acceptance criteria:
-    * 3 categories will be shown on the page ['Thai','Chinese','Indian']
+    * 3 categories will be shown on the page ['Meal for 1', 'Evening Meal for 2', 'Sunday Lunch for all the family']
 
 ### Get Category (Show all fixture categories with Delete button)
 
@@ -150,6 +150,77 @@ You will need the following things properly installed on your computer.
   * Clicking button 'Add Category'
   * The recipe name will appear on the 'get_categories' page
 
+### Get Cuisine (Show all fixture cuisines)
+
+* As a user I want to see the cuisines that have been created from fixtures ['Thai','Chinese','Indian'].
+
+  * Example acceptance criteria:
+    * 3 cuisines will be shown on the page ['Thai','Chinese','Indian']
+
+### Get Cuisine (Show all fixture Cuisines with Delete button)
+
+* As a user I want to see the cuisines that have been created and each one will be shown with a 'Delete' button.
+
+  * Example acceptance criteria:
+    * Each cuisine created will have a 'Delete' link/button
+    * The page will have 3 'Delete' link/buttons
+
+### Get Cuisine (Show all fixture Cuisines with Edit button)
+
+* As a user I want to see the cuisines that have been created and each one will be shown with a 'Edit' button.
+
+  * Example acceptance criteria:
+    * Each cuisine created will have a 'Edit' link/button
+    * The page will have 3 'Edit' link/buttons
+
+### Delete the first Cuisine
+
+* As a user I want to click on the 'Delete' link/button for the first cuisine, the page refreshes and it disappears
+
+  * Example acceptance criteria:
+    * Click on the 'Delete' link/button for the first cuisine line
+    * The cuisine entry is no longer shown
+
+### Delete all the Cuisines
+
+* As a user I want to click on the 'Delete' link/button for all cuisines, the page refreshes and it disappears
+
+  * Example acceptance criteria:
+    * Click on the 'Delete' link/button for the cuisines shown
+    * All deleted cuisines will disappear
+    * No cuisine entries will exist to be shown
+
+### Delete the last Cuisine
+
+* As a user I want to click on the 'Delete' link/button for the last cuisine, the page refreshes and it disappears
+
+  * Example acceptance criteria:
+    * Click on the 'Delete' link/button for the last cuisine line
+    * The cuisine entry is no longer shown
+
+### Edit Last Cuisine
+
+* As a user I want to click on the 'Edit' link/button on the last cuisine and that cuisine will be shown individually on a page where it can be edited, cancelled and amendments saved.
+
+* Example acceptance criteria:
+  * An input box with the existing cuisine text
+  * links/buttons to create a 'Cancel' the amendment and 'Edit' (save) the cuisine
+
+* As a user I want to click on the 'Edit' link/button for a cuisine and that cuisine will be shown individually on a page where it can be cancelled and then all cuisines will be shown.
+
+  * Example acceptance criteria:
+    * Each cuisine created will have a 'Delete' and 'Edit' link/button
+    * Clicking on Edit will show that cuisine individually with the text in an input box
+    * Clicking will return the user to the all cuisines shown page
+
+### Add cuisine
+
+* As a user I want to add a cuisine.
+
+* Example acceptance criteria:
+  * Entering text into the input box cuisine Name
+  * Clicking button 'Add Cuisine'
+  * The recipe name will appear on the 'get_cuisines' page
 
 ### Get Recipes Headings (Show all fixture recipes headings)
 
