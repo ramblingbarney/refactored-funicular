@@ -3,6 +3,7 @@ import config
 from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+import urllib.parse
 
 
 if os.getenv('FLASK_CONFIG') == "production":
@@ -23,11 +24,13 @@ elif os.getenv('FLASK_CONFIG') == "testing":
 
 mongo = PyMongo(app)
 
-def get_category_id(category_name):
+def get_collection_id(collection_name, search_field, search_value):
 
-    category_record = mongo.db.categories.find_one({'category_name': category_name})
+    field_name = urllib.parse.quote_plus(search_field)
 
-    return category_record['_id']
+    collection_record = mongo.db[collection_name].find_one({field_name : search_value})
+
+    return collection_record['_id']
 
 def insert_ingredients(inserted_recipe_id, recipe_dict):
 
@@ -150,9 +153,9 @@ def insert_recipe():
     # recipe record
     recipes = mongo.db.recipes
 
-    category_id = get_category_id(request.form.to_dict()['category_name'])
+    category_id = get_collection_id('categories', 'category_name', request.form.to_dict()['category_name'])
 
-    cuisine_id = get_category_id(request.form.to_dict()['cuisine_name'])
+    cuisine_id = get_collection_id('cuisines','cuisine_name', request.form.to_dict()['cuisine_name'])
 
     recipe_doc = {'recipe_name': request.form.to_dict()['recipe_name'],
             'recipe_description': request.form.to_dict()['recipe_description'],
