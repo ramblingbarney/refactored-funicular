@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- TODO: put jquery in base -->
 <script>
 // Add remove input text box dynamically taken from here
 // https://www.sanwebe.com/2013/03/addremove-input-fields-dynamically-with-jquery
@@ -11,9 +12,14 @@ $(document).ready(function() {
     var wrapper_instructions = $(".input_fields_wrap_instructions"); //Fields wrapper insstructions
     var add_button_ingredients = $(".add_field_button_ingredients"); //Add button ID ingredients
     var add_button_instructions = $(".add_field_button_instructions"); //Add button ID insstructions
+    var plus_15_button = $(".plus_15_button"); //Add button ID insstructions
+    var minus_15_button = $(".minus_15_button"); //Add button ID insstructions
+    var totalTime = 0;
 
     var x = 1; //initlal text box count & used for instruction field name instruction[x]
     var y = 1; //initlal text box count & used for ingredient field name ingredient[x]
+
+    document.getElementById('total-time').value =  totalTime;
 
     $(add_button_instructions).click(function(e){ //on add input button click
         e.preventDefault();
@@ -30,6 +36,20 @@ $(document).ready(function() {
             input_fields_ingredients = `<li><input type="text" name="ingredient[${y}]"/><a href="#" class="remove_field_ingredients">Remove</a></li>`
             $(wrapper_ingredients).append(input_fields_ingredients); //add input box
             y++; //text box increment
+        }
+    });
+
+    $(plus_15_button).click(function(e){ //on add input button click
+        e.preventDefault();
+        totalTime += 15;
+        document.getElementById('total-time').value = totalTime
+    });
+
+    $(minus_15_button).click(function(e){ //on add input button click
+        e.preventDefault();
+        if (totalTime > 0) {
+          totalTime -= 15;
+          document.getElementById('total-time').value = totalTime;
         }
     });
 
@@ -81,6 +101,15 @@ $(document).ready(function() {
               {% endfor %}
             </select>
             <label>Recipe Cuisine</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+              <i class="material-icons prefix">assignment</i>
+              <input id="total-time" name="total_time" type="text" required>
+              <button class="plus_15_button" type="button"> + 15 mins</button>
+              <button class="minus_15_button" type="button"> - 15 mins</button>
+              <label for="icon_prefix">Total Time</label>
           </div>
         </div>
         <div class="row">

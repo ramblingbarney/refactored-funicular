@@ -150,7 +150,7 @@ def get_recipes():
 @app.route('/insert_recipe', methods=['POST'])
 def insert_recipe():
 
-    # recipe record
+    # recipe collection
     recipes = mongo.db.recipes
 
     category_id = get_collection_id('categories', 'category_name', request.form.to_dict()['category_name'])
@@ -160,8 +160,10 @@ def insert_recipe():
     recipe_doc = {'recipe_name': request.form.to_dict()['recipe_name'],
             'recipe_description': request.form.to_dict()['recipe_description'],
             'category_id': category_id,
-            'cuisine_id': cuisine_id}
+            'cuisine_id': cuisine_id,
+            'total_time': request.form.to_dict()['total_time']}
 
+    # recipes record insertion
     _recipe_id = recipes.insert_one(recipe_doc)
 
     # ingredients record insertion

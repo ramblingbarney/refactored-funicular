@@ -87,18 +87,21 @@ class RecipeBuddyUITests(unittest.TestCase):
         recipe_1 = {'recipe_name': 'Avocado and Tuna Tapas',
                 'recipe_description': 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.',
                 'category_id': insert_category_1.inserted_id,
-                'cuisine_id': insert_cuisine_1.inserted_id}
+                'cuisine_id': insert_cuisine_1.inserted_id,
+                'total_time': '45'}
 
 
         recipe_2 = {'recipe_name': 'Chinese Pepper Steak',
                 'recipe_description': 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.',
                 'category_id': insert_category_2.inserted_id,
-                'cuisine_id': insert_cuisine_2.inserted_id}
+                'cuisine_id': insert_cuisine_2.inserted_id,
+                'total_time': '30'}
 
         recipe_3 = {'recipe_name': 'Moroccan Chicken with Saffron and Preserved Lemon',
                 'recipe_description': 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.',
                 'category_id': insert_category_3.inserted_id,
-                'cuisine_id': insert_cuisine_3.inserted_id}
+                'cuisine_id': insert_cuisine_3.inserted_id,
+                'total_time': '15'}
 
         # insert recipes collection
 
@@ -779,6 +782,17 @@ class RecipeBuddyUITests(unittest.TestCase):
             self.li_span_text.append(element.text)
 
         self.assertListEqual(test_list, self.li_span_text)
+
+# TODO: test for existing recipe category
+# TODO: test for existing recipe cusine
+# TODO: test for existing recipe time
+
+# TODO: test for add instruction to existing recipes
+# TODO: test for add instruction to existing recipes
+# TODO: test for add ingrdient to existing recipes
+# TODO: test for add time to existing recipes
+# TODO: test for remove time to existing recipes
+
 
 
 # TODO: check tests for assigned variables not required and poor naming conventions recipe using categoory etc
