@@ -254,6 +254,39 @@ You will need the following things properly installed on your computer.
   * Clicking button 'Add Recipe'
   * The recipe description will appear on the 'get_recipes' page
 
+### Add Recipe Increase Total Time
+
+* As a user I want to add a recipe total time to cook in increments of 15 minutes.
+
+* Example acceptance criteria:
+  * Entering text into the input box Recipe Description
+  * Clicking button '+ 15 mins'
+  * The recipe Total Time will be 15 mins
+
+### Add Recipe Decrease Total Time
+
+* As a user I want to decrease the recipe total time to cook in increments of 15 minutes.
+
+* Example acceptance criteria:
+  * Entering text into the input box Recipe Description
+  * Clicking button '+ 15 mins'
+  * Clicking button '+ 15 mins'
+  * Clicking button '- 15 mins'
+  * The recipe Total Time will increase to 30 mins and then decrease to 15 mins
+
+### Add Recipe Total Time will be zero or more
+
+* As a user I want the total time to cook to be zero or greater and never negative.
+
+* Example acceptance criteria:
+  * Entering text into the input box Recipe Description
+  * Clicking button '+ 15 mins'
+  * Clicking button '+ 15 mins'
+  * Clicking button '- 15 mins'
+  * Clicking button '- 15 mins'
+  * Clicking button '- 15 mins'
+  * The recipe Total Time will increase to 30 mins and then decrease to 0 mins
+
 ### Show Recipe
 
 * As a user I want to click on the 'show' recipe link/button and be shown the full recipe (name, description, instructions and ingredients).
@@ -264,6 +297,7 @@ You will need the following things properly installed on your computer.
     * Recipe description
     * Recipe instructions
     * Recipe ingredients
+    * Recipe Total Time
 
 ## Manual Testing
 
@@ -274,5 +308,4 @@ You will need the following things properly installed on your computer.
 * Mongo DB admin password has not been set & database setup is for local testing only
 * When running all tests a resource warning is displayed for a number of unclosed sockets
   "ResourceWarning: unclosed <socket.socket fd=9, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 55958), raddr=('127.0.0.1', 55261)>"
-
-<!-- TODO: no checks are made for duplicate categories or recipies -->
+* Cuisines, Cateogries, Total Time, Recipes can have duplicates, I would recommend either having an index in the names and then using a switch to an update statement when the insert fails or using javascript checkon the page with a dummy route as used in my Stream 2A project

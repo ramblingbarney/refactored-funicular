@@ -570,6 +570,51 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertEqual(len(self.elements), 4)
 
+    def test_total_time_plus_add_recipe(self):
+        ''' Test Adding 15 minute Time increment to a Recipe'''
+
+        self.driver.get("http://localhost:5000/add_recipe")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("plus_15_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        time_after = self.driver.find_element_by_id("total-time")
+
+        self.assertEqual(int(time_after.get_attribute('value')), 15)
+
+    def test_total_time_minus_add_recipe(self):
+        ''' Test removing 15 minute Time increment to a Recipe'''
+
+        self.driver.get("http://localhost:5000/add_recipe")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("plus_15_button").click()
+        self.driver.find_element_by_class_name("plus_15_button").click()
+        self.driver.find_element_by_class_name("minus_15_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        time_after = self.driver.find_element_by_id("total-time")
+
+        self.assertEqual(int(time_after.get_attribute('value')), 15)
+
+    def test_total_time_not_below_zero_add_recipe(self):
+        ''' Test Total Time cannot be less than zero with a Recipe'''
+
+        self.driver.get("http://localhost:5000/add_recipe")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("plus_15_button").click()
+        self.driver.find_element_by_class_name("plus_15_button").click()
+        self.driver.find_element_by_class_name("minus_15_button").click()
+        self.driver.find_element_by_class_name("minus_15_button").click()
+        self.driver.find_element_by_class_name("minus_15_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        time_after = self.driver.find_element_by_id("total-time")
+
+        self.assertEqual(int(time_after.get_attribute('value')), 0)
+
     def test_first_show_recipe_heading(self):
         ''' Test first show recipe headings present '''
 
@@ -703,6 +748,21 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertListEqual(test_list, self.li_span_text)
 
+    def test_first_show_recipe_total_time(self):
+        ''' Test first show recipe total time present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'total-time')]/strong")
+
+        self.assertEqual(int(element.text), 45)
+
     def test_second_show_recipe_instructions(self):
         ''' Test second show recipe instructions present '''
 
@@ -742,6 +802,21 @@ class RecipeBuddyUITests(unittest.TestCase):
             self.li_span_text.append(element.text)
 
         self.assertListEqual(test_list, self.li_span_text)
+
+    def test_second_show_recipe_total_time(self):
+        ''' Test second show recipe total time present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[1].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'total-time')]/strong")
+
+        self.assertEqual(int(element.text), 30)
 
     def test_third_show_recipe_instructions(self):
         ''' Test third show recipe instructions present '''
@@ -783,9 +858,23 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertListEqual(test_list, self.li_span_text)
 
+    def test_third_show_recipe_total_time(self):
+        ''' Test third show recipe total time present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[2].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'total-time')]/strong")
+
+        self.assertEqual(int(element.text), 15)
+
 # TODO: test for existing recipe category
 # TODO: test for existing recipe cusine
-# TODO: test for existing recipe time
 
 # TODO: test for add instruction to existing recipes
 # TODO: test for add instruction to existing recipes

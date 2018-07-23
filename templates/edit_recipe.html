@@ -1,66 +1,6 @@
 {% extends 'base.html' %} {% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- TODO: put jquery in base -->
 <script>
-// Add remove input text box dynamically taken from here
-// https://www.sanwebe.com/2013/03/addremove-input-fields-dynamically-with-jquery
-// I have modified it adding 'inputField' variable to allow varible 'x' string interpollation
 
-// $(document).ready(function() {
-//     var max_fields      = 100; //maximum input boxes allowed
-//     var wrapper_ingredients = $(".input_fields_wrap_ingredients"); //Fields wrapper ingredients
-//     var wrapper_instructions = $(".input_fields_wrap_instructions"); //Fields wrapper insstructions
-//     var add_button_ingredients = $(".add_field_button_ingredients"); //Add button ID ingredients
-//     var add_button_instructions = $(".add_field_button_instructions"); //Add button ID insstructions
-//     var plus_15_button = $(".plus_15_button"); //Add button ID insstructions
-//     var minus_15_button = $(".minus_15_button"); //Add button ID insstructions
-//     var totalTime = parseInt(document.getElementById('total-time').value)
-//
-//     var x = 1; //initlal text box count & used for instruction field name instruction[x]
-//     var y = 1; //initlal text box count & used for ingredient field name ingredient[x]
-//     $(add_button_instructions).click(function(e){ //on add input button click
-//         e.preventDefault();
-//         if(x < max_fields){ //max input box allowed
-//             inputField_instructions = `<li><input type="text" name="instruction[${x}]" required/><a href="#" class="remove_field_instructions">Remove</a></li>`
-//             $(wrapper_instructions).append(inputField_instructions); //add input box
-//             x++; //text box increment
-//         }
-//     });
-//
-//     $(add_button_ingredients).click(function(e){ //on add input button click
-//         e.preventDefault();
-//         if(y < max_fields){ //max input box allowed
-//             input_fields_ingredients = `<li><input type="text" name="ingredient[${y}]" required/><a href="#" class="remove_field_ingredients">Remove</a></li>`
-//             $(wrapper_ingredients).append(input_fields_ingredients); //add input box
-//             y++; //text box increment
-//         }
-//     });
-//
-//     $(plus_15_button).click(function(e){ //on add input button click
-//         e.preventDefault();
-//         totalTime += 15;
-//         document.getElementById('total-time').value = totalTime
-//     });
-//
-//     $(minus_15_button).click(function(e){ //on add input button click
-//         e.preventDefault();
-//         if (totalTime > 0) {
-//           totalTime -= 15;
-//           document.getElementById('total-time').value = totalTime;
-//         }
-//     });
-//
-//     $(wrapper_ingredients).on("click",".remove_field_ingredients", function(e){ //user click on remove text
-//         e.preventDefault();
-//         $(this).parent('li').remove(); x--;
-//     })
-//
-//     $(wrapper_instructions).on("click",".remove_field_instructions", function(e){ //user click on remove text
-//         e.preventDefault();
-//         $(this).parent('li').remove(); x--;
-//     })
-//
-// });
 
 function addFieldInstructions() {
 
@@ -177,5 +117,3 @@ function addFieldIngredients() {
     </form>
 </div>
 {% endblock %}
-
-<!-- TODO: check recipe name is unique -->
