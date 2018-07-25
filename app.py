@@ -55,6 +55,34 @@ def insert_instructions(inserted_recipe_id, recipe_dict):
     instructions = mongo.db.instructions
     instructions.insert_one(instructions_doc)
 
+def update_ingredients(update_recipe_id, recipe_dict):
+
+    ingredients_filtered = {k: v for (k, v) in recipe_dict
+                                                if 'ingredient' in k}
+
+    ingredients_doc = {'recipe_id': ObjectId(update_recipe_id),
+                        'ingredients': list(ingredients_filtered.values())}
+
+    ingredients = mongo.db.ingredients
+
+    ingredients_record = ingredients.find_one({'recipe_id': ObjectId(update_recipe_id)})
+
+    ingredients.update({'_id': ObjectId(ingredients_record['_id'])}, ingredients_doc)
+
+def update_instructions(update_recipe_id, recipe_dict):
+
+    instructions_filtered = {k: v for (k, v) in recipe_dict
+                                                if 'instruction' in k}
+
+    instructions_doc = {'recipe_id': ObjectId(update_recipe_id),
+                        'instructions': list(instructions_filtered.values())}
+
+    instructions = mongo.db.instructions
+
+    instructions_record = instructions.find_one({'recipe_id': ObjectId(update_recipe_id)})
+
+    instructions.update({'_id': ObjectId(instructions_record['_id'])}, instructions_doc)
+
 
 @app.route('/add_category')
 def add_category():
@@ -182,7 +210,7 @@ def show_recipe(recipe_id):
     instructions=mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
     return render_template('show_recipe.html',
         recipes=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)}),
-        category=mongo.db.categories.find_one({'_id': recipe_record['category_id']}),
+        categories=mongo.db.categories.find_one({'_id': recipe_record['category_id']}),
         cuisines=mongo.db.cuisines.find_one({'_id': recipe_record['cuisine_id']}),
         instructions=instructions['instructions'],
         ingredients=ingredients['ingredients'])
@@ -203,19 +231,30 @@ def edit_recipe(recipe_id):
         ingredients=ingredients['ingredients'])
 
 
-@app.route('/recipe_item/<recipe_id>', methods=["POST"])
+@app.route('/update_recipe/<recipe_id>', methods=["POST"])
 def update_recipe(recipe_id):
-    recipe_item = mongo.db.recipes
-    # TODO: category_item = mongo.db.categories
-    instruction_items = mongo.db.instructions
-    ingredient_items = mongo.db.ingredients
-    recipe_item.update({'_id': ObjectId(recipe_id)},
-                        {'recipe_name': request.form['recipe_name']},
-                        {'recipe_description': request.form['recipe_description']})
-    instruction_items.update({'recipe_id': ObjectId(recipe_id)},
-                        {'instructions': request.form['instructions']})
-    ingredient_items.update({'recipe_id': ObjectId(recipe_id)},
-                        {'ingredients': request.form['ingredients']})
+
+    recipes = mongo.db.recipes
+
+    category_id = get_collection_id('categories', 'category_name', request.form.to_dict()['category_name'])
+
+    cuisine_id = get_collection_id('cuisines','cuisine_name', request.form.to_dict()['cuisine_name'])
+
+    recipe_doc = {'recipe_name': request.form.to_dict()['recipe_name'],
+            'recipe_description': request.form.to_dict()['recipe_description'],
+            'category_id': category_id,
+            'cuisine_id': cuisine_id,
+            'total_time': request.form.to_dict()['total_time']}
+
+    # recipes record update
+    recipes.update({'_id': ObjectId(recipe_id)},recipe_doc)
+
+    # ingredients record update
+    ing_result = update_ingredients(recipe_id, request.form.to_dict().items())
+
+    # instructions record update
+    update_instructions(recipe_id, request.form.to_dict().items())
+
     return redirect(url_for('get_recipes'))
 
 

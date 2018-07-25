@@ -1,7 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 <script>
 
-
 function addFieldInstructions() {
 
   var el = document.getElementById('li-instructions');
@@ -9,7 +8,7 @@ function addFieldInstructions() {
   var numberInstructions = document.getElementsByClassName("input_fields_wrap_instructions");
 
   // Give the new div some content
-  elChild.innerHTML = `<input name="ingredient[${numberInstructions.length}]" type="text" class="validate input_fields_wrap_instructions" value="{{ing}}"/><button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" type="button">Remove</button>`;
+  elChild.innerHTML = `<input name="instruction[${numberInstructions.length}]" type="text" class="validate input_fields_wrap_instructions" value="{{ing}}"/><button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" type="button">Remove</button>`;
 
   // Jug it into the parent element
   el.appendChild(elChild);
@@ -31,9 +30,9 @@ function addFieldIngredients() {
 }
 
 </script>
-<h3>Add Recipe</h3>
+<h3>Edit Recipe</h3>
 <div class="row">
-    <form action="{{ url_for('update_recipe', recipe_id=_id) }}" method="POST" class="col s12">
+    <form action="{{ url_for('update_recipe', recipe_id=recipes._id) }}" method="POST" class="col s12">
         <div class="row">
           <div class="input-field col s12">
               <i class="material-icons prefix">assignment</i>
@@ -110,8 +109,8 @@ function addFieldIngredients() {
           </div>
         </div>
         <div class="row">
-            <button class="btn waves-effect waves-light" id="add-recipe" type="submit" name="action">Add Recipe
-                <i class="material-icons right">playlist_add</i>
+            <button class="btn waves-effect waves-light" id="add-recipe" type="submit" name="action">Save
+              <i class="material-icons right">playlist_add</i>
              </button>
         </div>
     </form>
