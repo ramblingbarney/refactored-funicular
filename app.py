@@ -1,4 +1,6 @@
 import os
+import sys
+import enum
 import config
 from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
@@ -23,6 +25,21 @@ elif os.getenv('FLASK_CONFIG') == "testing":
 
 
 mongo = PyMongo(app)
+
+class COLLECTION_NAMES(enum.Enum):
+    CATEGORIES = 'categories'
+    CUISINES = 'cuisines'
+    INSTRUCTIONS = 'instructions'
+    INGREDIENTS = 'ingredients'
+
+
+class FILTER_KEYS(enum.Enum):
+    INGREDIENT = 'ingredient'
+    INSTRUCTION = 'instruction'
+
+class ID_NAME(enum.Enum):
+    RECIPE_ID = 'recipe_id'
+
 
 def get_collection_id(collection_name, search_field, search_value):
 
@@ -83,19 +100,47 @@ def update_instructions(update_recipe_id, recipe_dict):
 
     instructions.update({'_id': ObjectId(instructions_record['_id'])}, instructions_doc)
 
-def update_record(update_recipe_id, recipe_dict, filter_key,collection_name):
+    update_record(id_name='recipe_id', update_record_id=recipe_id,
+                record_set_dict=request.form.to_dict().items(), filter_key='instruction',collection_name='instructions')
 
-    key_name = urllib.parse.quote_plus(filter_key)
-    sub_record_name = urllib.parse.quote_plus(collection_name)
 
-    instructions_filtered = {k: v for (k, v) in recipe_dict
+def update_record(id_name, update_record_id, record_set_dict, filter_key,collection_name):
+
+    if (filter_key == FILTER_KEYS.INGREDIENT.value
+        or filter_key == FILTER_KEYS.INSTRUCTION.value):
+
+        key_name = urllib.parse.quote_plus(filter_key)
+
+    else:
+
+        sys.stderr.write('filter key ingredient/instruction :: error %s' % (filter_key))
+
+    if (collection_name == COLLECTION_NAMES.CATEGORIES.value
+        or collection_name == COLLECTION_NAMES.CUISINES.value
+        or collection_name == COLLECTION_NAMES.INSTRUCTIONS.value
+        or collection_name == COLLECTION_NAMES.INGREDIENTS.value):
+
+        sub_record_name = urllib.parse.quote_plus(collection_name)
+
+    else:
+
+        sys.stderr.write('collection name categories/cuisines/instructions/ingredients not found :: error %s' % (collection_name))
+
+    if ( id_name == ID_NAME.RECIPE_ID.value):
+
+        primary_record_id = urllib.parse.quote_plus(id_name)
+
+    else:
+
+        sys.stderr.write('id name recipe_id not found :: error %s' % (id_name))
+
+    filtered_dict = {k: v for (k, v) in record_set_dict
                                                 if key_name in k}
 
-    record_doc = {'recipe_id': ObjectId(update_recipe_id),
-                        sub_record_name: list(instructions_filtered.values())}
+    record_doc = {primary_record_id: ObjectId(update_record_id),
+                        sub_record_name: list(filtered_dict.values())}
 
-
-    record_tobe_updated = mongo.db[collection_name].find_one({'recipe_id': ObjectId(update_recipe_id)})
+    record_tobe_updated = mongo.db[collection_name].find_one({'recipe_id': ObjectId(update_record_id)})
 
     mongo.db[collection_name].update({'_id': ObjectId(record_tobe_updated['_id'])}, record_doc)
 
@@ -265,10 +310,12 @@ def update_recipe(recipe_id):
     recipes.update({'_id': ObjectId(recipe_id)},recipe_doc)
 
     # ingredients record update
-    ing_result = update_ingredients(recipe_id, request.form.to_dict().items())
+    update_record(id_name='recipe_id', update_record_id=recipe_id,
+                record_set_dict=request.form.to_dict().items(), filter_key='ingredient',collection_name='ingredients')
 
     # instructions record update
-    update_instructions(recipe_id, request.form.to_dict().items())
+    update_record(id_name='recipe_id', update_record_id=recipe_id,
+                record_set_dict=request.form.to_dict().items(), filter_key='instruction',collection_name='instructions')
 
     return redirect(url_for('get_recipes'))
 
