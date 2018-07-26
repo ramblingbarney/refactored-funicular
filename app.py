@@ -83,6 +83,21 @@ def update_instructions(update_recipe_id, recipe_dict):
 
     instructions.update({'_id': ObjectId(instructions_record['_id'])}, instructions_doc)
 
+def update_record(update_recipe_id, recipe_dict, filter_key,collection_name):
+
+    key_name = urllib.parse.quote_plus(filter_key)
+    sub_record_name = urllib.parse.quote_plus(collection_name)
+
+    instructions_filtered = {k: v for (k, v) in recipe_dict
+                                                if key_name in k}
+
+    record_doc = {'recipe_id': ObjectId(update_recipe_id),
+                        sub_record_name: list(instructions_filtered.values())}
+
+
+    record_tobe_updated = mongo.db[collection_name].find_one({'recipe_id': ObjectId(update_recipe_id)})
+
+    mongo.db[collection_name].update({'_id': ObjectId(record_tobe_updated['_id'])}, record_doc)
 
 @app.route('/add_category')
 def add_category():
