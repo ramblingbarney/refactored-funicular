@@ -147,10 +147,10 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def tearDown(self):
         # delete fixture collections
-        self.DB.categories.delete_many({})
-        self.DB.recipes.delete_many({})
-        self.DB.instructions.delete_many({})
-        self.DB.ingredients.delete_many({})
+        # self.DB.categories.delete_many({})
+        # self.DB.recipes.delete_many({})
+        # self.DB.instructions.delete_many({})
+        # self.DB.ingredients.delete_many({})
         self.driver.quit()
 
     def test_three_categories(self):
@@ -963,12 +963,92 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertEqual(element.text, 'Sunday Lunch for all the family')
 
-# TODO: test for add instruction to existing recipes
+    def test_first_edit_recipe_category(self):
+        ''' Test first edit recipe category '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("edit_recipe_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        select = Select(self.driver.find_element_by_id("category"))
+        select.select_by_visible_text('Evening Meal for 2')
+
+        self.driver.find_element_by_id("save-recipe").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'category-name')]/span")
+
+        self.assertEqual(element.text, 'Evening Meal for 2')
+
+    def test_first_edit_recipe_cuisine(self):
+        ''' Test first edit recipe cuisine '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("edit_recipe_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        select = Select(self.driver.find_element_by_id("cuisine"))
+        select.select_by_visible_text('Spanish')
+
+        self.driver.find_element_by_id("save-recipe").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'cuisine-name')]/span")
+
+        self.assertEqual(element.text, 'Spanish')
+
+
+    def test_first_edit_recipe_instructions(self):
+        ''' Test first edit recipe and instruction '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("edit_recipe_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        select = Select(self.driver.find_element_by_id("cuisine"))
+        select.select_by_visible_text('Spanish')
+
+        self.driver.find_element_by_id("save-recipe").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'cuisine-name')]/span")
+
+        self.assertEqual(element.text, 'Spanish')
+
+
 # TODO: test for add instruction to existing recipes
 # TODO: test for add ingrdient to existing recipes
 # TODO: test for add time to existing recipes
 # TODO: test for remove time to existing recipes
-
-
 
 # TODO: check tests for assigned variables not required and poor naming conventions recipe using categoory etc

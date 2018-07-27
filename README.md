@@ -301,6 +301,59 @@ You will need the following things properly installed on your computer.
     * Recipe cuisine
     * Recipe Total Time
 
+### Edit Recipe Category
+
+* As a user I want to change the recipe category
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+    
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+  * Change Category select box values
+  * Click save
+  * Clicking 'Show' loads page with with Category changed
+
+### Edit Recipe Cuisine
+
+* As a user I want to change the recipe cuisine
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+  * Change Category select box values
+  * Click save
+  * Clicking 'Show' loads page with with Cuisine changed
+
+
 ## Manual Testing
 
 * Open '/add_recipe.html' template, add text to all fields and select an option in the category select box, leave a different field empty or unselected select box each time and attempt to submit the form, a hover message should appear on the empty field or unselected select box stating input text required or selection required.
