@@ -763,6 +763,36 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertEqual(int(element.text), 45)
 
+    def test_first_show_recipe_cuisine(self):
+        ''' Test first show recipe cuisine present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'cuisine-name')]/span")
+
+        self.assertEqual(element.text, 'Thai')
+
+    def test_first_show_recipe_category(self):
+        ''' Test first show recipe category present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'category-name')]/span")
+
+        self.assertEqual(element.text, 'Meal for 1')
+
     def test_second_show_recipe_instructions(self):
         ''' Test second show recipe instructions present '''
 
@@ -817,6 +847,36 @@ class RecipeBuddyUITests(unittest.TestCase):
         element = self.driver.find_element_by_xpath("//div[contains(@class, 'total-time')]/strong")
 
         self.assertEqual(int(element.text), 30)
+
+    def test_second_show_recipe_cuisine(self):
+        ''' Test second show recipe cuisine present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[1].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'cuisine-name')]/span")
+
+        self.assertEqual(element.text, 'Spanish')
+
+    def test_second_show_recipe_category(self):
+        ''' Test second show recipe category present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[1].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'category-name')]/span")
+
+        self.assertEqual(element.text, 'Evening Meal for 2')
 
     def test_third_show_recipe_instructions(self):
         ''' Test third show recipe instructions present '''
@@ -873,8 +933,35 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertEqual(int(element.text), 15)
 
-# TODO: test for existing recipe category
-# TODO: test for existing recipe cusine
+    def test_third_show_recipe_cuisine(self):
+        ''' Test third show recipe cuisine present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[2].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'cuisine-name')]/span")
+
+        self.assertEqual(element.text, 'Indian')
+
+    def test_third_show_recipe_category(self):
+        ''' Test third show recipe category present '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[2].click()
+
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'category-name')]/span")
+
+        self.assertEqual(element.text, 'Sunday Lunch for all the family')
 
 # TODO: test for add instruction to existing recipes
 # TODO: test for add instruction to existing recipes

@@ -297,6 +297,8 @@ You will need the following things properly installed on your computer.
     * Recipe description
     * Recipe instructions
     * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
     * Recipe Total Time
 
 ## Manual Testing

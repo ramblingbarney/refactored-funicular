@@ -32,7 +32,6 @@ class COLLECTION_NAMES(enum.Enum):
     INSTRUCTIONS = 'instructions'
     INGREDIENTS = 'ingredients'
 
-
 class FILTER_KEYS(enum.Enum):
     INGREDIENT = 'ingredient'
     INSTRUCTION = 'instruction'
@@ -105,6 +104,7 @@ def update_instructions(update_recipe_id, recipe_dict):
 
 
 def update_record(id_name, update_record_id, record_set_dict, filter_key,collection_name):
+    '''Update an Instruction or Ingredient record using using foreign key id'''
 
     if (filter_key == FILTER_KEYS.INGREDIENT.value
         or filter_key == FILTER_KEYS.INSTRUCTION.value):
@@ -115,9 +115,7 @@ def update_record(id_name, update_record_id, record_set_dict, filter_key,collect
 
         sys.stderr.write('filter key ingredient/instruction :: error %s' % (filter_key))
 
-    if (collection_name == COLLECTION_NAMES.CATEGORIES.value
-        or collection_name == COLLECTION_NAMES.CUISINES.value
-        or collection_name == COLLECTION_NAMES.INSTRUCTIONS.value
+    if (collection_name == COLLECTION_NAMES.INSTRUCTIONS.value
         or collection_name == COLLECTION_NAMES.INGREDIENTS.value):
 
         sub_record_name = urllib.parse.quote_plus(collection_name)
