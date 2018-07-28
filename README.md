@@ -314,7 +314,7 @@ You will need the following things properly installed on your computer.
     * Recipe category
     * Recipe cuisine
     * Recipe Total Time
-    
+
   * Clicking 'Edit' loads page with:
     * Recipe name
     * Recipe description
@@ -325,7 +325,7 @@ You will need the following things properly installed on your computer.
     * Recipe Total Time
   * Change Category select box values
   * Click save
-  * Clicking 'Show' loads page with with Category changed
+  * Clicking 'Show' loads page with Category changed
 
 ### Edit Recipe Cuisine
 
@@ -351,8 +351,191 @@ You will need the following things properly installed on your computer.
     * Recipe Total Time
   * Change Category select box values
   * Click save
-  * Clicking 'Show' loads page with with Cuisine changed
+  * Clicking 'Show' loads page with Cuisine changed
 
+### Edit Recipe Add One More Instruction
+
+* As a user I want to add an additional instruction to an existing recipe
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+  * Click the 'Add More Instructions' button
+  * Enter instruction text into the new last instruction input box
+  * Click save
+  * Clicking 'Show' loads page with the additional instruction showing
+
+### Edit Recipe Remove One Instruction
+
+* As a user I want to remove an instruction for an existing recipe
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+  * Click the 'Remove' button beside the instruction you want to remove
+  * Click save
+  * Clicking 'Show' loads page with the removed instruction not showing
+
+### Edit Recipe Add One More Ingredient
+
+* As a user I want to add an additional ingredient to an existing recipe
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+  * Click the 'Add More Ingredient' button
+  * Enter ingredient text into the new last ingredient input box
+  * Click save
+  * Clicking 'Show' loads page with the additional ingredient showing
+
+### Edit Recipe Remove One Ingredient
+
+* As a user I want to remove an ingredient for an existing recipe
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+  * Click the 'Remove' button beside the ingredient you want to remove
+  * Click save
+  * Clicking 'Show' loads page with the removed ingredient not showing
+
+### Edit Recipe Add Time
+
+* As a user I want to change the recipe total time
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+  * Click '+ 15 mins' button
+  * Click save
+  * Clicking 'Show' loads page with the Total Time increased by 15 minutes
+
+### Edit Recipe Remove Time
+
+* As a user I want to change the recipe total time
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+  * Click '- 15 mins' button
+  * Click save
+  * Clicking 'Show' loads page with the Total Time decreased by 15 minutes
+
+### Edit Recipe Remove All Time
+
+* As a user I want to change the recipe total time to zero and not be able to set a negative time
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+  * Click '- 15 mins' button more times than the result of the initial total time divided by 15
+  * Click save
+  * Clicking 'Show' loads page with the Total Time of zero
 
 ## Manual Testing
 

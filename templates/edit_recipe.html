@@ -29,6 +29,27 @@ function addFieldIngredients() {
 
 }
 
+function addFifteenMinutes() {
+
+  totalTime = parseInt(document.getElementById('total-time').value);
+  totalTime += 15;
+  document.getElementById('total-time').value = totalTime;
+
+}
+
+function minusFifteenMinutes() {
+
+  totalTime = parseInt(document.getElementById('total-time').value);
+
+  if (totalTime > 0) {
+    totalTime -= 15;
+    document.getElementById('total-time').value = totalTime;
+  }
+
+}
+
+
+
 </script>
 <h3>Edit Recipe</h3>
 <div class="row">
@@ -65,8 +86,8 @@ function addFieldIngredients() {
             <select id="cuisine" name="cuisine_name" required>
               <option value="">Choose Cuisine</option>
               {% for cui in cuisines %}
-            <option value="{{cui.cuisine_name}}" {% if cui.cuisine_name==selected_cuisine['cuisine_name'] %} selected{% endif %}>{{cui.cuisine_name}}</option>
-            {% endfor %}
+                <option value="{{cui.cuisine_name}}" {% if cui.cuisine_name==selected_cuisine['cuisine_name'] %} selected{% endif %}>{{cui.cuisine_name}}</option>
+              {% endfor %}
             </select>
             <label>Recipe Cuisine</label>
           </div>
@@ -75,8 +96,8 @@ function addFieldIngredients() {
           <div class="input-field col s12">
               <i class="material-icons prefix">assignment</i>
               <input id="total-time" name="total_time" type="text" class="validate" value="{{recipes.total_time}}">
-              <button class="plus_15_button" type="button"> + 15 mins</button>
-              <button class="minus_15_button" type="button"> - 15 mins</button>
+              <button class="plus_15_button" onclick="addFifteenMinutes()" type="button"> + 15 mins</button>
+              <button class="minus_15_button" onclick="minusFifteenMinutes()" type="button"> - 15 mins</button>
               <label for="icon_prefix">Total Time</label>
           </div>
         </div>

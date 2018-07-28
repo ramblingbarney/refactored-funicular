@@ -1017,9 +1017,8 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertEqual(element.text, 'Spanish')
 
-
-    def test_first_edit_recipe_instructions(self):
-        ''' Test first edit recipe and instruction '''
+    def test_first_edit_recipe_instructions_add_one(self):
+        ''' Test first edit recipe adding one more instruction input box '''
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
@@ -1031,8 +1030,12 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_class_name("edit_recipe_button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        select = Select(self.driver.find_element_by_id("cuisine"))
-        select.select_by_visible_text('Spanish')
+        self.driver.find_element_by_class_name("add_field_button_instructions").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@id, 'li-instructions')]/li/input")
+
+        self.elements[3].send_keys('set on fire')
 
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
@@ -1041,14 +1044,197 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//div[contains(@class, 'cuisine-name')]/span")
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
 
-        self.assertEqual(element.text, 'Spanish')
+        test_list = ['mix 3 eggs', 'whisk', 'put on low heat', 'set on fire']
 
+        for element in self.elements:
+            self.li_span_text.append(element.text)
 
-# TODO: test for add instruction to existing recipes
-# TODO: test for add ingrdient to existing recipes
-# TODO: test for add time to existing recipes
-# TODO: test for remove time to existing recipes
+        self.assertListEqual(test_list, self.li_span_text)
 
-# TODO: check tests for assigned variables not required and poor naming conventions recipe using categoory etc
+    def test_first_edit_recipe_instructions_remove_one(self):
+        ''' Test first edit recipe remove one instruction input box '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("edit_recipe_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@id, 'li-instructions')]/li/button")
+        self.elements[2].click()
+
+        self.driver.find_element_by_id("save-recipe").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+
+        test_list = ['mix 3 eggs', 'whisk']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_first_edit_recipe_ingredients_add_one(self):
+        ''' Test first edit recipe adding one more ingredient input box '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("edit_recipe_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("add_field_button_ingredients").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@id, 'li-ingredients')]/li/input")
+
+        self.elements[3].send_keys('200g nuts')
+
+        self.driver.find_element_by_id("save-recipe").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
+
+        test_list = ['3 eggs', '100g butter', '0.5l water', '200g nuts']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_first_edit_recipe_ingredients_remove_one(self):
+        ''' Test first edit recipe remove one ingredient input box '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("edit_recipe_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@id, 'li-ingredients')]/li/button")
+        self.elements[2].click()
+
+        self.driver.find_element_by_id("save-recipe").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
+
+        test_list = ['3 eggs', '100g butter']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_total_time_plus_first_edit_recipe(self):
+        ''' Test Adding 15 minute Time increment to the first Recipe'''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("edit_recipe_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("plus_15_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("save-recipe").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'total-time')]/strong")
+
+        self.assertEqual(int(element.text),60)
+
+    def test_total_time_minus_first_edit_recipe(self):
+        ''' Test removing 15 minute Time increment to the first Recipe'''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("edit_recipe_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("minus_15_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("save-recipe").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'total-time')]/strong")
+
+        self.assertEqual(int(element.text),30)
+
+    def test_total_time_not_below_zero_edit_recipe(self):
+        ''' Test Total Time cannot be less than zero with a Recipe'''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("edit_recipe_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_class_name("minus_15_button").click()
+        self.driver.find_element_by_class_name("minus_15_button").click()
+        self.driver.find_element_by_class_name("minus_15_button").click()
+        self.driver.find_element_by_class_name("minus_15_button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("save-recipe").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//div[contains(@class, 'total-time')]/strong")
+
+        self.assertEqual(int(element.text),0)
+
+# TODO: check tests for assigned variables not required and poor naming conventions recipe using categoory etc, self.elements
