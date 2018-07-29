@@ -48,62 +48,46 @@ def get_collection_id(collection_name, search_field, search_value):
 
     return collection_record['_id']
 
-def insert_ingredients(inserted_recipe_id, recipe_dict):
 
-    ingredients_filtered = {k: v for (k, v) in recipe_dict
-                                                if 'ingredient' in k}
+def insert_record(id_name, insert_record_id, record_set_dict, filter_key, collection_name):
+    '''Insert an Instruction or Ingredient record using using foreign key id'''
 
-    ingredients_doc = {'recipe_id': inserted_recipe_id,
-                        'ingredients': list(ingredients_filtered.values())}
+    if (filter_key == FILTER_KEYS.INGREDIENT.value
+        or filter_key == FILTER_KEYS.INSTRUCTION.value):
 
-    ingredients = mongo.db.ingredients
-    ingredients.insert_one(ingredients_doc)
+        key_name = urllib.parse.quote_plus(filter_key)
 
+    else:
 
-def insert_instructions(inserted_recipe_id, recipe_dict):
+        sys.stderr.write('filter key ingredient/instruction :: error %s' % (filter_key))
 
-    instructions_filtered = {k: v for (k, v) in recipe_dict
-                                                if 'instruction' in k}
+    if (collection_name == COLLECTION_NAMES.INSTRUCTIONS.value
+        or collection_name == COLLECTION_NAMES.INGREDIENTS.value):
 
-    instructions_doc = {'recipe_id': inserted_recipe_id,
-                        'instructions': list(instructions_filtered.values())}
+        sub_record_name = urllib.parse.quote_plus(collection_name)
 
-    instructions = mongo.db.instructions
-    instructions.insert_one(instructions_doc)
+    else:
 
-# def update_ingredients(update_recipe_id, recipe_dict):
-#
-#     ingredients_filtered = {k: v for (k, v) in recipe_dict
-#                                                 if 'ingredient' in k}
-#
-#     ingredients_doc = {'recipe_id': ObjectId(update_recipe_id),
-#                         'ingredients': list(ingredients_filtered.values())}
-#
-#     ingredients = mongo.db.ingredients
-#
-#     ingredients_record = ingredients.find_one({'recipe_id': ObjectId(update_recipe_id)})
-#
-#     ingredients.update({'_id': ObjectId(ingredients_record['_id'])}, ingredients_doc)
-#
-# def update_instructions(update_recipe_id, recipe_dict):
-#
-#     instructions_filtered = {k: v for (k, v) in recipe_dict
-#                                                 if 'instruction' in k}
-#
-#     instructions_doc = {'recipe_id': ObjectId(update_recipe_id),
-#                         'instructions': list(instructions_filtered.values())}
-#
-#     instructions = mongo.db.instructions
-#
-#     instructions_record = instructions.find_one({'recipe_id': ObjectId(update_recipe_id)})
-#
-#     instructions.update({'_id': ObjectId(instructions_record['_id'])}, instructions_doc)
-#
-#     update_record(id_name='recipe_id', update_record_id=recipe_id,
-#                 record_set_dict=request.form.to_dict().items(), filter_key='instruction',collection_name='instructions')
+        sys.stderr.write('collection name categories/cuisines/instructions/ingredients not found :: error %s' % (collection_name))
+
+    if ( id_name == ID_NAME.RECIPE_ID.value):
+
+        primary_record_id = urllib.parse.quote_plus(id_name)
+
+    else:
+
+        sys.stderr.write('id name recipe_id not found :: error %s' % (id_name))
+
+    filtered_dict = {k: v for (k, v) in record_set_dict
+                                                if key_name in k}
+
+    record_doc = {primary_record_id: insert_record_id,
+                    sub_record_name: list(filtered_dict.values())}
+
+    mongo.db[collection_name].insert_one(record_doc)
 
 
-def update_record(id_name, update_record_id, record_set_dict, filter_key,collection_name):
+def update_record(id_name, update_record_id, record_set_dict, filter_key, collection_name):
     '''Update an Instruction or Ingredient record using using foreign key id'''
 
     if (filter_key == FILTER_KEYS.INGREDIENT.value
@@ -253,10 +237,10 @@ def insert_recipe():
     _recipe_id = recipes.insert_one(recipe_doc)
 
     # ingredients record insertion
-    insert_ingredients(_recipe_id.inserted_id, request.form.to_dict().items())
+    insert_record(id_name='recipe_id', insert_record_id=_recipe_id.inserted_id, record_set_dict=request.form.to_dict().items(), filter_key='ingredient', collection_name='ingredients')
 
     # instructions record insertion
-    insert_instructions(_recipe_id.inserted_id, request.form.to_dict().items())
+    insert_record(id_name='recipe_id', insert_record_id=_recipe_id.inserted_id, record_set_dict=request.form.to_dict().items(), filter_key='instruction', collection_name='instructions')
 
     return redirect(url_for('get_recipes'))
 
@@ -333,5 +317,3 @@ if __name__ == '__main__':
 # TODO: pagination https://stackoverflow.com/questions/33556572/paginate-a-list-of-items-in-python-flask
 # TODO: user votes
 # TODO: you can use a Python library such as matplotlib, or a JS library such as d3/dc (that you learned about if you took the frontend modules) for visualisation
-# TODO: Delete REcipe
-# TODO: refactor insert record
