@@ -139,7 +139,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         # create selenium browser instance
         options = Options()
-        # options.add_argument("--headless")
+        options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=options)
 
         self.elements = []
@@ -147,10 +147,10 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def tearDown(self):
         # delete fixture collections
-        # self.DB.categories.delete_many({})
-        # self.DB.recipes.delete_many({})
-        # self.DB.instructions.delete_many({})
-        # self.DB.ingredients.delete_many({})
+        self.DB.categories.delete_many({})
+        self.DB.recipes.delete_many({})
+        self.DB.instructions.delete_many({})
+        self.DB.ingredients.delete_many({})
         self.driver.quit()
 
     def test_three_categories(self):
