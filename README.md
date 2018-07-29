@@ -537,6 +537,33 @@ You will need the following things properly installed on your computer.
   * Click save
   * Clicking 'Show' loads page with the Total Time of zero
 
+### Delete the first Recipe
+
+* As a user I want to click on the 'Delete' link/button for the first show recipe , the page refreshes and it disappears
+
+  * Example acceptance criteria:
+    * Click the show recipe button for the first recipe on the 'get_Recipes' page
+    * Click on the 'Delete' link/button
+    * When you return to the 'get_recipes' page it is no longer shown
+
+### Delete the last Recipe
+
+* As a user I want to click on the 'Delete' link/button for the last show recipe , the page refreshes and it disappears
+
+  * Example acceptance criteria:
+    * Click the show recipe button for the last recipe on the 'get_Recipes' page
+    * Click on the 'Delete' link/button
+    * When you return to the 'get_recipes' page it is no longer shown
+
+### Delete all the Recipes
+
+* As a user I want to click on the 'Delete' link/button for all the recipes on each show recipe page, the page refreshes and it is not shown on the 'get_recipes' page
+
+  * Example acceptance criteria:
+    * Click the show recipe button for each of the recipes on the 'get_Recipes' page
+    * Click on the 'Delete' link/button
+    * When you return to the 'get_recipes' page it is no longer shown
+
 ## Manual Testing
 
 * Open '/add_recipe.html' template, add text to all fields and select an option in the category select box, leave a different field empty or unselected select box each time and attempt to submit the form, a hover message should appear on the empty field or unselected select box stating input text required or selection required.

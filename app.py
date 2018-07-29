@@ -71,36 +71,36 @@ def insert_instructions(inserted_recipe_id, recipe_dict):
     instructions = mongo.db.instructions
     instructions.insert_one(instructions_doc)
 
-def update_ingredients(update_recipe_id, recipe_dict):
-
-    ingredients_filtered = {k: v for (k, v) in recipe_dict
-                                                if 'ingredient' in k}
-
-    ingredients_doc = {'recipe_id': ObjectId(update_recipe_id),
-                        'ingredients': list(ingredients_filtered.values())}
-
-    ingredients = mongo.db.ingredients
-
-    ingredients_record = ingredients.find_one({'recipe_id': ObjectId(update_recipe_id)})
-
-    ingredients.update({'_id': ObjectId(ingredients_record['_id'])}, ingredients_doc)
-
-def update_instructions(update_recipe_id, recipe_dict):
-
-    instructions_filtered = {k: v for (k, v) in recipe_dict
-                                                if 'instruction' in k}
-
-    instructions_doc = {'recipe_id': ObjectId(update_recipe_id),
-                        'instructions': list(instructions_filtered.values())}
-
-    instructions = mongo.db.instructions
-
-    instructions_record = instructions.find_one({'recipe_id': ObjectId(update_recipe_id)})
-
-    instructions.update({'_id': ObjectId(instructions_record['_id'])}, instructions_doc)
-
-    update_record(id_name='recipe_id', update_record_id=recipe_id,
-                record_set_dict=request.form.to_dict().items(), filter_key='instruction',collection_name='instructions')
+# def update_ingredients(update_recipe_id, recipe_dict):
+#
+#     ingredients_filtered = {k: v for (k, v) in recipe_dict
+#                                                 if 'ingredient' in k}
+#
+#     ingredients_doc = {'recipe_id': ObjectId(update_recipe_id),
+#                         'ingredients': list(ingredients_filtered.values())}
+#
+#     ingredients = mongo.db.ingredients
+#
+#     ingredients_record = ingredients.find_one({'recipe_id': ObjectId(update_recipe_id)})
+#
+#     ingredients.update({'_id': ObjectId(ingredients_record['_id'])}, ingredients_doc)
+#
+# def update_instructions(update_recipe_id, recipe_dict):
+#
+#     instructions_filtered = {k: v for (k, v) in recipe_dict
+#                                                 if 'instruction' in k}
+#
+#     instructions_doc = {'recipe_id': ObjectId(update_recipe_id),
+#                         'instructions': list(instructions_filtered.values())}
+#
+#     instructions = mongo.db.instructions
+#
+#     instructions_record = instructions.find_one({'recipe_id': ObjectId(update_recipe_id)})
+#
+#     instructions.update({'_id': ObjectId(instructions_record['_id'])}, instructions_doc)
+#
+#     update_record(id_name='recipe_id', update_record_id=recipe_id,
+#                 record_set_dict=request.form.to_dict().items(), filter_key='instruction',collection_name='instructions')
 
 
 def update_record(id_name, update_record_id, record_set_dict, filter_key,collection_name):
@@ -318,5 +318,20 @@ def update_recipe(recipe_id):
     return redirect(url_for('get_recipes'))
 
 
+@app.route('/delete_recipe/<recipe_id>')
+def delete_recipe(recipe_id):
+    recipe_record=mongo.db.recipes.remove({'_id': ObjectId(recipe_id)})
+    ingredients=mongo.db.ingredients.remove({'recipe_id': ObjectId(recipe_id)})
+    instructions=mongo.db.instructions.remove({'recipe_id': ObjectId(recipe_id)})
+    return redirect(url_for('get_recipes'))
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), debug=True)
+
+
+# TODO: Add users https://realpython.com/using-flask-login-for-user-management-with-flask/
+# TODO: pagination https://stackoverflow.com/questions/33556572/paginate-a-list-of-items-in-python-flask
+# TODO: user votes
+# TODO: you can use a Python library such as matplotlib, or a JS library such as d3/dc (that you learned about if you took the frontend modules) for visualisation
+# TODO: Delete REcipe
+# TODO: refactor insert record

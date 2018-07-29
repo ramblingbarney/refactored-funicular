@@ -139,7 +139,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         # create selenium browser instance
         options = Options()
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=options)
 
         self.elements = []
@@ -240,7 +240,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertListEqual(test_list, self.li_span_text)
 
     def test_delete_all_categories(self):
-        ''' Test Deleting the first Category item'''
+        ''' Test Deleting all the Category items'''
 
         self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0)  # seconds
@@ -1236,5 +1236,85 @@ class RecipeBuddyUITests(unittest.TestCase):
         element = self.driver.find_element_by_xpath("//div[contains(@class, 'total-time')]/strong")
 
         self.assertEqual(int(element.text),0)
+
+    def test_delete_first_recipe(self):
+        ''' Test Deleting the first Recipe item'''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        try:
+
+            self.driver.find_element_by_class_name("delete_recipe_button").click()
+            self.driver.implicitly_wait(0)  # seconds
+
+        except NoSuchElementException:
+            True
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Chinese Pepper Steak',
+                    'Moroccan Chicken with Saffron and Preserved Lemon']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_delete_last_recipe(self):
+        ''' Test Deleting the last Recipe item'''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[2].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        try:
+
+            self.driver.find_element_by_class_name("delete_recipe_button").click()
+            self.driver.implicitly_wait(0)  # seconds
+
+        except NoSuchElementException:
+            True
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Avocado and Tuna Tapas',
+                    'Chinese Pepper Steak']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_delete_all_recipes(self):
+        ''' Test Deleting all the Recipe items'''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        number_of_recipes = len(self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]"))
+
+        while number_of_recipes > 0:
+
+            self.driver.find_element_by_xpath("//a[contains(@class, 'show_recipe_button')]").click()
+            self.driver.implicitly_wait(0)  # seconds
+
+            try:
+                self.driver.find_element_by_class_name("delete_recipe_button").click()
+                self.driver.implicitly_wait(0)  # seconds
+                number_of_recipes -= 1
+
+            except NoSuchElementException:
+                True
+
+        self.assertEqual(len(self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")), 0)
+
 
 # TODO: check tests for assigned variables not required and poor naming conventions recipe using categoory etc, self.elements
