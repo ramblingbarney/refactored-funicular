@@ -5,7 +5,9 @@ import config
 from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+import user
 import urllib.parse
+from forms import LoginForm
 
 
 if os.getenv('FLASK_CONFIG') == "production":
@@ -22,7 +24,6 @@ elif os.getenv('FLASK_CONFIG') == "testing":
     app = Flask(__name__)
     app.config.from_object('config.TestingConfig')
     app.config.from_envvar('YOURAPPLICATION_SETTINGS')
-
 
 mongo = PyMongo(app)
 
@@ -70,7 +71,7 @@ def insert_record(id_name, insert_record_id, record_set_dict, filter_key, collec
 
         sys.stderr.write('collection name categories/cuisines/instructions/ingredients not found :: error %s' % (collection_name))
 
-    if ( id_name == ID_NAME.RECIPE_ID.value):
+    if (id_name == ID_NAME.RECIPE_ID.value):
 
         primary_record_id = urllib.parse.quote_plus(id_name)
 
@@ -125,6 +126,30 @@ def update_record(id_name, update_record_id, record_set_dict, filter_key, collec
     record_tobe_updated = mongo.db[collection_name].find_one({'recipe_id': ObjectId(update_record_id)})
 
     mongo.db[collection_name].update({'_id': ObjectId(record_tobe_updated['_id'])}, record_doc)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # Here we use a class of some kind to represent and validate our
+    # client-side form data. For example, WTForms is a library that will
+    # handle this for us, and we use a custom LoginForm to validate.
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Login and validate the user.
+        # user should be an instance of your `User` class
+        login_user(user)
+
+        flask.flash('Logged in successfully.')
+
+        next = flask.request.args.get('next')
+        # is_safe_url should check if the url is safe for redirects.
+        # See http://flask.pocoo.org/snippets/62/ for an example.
+        if not is_safe_url(next):
+            return flask.abort(400)
+
+        return flask.redirect(next or flask.url_for('get_recipes'))
+    return render_template('login.html', form=form)
+
 
 @app.route('/add_category')
 def add_category():
@@ -312,8 +337,6 @@ def delete_recipe(recipe_id):
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), debug=True)
 
-
-# TODO: Add users https://realpython.com/using-flask-login-for-user-management-with-flask/
 # TODO: pagination https://stackoverflow.com/questions/33556572/paginate-a-list-of-items-in-python-flask
 # TODO: user votes
 # TODO: you can use a Python library such as matplotlib, or a JS library such as d3/dc (that you learned about if you took the frontend modules) for visualisation
