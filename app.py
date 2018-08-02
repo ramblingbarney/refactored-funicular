@@ -2,13 +2,12 @@ import os
 import sys
 import enum
 import config
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, flash, render_template, redirect, request, url_for, session, abort, Response
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-import user
 import urllib.parse
-from forms import LoginForm
-
+import urllib.request
 
 if os.getenv('FLASK_CONFIG') == "production":
     app = Flask(__name__)
@@ -27,6 +26,28 @@ elif os.getenv('FLASK_CONFIG') == "testing":
 
 mongo = PyMongo(app)
 
+# flask-login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+
+
+# silly user model
+class User(UserMixin):
+
+    def __init__(self, id):
+        self.id = id
+        self.name = "user" + str(id)
+        self.password = self.name + "_secret"
+
+    def __repr__(self):
+        return "%d/%s/%s" % (self.id, self.name, self.password)
+
+
+# create some users with ids 1 to 20
+users = [User(id) for id in range(1, 21)]
+
+
 class COLLECTION_NAMES(enum.Enum):
     CATEGORIES = 'categories'
     CUISINES = 'cuisines'
@@ -40,6 +61,55 @@ class FILTER_KEYS(enum.Enum):
 class ID_NAME(enum.Enum):
     RECIPE_ID = 'recipe_id'
 
+
+# some protected url
+@app.route('/')
+@login_required
+def home():
+    return Response("Hello World!")
+
+
+# somewhere to login
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if password == username + "_secret":
+            id = 1
+            user = User(id)
+            login_user(user)
+            return redirect(request.args.get("next"))
+        else:
+            return abort(401)
+    else:
+        return Response('''
+        <form action="" method="post">
+            <p><input type=text name=username>
+            <p><input type=password name=password>
+            <p><input type=submit value=Login>
+        </form>
+        ''')
+
+
+# somewhere to logout
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return Response('<p>Logged out</p>')
+
+
+# handle login failed
+@app.errorhandler(401)
+def page_not_found(e):
+    return Response('<p>Login failed</p>')
+
+
+# callback to reload the user object
+@login_manager.user_loader
+def load_user(userid):
+    return User(userid)
 
 def get_collection_id(collection_name, search_field, search_value):
 
@@ -126,29 +196,6 @@ def update_record(id_name, update_record_id, record_set_dict, filter_key, collec
     record_tobe_updated = mongo.db[collection_name].find_one({'recipe_id': ObjectId(update_record_id)})
 
     mongo.db[collection_name].update({'_id': ObjectId(record_tobe_updated['_id'])}, record_doc)
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    # Here we use a class of some kind to represent and validate our
-    # client-side form data. For example, WTForms is a library that will
-    # handle this for us, and we use a custom LoginForm to validate.
-    form = LoginForm()
-    if form.validate_on_submit():
-        # Login and validate the user.
-        # user should be an instance of your `User` class
-        login_user(user)
-
-        flask.flash('Logged in successfully.')
-
-        next = flask.request.args.get('next')
-        # is_safe_url should check if the url is safe for redirects.
-        # See http://flask.pocoo.org/snippets/62/ for an example.
-        if not is_safe_url(next):
-            return flask.abort(400)
-
-        return flask.redirect(next or flask.url_for('get_recipes'))
-    return render_template('login.html', form=form)
 
 
 @app.route('/add_category')
@@ -337,6 +384,5 @@ def delete_recipe(recipe_id):
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), debug=True)
 
-# TODO: pagination https://stackoverflow.com/questions/33556572/paginate-a-list-of-items-in-python-flask
 # TODO: user votes
 # TODO: you can use a Python library such as matplotlib, or a JS library such as d3/dc (that you learned about if you took the frontend modules) for visualisation
