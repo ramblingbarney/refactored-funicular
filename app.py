@@ -4,6 +4,7 @@ import enum
 import config
 from flask import Flask, flash, render_template, redirect, request, url_for, session, abort, Response
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
+from forms import LoginForm, RegistrationForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import urllib.parse
@@ -83,13 +84,25 @@ def login():
         else:
             return abort(401)
     else:
-        return Response('''
-        <form action="" method="post">
-            <p><input type=text name=username>
-            <p><input type=password name=password>
-            <p><input type=submit value=Login>
-        </form>
-        ''')
+        form = LoginForm()
+        return render_template('login.html', form = form)
+
+# somewhere to regiser
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if password == username + "_secret":
+            id = 1
+            user = User(id)
+            login_user(user)
+            return redirect(request.args.get("next"))
+        else:
+            return abort(401)
+    else:
+        form = RegistrationForm()
+        return render_template('register.html', form = form)
 
 
 # somewhere to logout
