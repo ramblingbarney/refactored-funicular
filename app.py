@@ -7,6 +7,8 @@ from flask_login import LoginManager, UserMixin, login_required, login_user, log
 from forms import LoginForm, RegistrationForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+import random
+import string
 import urllib.parse
 import urllib.request
 
@@ -33,17 +35,33 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 
-# silly user model
 class User(UserMixin):
 
     def __init__(self, id):
+        # self.username = username
+        # self.email = None
         self.id = id
         self.name = "user" + str(id)
         self.password = self.name + "_secret"
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+
+    @staticmethod
+    def validate_login(password_hash, password):
+        return check_password_hash(password_hash, password)
+
     def __repr__(self):
         return "%d/%s/%s" % (self.id, self.name, self.password)
-
 
 # create some users with ids 1 to 20
 users = [User(id) for id in range(1, 21)]
@@ -63,6 +81,20 @@ class ID_NAME(enum.Enum):
     RECIPE_ID = 'recipe_id'
 
 
+@app.before_request
+def csrf_protect():
+    if request.method == "POST":
+        token = session.pop('_csrf_token', None)
+        if not token or token != request.form.get('_csrf_token'):
+            abort(403)
+
+def generate_csrf_token():
+    if '_csrf_token' not in session:
+        session['_csrf_token'] = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(64)])
+    return session['_csrf_token']
+
+app.jinja_env.globals['csrf_token'] = generate_csrf_token
+
 # some protected url
 @app.route('/')
 @login_required
@@ -76,10 +108,15 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        print(username,password)
         if password == username + "_secret":
             id = 1
             user = User(id)
-            login_user(user)
+            if 'remember_me' in request.form:
+                remember_me = True
+                login_user(user, remember = remember_me)
+            else:
+                login_user(user)
             return redirect(request.args.get("next"))
         else:
             return abort(401)
