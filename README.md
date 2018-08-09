@@ -574,3 +574,4 @@ You will need the following things properly installed on your computer.
 * When running all tests a resource warning is displayed for a number of unclosed sockets
   "ResourceWarning: unclosed <socket.socket fd=9, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 55958), raddr=('127.0.0.1', 55261)>"
 * Cuisines, Cateogries, Total Time, Recipes can have duplicates, I would recommend either having an index in the names and then using a switch to an update statement when the insert fails or using javascript checkon the page with a dummy route as used in my Stream 2A project
+* If a user attempts to register the same email address twice the record is updated with the last password as the site doesn't have a lost password functionality

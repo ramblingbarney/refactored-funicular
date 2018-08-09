@@ -4,6 +4,7 @@ import enum
 import config
 from flask import Flask, flash, render_template, redirect, request, url_for, session, abort, Response
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
+from werkzeug.security import generate_password_hash, check_password_hash
 from forms import LoginForm, RegistrationForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -11,6 +12,7 @@ import random
 import string
 import urllib.parse
 import urllib.request
+
 
 if os.getenv('FLASK_CONFIG') == "production":
     app = Flask(__name__)
@@ -34,26 +36,19 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
-
 class User(UserMixin):
 
     def __init__(self, id):
-        # self.username = username
-        # self.email = None
+
         self.id = id
-        self.name = "user" + str(id)
-        self.password = self.name + "_secret"
 
-    def is_authenticated(self):
-        return True
+        user_record = mongo.db.users.find_one({'_id': ObjectId(self.id)})
 
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
+        self.username = user_record['username']
+        self.email = user_record['email']
 
     def get_id(self):
+
         return self.id
 
     @staticmethod
@@ -61,10 +56,7 @@ class User(UserMixin):
         return check_password_hash(password_hash, password)
 
     def __repr__(self):
-        return "%d/%s/%s" % (self.id, self.name, self.password)
-
-# create some users with ids 1 to 20
-users = [User(id) for id in range(1, 21)]
+        return "%s/%s/%s" % (self.id, self.username, self.email)
 
 
 class COLLECTION_NAMES(enum.Enum):
@@ -99,44 +91,67 @@ app.jinja_env.globals['csrf_token'] = generate_csrf_token
 @app.route('/')
 @login_required
 def home():
-    return Response("Hello World!")
+    return redirect(url_for('get_recipes'))
 
 
 # somewhere to login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        print(username,password)
-        if password == username + "_secret":
-            id = 1
-            user = User(id)
-            if 'remember_me' in request.form:
-                remember_me = True
-                login_user(user, remember = remember_me)
-            else:
-                login_user(user)
-            return redirect(request.args.get("next"))
+        email = request.form['email']
+        form_password = request.form['password']
+
+        login_user_record = mongo.db.users.find_one({'email': email})
+
+        user = User(str(login_user_record['_id']))
+
+        is_valid_user = user.validate_login(login_user_record['password'], form_password)
+
+        if is_valid_user == True:
+
+            login_user(user)
+
         else:
+
             return abort(401)
+
+        return redirect('/')
+
     else:
         form = LoginForm()
-        return render_template('login.html', form = form)
+        return render_template('login.html', form=form)
 
 # somewhere to regiser
 @app.route("/register", methods=["GET", "POST"])
 def register():
+
     if request.method == 'POST':
+
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
-        if password == username + "_secret":
-            id = 1
-            user = User(id)
-            login_user(user)
-            return redirect(request.args.get("next"))
+
+        existing_user = mongo.db.users.find_one({'email': email})
+
+        hashpass = generate_password_hash(request.form['password'], method='pbkdf2:sha512')
+
+        if existing_user:
+
+            register_record = mongo.db.users.update({'_id': ObjectId(existing_user['_id'])}, {'username': username, 'email': email, 'password': hashpass})
+
+            user = User(str(existing_user['_id']))
+
         else:
-            return abort(401)
+
+            user_doc = {'username': username, 'email': email, 'password': hashpass}
+
+            register_record = mongo.db.users.insert_one(user_doc)
+
+            user = User(register_record.inserted_id)
+
+        login_user(user)
+        return redirect('/')
+
     else:
         form = RegistrationForm()
         return render_template('register.html', form = form)

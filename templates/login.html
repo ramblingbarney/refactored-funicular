@@ -4,8 +4,8 @@
       <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
         {{ form.hidden_tag() }}
         <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}
         </p>
         <p>
             {{ form.password.label }}<br>
