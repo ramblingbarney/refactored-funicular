@@ -44,8 +44,8 @@ class User(UserMixin):
 
         user_record = mongo.db.users.find_one({'_id': ObjectId(self.id)})
 
-        self.username = user_record['username']
         self.email = user_record['email']
+        self.username = user_record['username']
 
     def get_id(self):
 
@@ -107,9 +107,9 @@ def login():
 
         is_valid_user = user.validate_login(login_user_record['password'], form_password)
 
-        if is_valid_user == True:
+        if is_valid_user is True:
 
-            login_user(user)
+            login_user(user, remember=request.form.get('remember_me', False))
 
         else:
 
