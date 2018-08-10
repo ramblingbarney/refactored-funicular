@@ -349,6 +349,7 @@ def add_recipe():
 
 
 @app.route('/get_recipes')
+@login_required
 def get_recipes():
     return render_template('get_recipes.html',
                             recipes=mongo.db.recipes.find())

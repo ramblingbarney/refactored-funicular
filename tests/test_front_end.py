@@ -4,6 +4,7 @@ import config
 from app import app
 from pymongo import MongoClient
 import urllib.parse
+from werkzeug.security import generate_password_hash
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
@@ -36,6 +37,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.DB.recipes.delete_many({})
         self.DB.instructions.delete_many({})
         self.DB.ingredients.delete_many({})
+        self.DB.users.delete_many({})
+
 
         # create the 'categories' collection in MongoDB
         self.collection_categories = self.DB.categories
@@ -131,6 +134,19 @@ class RecipeBuddyUITests(unittest.TestCase):
         # insert
         self.collection_ingredients.insert_many([ingredients_1, ingredients_2, ingredients_3])
 
+        # create the 'users' collection in mongodb
+        self.collection_users = self.DB.users
+
+        hashed_user_password_1 = generate_password_hash('3$l<qpY01PsWDSc9KLnV', method='pbkdf2:sha512')
+        hashed_user_password_2 = generate_password_hash('*F-&l!wJ)wU*@7sHF5hC', method='pbkdf2:sha512')
+        hashed_user_password_3 = generate_password_hash('ULndonb7YOW{O)7iJ6c', method='pbkdf2:sha512')
+
+        users_1 = {'username' : 'tom', 'email' : 'tom123d@yahoo.com', 'password' : hashed_user_password_1}
+        users_2 = {'username' : 'dick', 'email' : 'dick123d@yahoo.com', 'password' : hashed_user_password_2}
+        users_3 = {'username' : 'harry', 'email' : 'harry123d@yahoo.com', 'password' : hashed_user_password_3}
+
+        self.collection_users.insert_many([users_1, users_2, users_3])
+
         # creates a test client
         self.app = app.test_client()
 
@@ -151,6 +167,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.DB.recipes.delete_many({})
         self.DB.instructions.delete_many({})
         self.DB.ingredients.delete_many({})
+        self.DB.users.delete_many({})
         self.driver.quit()
 
     def test_three_categories(self):
@@ -1315,6 +1332,63 @@ class RecipeBuddyUITests(unittest.TestCase):
                 True
 
         self.assertEqual(len(self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")), 0)
+
+    def test_not_logged_in_divert(self):
+        ''' Test when not logged in the user is diverted to the login page'''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.assertEqual(self.driver.current_url,'http://localhost:5000/login?next=%2Fget_recipes')
+
+    def test_login(self):
+        ''' Test logging into the website'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.assertEqual(self.driver.current_url,'http://localhost:5000/get_recipes')
+
+    def test_logout(self):
+        ''' Test logout of the website'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+        self.driver.get("http://localhost:5000/logout")
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.assertEqual(self.driver.current_url,'http://localhost:5000/login?next=%2Fget_recipes')
+
+    def test_register(self):
+        ''' Test registering on the website'''
+
+        self.driver.get("http://localhost:5000/register")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("username").send_keys('tom')
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("password2").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.assertEqual(self.driver.current_url,'http://localhost:5000/get_recipes')
+
 
 
 # TODO: check tests for assigned variables not required and poor naming conventions recipe using categoory etc, self.elements

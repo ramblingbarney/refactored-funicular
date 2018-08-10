@@ -564,9 +564,51 @@ You will need the following things properly installed on your computer.
     * Click on the 'Delete' link/button
     * When you return to the 'get_recipes' page it is no longer shown
 
+### Not Logged in Divert
+
+* As a user I want to go to the 'get_recipes' page and be shown the 'login' page
+
+* Example acceptance criteria:
+  * As a user that is not logged in
+  * Open http://localhost:5000/get_recipes
+  * You are then redirected to http://localhost:5000/login
+
+### Register
+
+* As a user I want to enter username, email, password on the 'http://localhost:5000/register' page and then be redirected to the 'http://localhost:5000/get_recipes' page
+
+* Example acceptance criteria:
+* Enter username, email, password on the 'http://localhost:5000/register' page
+* You are then redirected to http://localhost:5000/get_recipes
+
+### Login
+
+* As a user I want to enter in registered user details and be shown the 'get_recipes' page
+
+* Example acceptance criteria:
+  * Registered user enters email and password on http://localhost:5000/login
+  * You are then redirected to http://localhost:5000/login
+
+### Logout
+
+* As a user I want to enter in registered user details and be shown the 'get_recipes' page and then logout by visiting 'http://localhost:5000/logout' or clicking 'logout'
+
+* Example acceptance criteria:
+  * Registered user enters email and password on http://localhost:5000/login
+  * You are then redirected to http://localhost:5000/get_recipes
+  * You then click logout or visit 'http://localhost:5000/logout'
+  * If you then visit 'http://localhost:5000/get_recipes' you are redirected to 'http://localhost:5000/login'
+
+
 ## Manual Testing
 
-* Open '/add_recipe.html' template, add text to all fields and select an option in the category select box, leave a different field empty or unselected select box each time and attempt to submit the form, a hover message should appear on the empty field or unselected select box stating input text required or selection required.
+### Required fields Add Recipe
+
+* Open 'http:://localhost:5000/add_recipe.html' template, add text to all fields and select an option in the category select box, leave a different field empty or unselected select box each time and attempt to submit the form, a hover message should appear on the empty field or unselected select box stating input text required or selection required.
+
+### Remember Me
+
+* Open 'http:://localhost:5000/register.html' template, enter username, email, password and repeat password fields.  Go to 'http:://localhost:5000/logout' url and then go to 'http:://localhost:5000/login.html' and enter the same email and password with the 'remember_me' checkbox ticked.  Close the browser tab and then reopen and go to 'http:://localhost:5000/get_recipes', you should be shown the Recipes list page 'http:://localhost:5000/get_recipes.html' and not the 'http:://localhost:5000/login' page.
 
 ## Known Issues
 
