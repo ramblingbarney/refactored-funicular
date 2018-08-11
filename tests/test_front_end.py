@@ -211,10 +211,17 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_add_category(self):
         ''' Test Adding a Category'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0)  # seconds
-        element = self.driver.find_element_by_id("add_category")
-        element.click()
+        self.driver.find_element_by_id("add_category").click()
         self.driver.implicitly_wait(0)  # seconds
         self.driver.find_element_by_id("category_name").send_keys(
                                             'Quick evening meal for 2')
@@ -235,6 +242,14 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_delete_first_category(self):
         ''' Test Deleting the first Category item'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0)  # seconds
@@ -259,6 +274,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_delete_all_categories(self):
         ''' Test Deleting all the Category items'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -277,6 +300,14 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_delete_last_category(self):
         ''' Test Deleting the first Category item'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0)  # seconds
@@ -300,6 +331,14 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_edit_last_category(self):
         ''' Test editing the last Category'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0)  # seconds
@@ -325,6 +364,15 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_cancel_edit_category(self):
         ''' Test cancelling editing a Category'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_categories")
         elements = self.driver.find_elements_by_class_name(
                                                         "edit_category_button")
@@ -376,6 +424,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_add_cuisine(self):
         ''' Test Adding a Cuisine'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_cuisines")
         self.driver.implicitly_wait(0)  # seconds
         element = self.driver.find_element_by_id("add_cuisine")
@@ -400,6 +456,14 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_delete_first_cuisine(self):
         ''' Test Deleting the first Cuisine item'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_cuisines")
         self.driver.implicitly_wait(0)  # seconds
@@ -443,6 +507,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_delete_last_cuisine(self):
         ''' Test Deleting the first Category item'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_cuisines")
         self.driver.implicitly_wait(0)  # seconds
         try:
@@ -466,6 +538,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_edit_last_cuisine(self):
         ''' Test editing the last Cuisine'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_cuisines")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -474,8 +554,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         element[2].click()
         self.driver.implicitly_wait(0)  # seconds
         self.driver.find_element_by_id("cuisine_name").send_keys('8')
-        edit_category_button = self.driver.find_element_by_id("edit_cuisine")
-        edit_category_button.click()
+        self.driver.find_element_by_id("edit_cuisine").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.elements = self.driver.find_elements_by_class_name(
@@ -490,6 +569,15 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_cancel_edit_cuisine(self):
         ''' Test cancelling editing a Category'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_cuisines")
         elements = self.driver.find_elements_by_class_name(
                                                         "edit_cuisine_button")
@@ -530,6 +618,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_add_recipe_headings(self):
         ''' Test Adding a Recipe Heading'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/add_recipe")
         self.driver.implicitly_wait(0)  # seconds
         self.driver.find_element_by_id("recipe-name").send_keys(
@@ -564,6 +660,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_add_recipe_descriptions(self):
         ''' Test Adding a Recipe Description'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/add_recipe")
         self.driver.implicitly_wait(0)  # seconds
         self.driver.find_element_by_id("recipe-name").send_keys(
@@ -590,6 +694,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_total_time_plus_add_recipe(self):
         ''' Test Adding 15 minute Time increment to a Recipe'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/add_recipe")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -602,6 +714,14 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_total_time_minus_add_recipe(self):
         ''' Test removing 15 minute Time increment to a Recipe'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/add_recipe")
         self.driver.implicitly_wait(0)  # seconds
@@ -617,6 +737,14 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_total_time_not_below_zero_add_recipe(self):
         ''' Test Total Time cannot be less than zero with a Recipe'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/add_recipe")
         self.driver.implicitly_wait(0)  # seconds
@@ -983,6 +1111,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_first_edit_recipe_category(self):
         ''' Test first edit recipe category '''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1010,6 +1146,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_first_edit_recipe_cuisine(self):
         ''' Test first edit recipe cuisine '''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1036,6 +1180,14 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_first_edit_recipe_instructions_add_one(self):
         ''' Test first edit recipe adding one more instruction input box '''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
@@ -1073,6 +1225,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_first_edit_recipe_instructions_remove_one(self):
         ''' Test first edit recipe remove one instruction input box '''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1104,6 +1264,14 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_first_edit_recipe_ingredients_add_one(self):
         ''' Test first edit recipe adding one more ingredient input box '''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
@@ -1141,6 +1309,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_first_edit_recipe_ingredients_remove_one(self):
         ''' Test first edit recipe remove one ingredient input box '''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1173,6 +1349,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_total_time_plus_first_edit_recipe(self):
         ''' Test Adding 15 minute Time increment to the first Recipe'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1200,6 +1384,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_total_time_minus_first_edit_recipe(self):
         ''' Test removing 15 minute Time increment to the first Recipe'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1226,6 +1418,14 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_total_time_not_below_zero_edit_recipe(self):
         ''' Test Total Time cannot be less than zero with a Recipe'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
@@ -1257,6 +1457,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_delete_first_recipe(self):
         ''' Test Deleting the first Recipe item'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1284,6 +1492,22 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def test_delete_last_recipe(self):
         ''' Test Deleting the last Recipe item'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
@@ -1313,6 +1537,14 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_delete_all_recipes(self):
         ''' Test Deleting all the Recipe items'''
 
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1336,10 +1568,10 @@ class RecipeBuddyUITests(unittest.TestCase):
     def test_not_logged_in_divert(self):
         ''' Test when not logged in the user is diverted to the login page'''
 
-        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.get("http://localhost:5000/add_category")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.assertEqual(self.driver.current_url,'http://localhost:5000/login?next=%2Fget_recipes')
+        self.assertEqual(self.driver.current_url,'http://localhost:5000/login?next=%2Fadd_category')
 
     def test_login(self):
         ''' Test logging into the website'''
@@ -1352,7 +1584,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("submit").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.assertEqual(self.driver.current_url,'http://localhost:5000/get_recipes')
+        self.assertEqual(self.driver.current_url,'http://localhost:5000/add_category')
 
     def test_logout(self):
         ''' Test logout of the website'''
@@ -1366,10 +1598,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
         self.driver.get("http://localhost:5000/logout")
 
-        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.get("http://localhost:5000/add_category")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.assertEqual(self.driver.current_url,'http://localhost:5000/login?next=%2Fget_recipes')
+        self.assertEqual(self.driver.current_url,'http://localhost:5000/login?next=%2Fadd_category')
 
     def test_register(self):
         ''' Test registering on the website'''
@@ -1384,10 +1616,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("submit").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.get("http://localhost:5000/add_category")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.assertEqual(self.driver.current_url,'http://localhost:5000/get_recipes')
+        self.assertEqual(self.driver.current_url,'http://localhost:5000/add_category')
 
 
 

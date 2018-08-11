@@ -1,5 +1,6 @@
 {% extends 'base.html'%} {% block content %}
 <div class="row">
+    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <div class="recipe-header col s9">Recipe Name
         <strong>{{recipes.recipe_name}}</strong>
     </div>

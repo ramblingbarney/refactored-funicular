@@ -65,6 +65,7 @@ $(document).ready(function() {
 <h3>Add Recipe</h3>
 <div class="row">
     <form action="{{ url_for('insert_recipe') }}" method="POST" class="col s12">
+      <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
         <div class="row">
           <div class="input-field col s12">
               <i class="material-icons prefix">assignment</i>

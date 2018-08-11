@@ -570,20 +570,20 @@ You will need the following things properly installed on your computer.
 
 * Example acceptance criteria:
   * As a user that is not logged in
-  * Open http://localhost:5000/get_recipes
+  * Open http://localhost:5000/add_category
   * You are then redirected to http://localhost:5000/login
 
 ### Register
 
-* As a user I want to enter username, email, password on the 'http://localhost:5000/register' page and then be redirected to the 'http://localhost:5000/get_recipes' page
+* As a user I want to enter username, email, password on the 'http://localhost:5000/register' page and then be redirected to the 'http://localhost:5000/add_category' page
 
 * Example acceptance criteria:
 * Enter username, email, password on the 'http://localhost:5000/register' page
-* You are then redirected to http://localhost:5000/get_recipes
+* You are then redirected to http://localhost:5000/add_category
 
 ### Login
 
-* As a user I want to enter in registered user details and be shown the 'get_recipes' page
+* As a user I want to enter in registered user details and be shown the 'http://localhost:5000/add_category' page
 
 * Example acceptance criteria:
   * Registered user enters email and password on http://localhost:5000/login
@@ -591,13 +591,13 @@ You will need the following things properly installed on your computer.
 
 ### Logout
 
-* As a user I want to enter in registered user details and be shown the 'get_recipes' page and then logout by visiting 'http://localhost:5000/logout' or clicking 'logout'
+* As a user I want to enter in registered user details and be shown the 'http://localhost:5000/add_category' page and then logout by visiting 'http://localhost:5000/logout' or clicking 'logout'
 
 * Example acceptance criteria:
   * Registered user enters email and password on http://localhost:5000/login
-  * You are then redirected to http://localhost:5000/get_recipes
+  * You are then redirected to http://localhost:5000/add_category
   * You then click logout or visit 'http://localhost:5000/logout'
-  * If you then visit 'http://localhost:5000/get_recipes' you are redirected to 'http://localhost:5000/login'
+  * If you then visit 'http://localhost:5000/add_category' you are redirected to 'http://localhost:5000/login'
 
 
 ## Manual Testing

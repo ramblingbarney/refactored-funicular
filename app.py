@@ -89,7 +89,6 @@ app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
 # some protected url
 @app.route('/')
-@login_required
 def home():
     return redirect(url_for('get_recipes'))
 
@@ -115,7 +114,7 @@ def login():
 
             return abort(401)
 
-        return redirect('/')
+        return redirect('/add_category')
 
     else:
         form = LoginForm()
@@ -150,7 +149,7 @@ def register():
             user = User(register_record.inserted_id)
 
         login_user(user)
-        return redirect('/')
+        return redirect('/add_category')
 
     else:
         form = RegistrationForm()
@@ -264,16 +263,19 @@ def update_record(id_name, update_record_id, record_set_dict, filter_key, collec
 
 
 @app.route('/add_category')
+@login_required
 def add_category():
     return render_template('add_category.html')
 
 
 @app.route('/add_cuisine')
+@login_required
 def add_cuisine():
     return render_template('add_cuisine.html')
 
 
 @app.route('/insert_category', methods=['POST'])
+@login_required
 def insert_category():
     categories = mongo.db.categories
     category_doc = {'category_name': request.form['category_name']}
@@ -282,6 +284,7 @@ def insert_category():
 
 
 @app.route('/insert_cuisine', methods=['POST'])
+@login_required
 def insert_cuisine():
     cuisines = mongo.db.cuisines
     cuisine_doc = {'cuisine_name': request.form['cuisine_name']}
@@ -302,18 +305,21 @@ def get_cuisines():
 
 
 @app.route('/edit_category/<category_id>')
+@login_required
 def edit_category(category_id):
     return render_template('edit_category.html',
         category=mongo.db.categories.find_one({'_id': ObjectId(category_id)}))
 
 
 @app.route('/edit_cuisine/<cuisine_id>')
+@login_required
 def edit_cuisine(cuisine_id):
     return render_template('edit_cuisine.html',
         cuisine=mongo.db.cuisines.find_one({'_id': ObjectId(cuisine_id)}))
 
 
 @app.route('/category_item/<category_id>', methods=["POST"])
+@login_required
 def update_category(category_id):
     category_items = mongo.db.categories
     category_items.update({'_id': ObjectId(category_id)},
@@ -322,6 +328,7 @@ def update_category(category_id):
 
 
 @app.route('/cuisine_item/<cuisine_id>', methods=["POST"])
+@login_required
 def update_cuisine(cuisine_id):
     cuisine_items = mongo.db.cuisines
     cuisine_items.update({'_id': ObjectId(cuisine_id)},
@@ -330,18 +337,21 @@ def update_cuisine(cuisine_id):
 
 
 @app.route('/delete_category/<category_id>')
+@login_required
 def delete_category(category_id):
     mongo.db.categories.remove({'_id': ObjectId(category_id)})
     return redirect(url_for("get_categories"))
 
 
 @app.route('/delete_cuisine/<cuisine_id>')
+@login_required
 def delete_cuisine(cuisine_id):
     mongo.db.cuisines.remove({'_id': ObjectId(cuisine_id)})
     return redirect(url_for("get_cuisines"))
 
 
 @app.route('/add_recipe')
+@login_required
 def add_recipe():
     return render_template('add_recipe.html',
                         categories=mongo.db.categories.find(),
@@ -349,13 +359,13 @@ def add_recipe():
 
 
 @app.route('/get_recipes')
-@login_required
 def get_recipes():
     return render_template('get_recipes.html',
                             recipes=mongo.db.recipes.find())
 
 
 @app.route('/insert_recipe', methods=['POST'])
+@login_required
 def insert_recipe():
 
     # recipe collection
@@ -397,6 +407,7 @@ def show_recipe(recipe_id):
 
 
 @app.route('/edit_recipe/<recipe_id>')
+@login_required
 def edit_recipe(recipe_id):
     recipe_record=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
     ingredients=mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
@@ -412,6 +423,7 @@ def edit_recipe(recipe_id):
 
 
 @app.route('/update_recipe/<recipe_id>', methods=["POST"])
+@login_required
 def update_recipe(recipe_id):
 
     recipes = mongo.db.recipes
@@ -441,6 +453,7 @@ def update_recipe(recipe_id):
 
 
 @app.route('/delete_recipe/<recipe_id>')
+@login_required
 def delete_recipe(recipe_id):
     recipe_record=mongo.db.recipes.remove({'_id': ObjectId(recipe_id)})
     ingredients=mongo.db.ingredients.remove({'recipe_id': ObjectId(recipe_id)})

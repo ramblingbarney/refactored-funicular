@@ -1,5 +1,6 @@
 {% extends 'base.html'%} {% block content %}
 <div class="container cuisine_container">
+  <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
 
   {% for cuisine in cuisines %}
 

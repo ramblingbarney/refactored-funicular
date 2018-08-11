@@ -1,5 +1,6 @@
 {% extends 'base.html'%} {% block content %}
 <div class="container category_container">
+  <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
 
   {% for category in categories %}
 
