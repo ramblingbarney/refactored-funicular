@@ -596,9 +596,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
 
-        test_list = ['Avocado and Tuna Tapas',
-                    'Chinese Pepper Steak',
-                    'Moroccan Chicken with Saffron and Preserved Lemon']
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare']
         #
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -640,6 +638,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.driver.find_element_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li/input").send_keys('Heat oil in frying pan')
         self.driver.find_element_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li/input").send_keys('30 ml olive oil')
+        self.driver.find_element_by_class_name("plus_15_button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.find_element_by_id("add-recipe").click()
@@ -647,10 +646,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
 
-        test_list = ['Avocado and Tuna Tapas',
-                        'Chinese Pepper Steak',
-                        'Moroccan Chicken with Saffron and Preserved Lemon',
-                        'Vietnamese Grilled Lemongrass Chicken']
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare', 'Vietnamese Grilled Lemongrass Chicken - Evening Meal for 2 - Spanish - 15 Minutes to Prepare']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -1482,8 +1478,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
 
-        test_list = ['Chinese Pepper Steak',
-                    'Moroccan Chicken with Saffron and Preserved Lemon']
+        test_list = ['Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -1526,8 +1521,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
 
-        test_list = ['Avocado and Tuna Tapas',
-                    'Chinese Pepper Steak']
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare']
 
         for element in self.elements:
             self.li_span_text.append(element.text)

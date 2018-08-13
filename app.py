@@ -357,12 +357,20 @@ def add_recipe():
                         categories=mongo.db.categories.find(),
                         cuisines=mongo.db.cuisines.find())
 
-
 @app.route('/get_recipes')
 def get_recipes():
-    return render_template('get_recipes.html',
-                            recipes=mongo.db.recipes.find())
-
+    return render_template('get_recipes.html'
+                                ,recipes=mongo.db.recipes.aggregate([
+                                    {'$lookup': {'from' : 'categories',
+                                            'localField' : 'category_id',
+                                            'foreignField' : '_id',
+                                            'as' : 'category_name'}
+                                            }
+                                    ,{'$lookup': {'from' : 'cuisines',
+                                            'localField' : 'cuisine_id',
+                                            'foreignField' : '_id',
+                                            'as' : 'cuisine_name'}
+                                    }]))
 
 @app.route('/insert_recipe', methods=['POST'])
 @login_required
@@ -465,3 +473,4 @@ if __name__ == '__main__':
 
 # TODO: user votes
 # TODO: you can use a Python library such as matplotlib, or a JS library such as d3/dc (that you learned about if you took the frontend modules) for visualisation
+# TODO: add sorted view of 'get_recipes'
