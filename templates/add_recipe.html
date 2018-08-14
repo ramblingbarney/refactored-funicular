@@ -1,83 +1,69 @@
 {% extends 'base.html' %} {% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- TODO: change this to pure javascript -->
 <script>
-// Add remove input text box dynamically taken from here
-// https://www.sanwebe.com/2013/03/addremove-input-fields-dynamically-with-jquery
-// I have modified it adding 'inputField' variable to allow varible 'x' string interpollation
 
-$(document).ready(function() {
-    var max_fields      = 100; //maximum input boxes allowed
-    var wrapper_ingredients = $(".input_fields_wrap_ingredients"); //Fields wrapper ingredients
-    var wrapper_instructions = $(".input_fields_wrap_instructions"); //Fields wrapper insstructions
-    var add_button_ingredients = $(".add_field_button_ingredients"); //Add button ID ingredients
-    var add_button_instructions = $(".add_field_button_instructions"); //Add button ID insstructions
-    var plus_15_button = $(".plus_15_button"); //Add button ID insstructions
-    var minus_15_button = $(".minus_15_button"); //Add button ID insstructions
-    var totalTime = 0;
+function addFieldInstructions() {
 
-    var plus_1_vote_button = $(".plus_1_vote_button"); //Add button ID insstructions
-    var minus_1_vote_button = $(".minus_1_vote_button"); //Add button ID insstructions
-    var recipeVotes = 0;
+  var el = document.getElementById('li-instructions');
+  var elChild = document.createElement('li');
+  var numberInstructions = document.getElementsByClassName("input_fields_wrap_instructions");
 
-    var x = 1; //initlal text box count & used for instruction field name instruction[x]
-    var y = 1; //initlal text box count & used for ingredient field name ingredient[x]
+  // Give the new div some content
+  elChild.innerHTML = `<input name="instruction[${numberInstructions.length}]" type="text" class="validate input_fields_wrap_instructions" value="{{ing}}"/><button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" type="button">Remove</button>`;
 
-    document.getElementById('total-time').value =  totalTime;
-    document.getElementById('user-votes').value =  recipeVotes;
+  // Jug it into the parent element
+  el.appendChild(elChild);
 
-    $(add_button_instructions).click(function(e){ //on add input button click
-        e.preventDefault();
-        if(x < max_fields){ //max input box allowed
-            inputField_instructions = `<li><input type="text" name="instruction[${x}]"/><a href="#" class="remove_field_instructions">Remove</a></li>`
-            $(wrapper_instructions).append(inputField_instructions); //add input box
-            x++; //text box increment
-        }
-    });
+}
 
-    $(add_button_ingredients).click(function(e){ //on add input button click
-        e.preventDefault();
-        if(y < max_fields){ //max input box allowed
-            input_fields_ingredients = `<li><input type="text" name="ingredient[${y}]"/><a href="#" class="remove_field_ingredients">Remove</a></li>`
-            $(wrapper_ingredients).append(input_fields_ingredients); //add input box
-            y++; //text box increment
-        }
-    });
+function addFieldIngredients() {
 
-    $(plus_15_button).click(function(e){ //on add input button click
-        e.preventDefault();
-        totalTime += 15;
-        document.getElementById('total-time').value = totalTime
-    });
+  var el = document.getElementById('li-ingredients');
+  var elChild = document.createElement('li');
+  var numberIngredients = document.getElementsByClassName("input_fields_wrap_ingredients");
 
-    $(minus_15_button).click(function(e){ //on add input button click
-        e.preventDefault();
-        if (totalTime > 0) {
-          totalTime -= 15;
-          document.getElementById('total-time').value = totalTime;
-        }
-    });
+  // Give the new div some content
+  elChild.innerHTML = `<input name="ingredient[${numberIngredients.length}]" type="text" class="validate input_fields_wrap_ingredients" value="{{ing}}"/><button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" type="button">Remove</button>`;
 
-    $(plus_1_vote_button).click(function(e){ //on add input button click
-        e.preventDefault();
-        recipeVotes += 1;
-        document.getElementById('user-votes').value = recipeVotes
-    });
+  // Jug it into the parent element
+  el.appendChild(elChild);
 
-    $(minus_1_vote_button).click(function(e){ //on add input button click
-        e.preventDefault();
-        recipeVotes -= 1;
-        document.getElementById('user-votes').value = recipeVotes
-    });
+}
 
-    $(wrapper_ingredients).on("click",".remove_field_ingredients", function(e){ //user click on remove text
-        e.preventDefault(); $(this).parent('li').remove(); x--;
-    })
+function addFifteenMinutes() {
 
-    $(wrapper_instructions).on("click",".remove_field_instructions", function(e){ //user click on remove text
-        e.preventDefault(); $(this).parent('li').remove(); x--;
-    })
-});
+  totalTime = parseInt(document.getElementById('total-time').value);
+  totalTime += 15;
+  document.getElementById('total-time').value = totalTime;
+
+}
+
+function minusFifteenMinutes() {
+
+  totalTime = parseInt(document.getElementById('total-time').value);
+
+  if (totalTime > 0) {
+    totalTime -= 15;
+    document.getElementById('total-time').value = totalTime;
+  }
+}
+
+function add1Vote() {
+
+  recipeVotes = 0;
+  recipeVotes = parseInt(document.getElementById('user-votes').value);
+  recipeVotes += 1;
+  document.getElementById('user-votes').value = recipeVotes;
+
+}
+
+function minus1Vote() {
+
+  recipeVotes = parseInt(document.getElementById('user-votes').value);
+  recipeVotes -= 1;
+  document.getElementById('user-votes').value = recipeVotes;
+
+}
+
 </script>
 <h3>Add Recipe</h3>
 <div class="row">
@@ -124,26 +110,26 @@ $(document).ready(function() {
         <div class="row">
           <div class="input-field col s12">
               <i class="material-icons prefix">assignment</i>
-              <input id="total-time" name="total_time" type="text" required>
-              <button class="plus_15_button" type="button"> + 15 mins</button>
-              <button class="minus_15_button" type="button"> - 15 mins</button>
+              <input id="total-time" name="total_time" type="text" value="0" required>
+              <button class="plus_15_button" onclick="addFifteenMinutes()" type="button"> + 15 mins</button>
+              <button class="minus_15_button" onclick="minusFifteenMinutes()" type="button"> - 15 mins</button>
               <label for="icon_prefix">Total Time</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
               <i class="material-icons prefix">assignment</i>
-              <input id="user-votes" name="user_votes" type="text" required>
-              <button class="plus_1_vote_button" type="button"> + 1</button>
-              <button class="minus_1_vote_button" type="button"> - 1</button>
+              <input id="user-votes" name="user_votes" type="text" value="0" required>
+              <button class="plus_1_vote_button" onclick="add1Vote()" type="button"> + 1</button>
+              <button class="minus_1_vote_button" onclick="minus1Vote()" type="button"> - 1</button>
               <label for="icon_prefix">User Votes</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <button class="add_field_button_instructions" type="button">Add More Instructions</button>
+            <button class="add_field_button_instructions" onclick="addFieldInstructions()" type="button">Add More Instructions</button>
             <div>
-              <ol class="input_fields_wrap_instructions">
+              <ol id="li-instructions" class="input_fields_wrap_instructions">
                 <li><input type="text" name="instructions[0]" required></li>
               </ol>
             </div>
@@ -151,9 +137,9 @@ $(document).ready(function() {
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <button class="add_field_button_ingredients" type="button">Add More Ingredients</button>
+            <button class="add_field_button_ingredients" onclick="addFieldIngredients()" type="button">Add More Ingredients</button>
             <div>
-              <ol class="input_fields_wrap_ingredients">
+              <ol class="input_fields_wrap_ingredients" id="li-ingredients">
                 <li><input type="text" name="ingredient[0]" required></li>
               </ol>
             </div>

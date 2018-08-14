@@ -126,7 +126,7 @@ function minus1Vote() {
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <button class="add_field_button_instructions" type="button" onclick="addFieldInstructions()">Add More Instructions</button>
+            <button class="add_field_button_instructions" onclick="addFieldInstructions()" type="button">Add More Instructions</button>
             <div>
               <ol id="li-instructions">
                 {% for i in instructions %}
@@ -140,7 +140,7 @@ function minus1Vote() {
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <button class="add_field_button_ingredients" type="button" onclick="addFieldIngredients()">Add More Ingredients</button>
+            <button class="add_field_button_ingredients" onclick="addFieldIngredients()" type="button">Add More Ingredients</button>
             <div>
               <ol id="li-ingredients">
                 {% for ing in ingredients %}
