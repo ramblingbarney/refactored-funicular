@@ -167,6 +167,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.DB.instructions.delete_many({})
         self.DB.ingredients.delete_many({})
         self.DB.users.delete_many({})
+        self.driver.get("http://localhost:5000/logout")
         self.driver.quit()
 
     def test_three_categories(self):
