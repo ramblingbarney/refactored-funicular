@@ -471,6 +471,5 @@ def delete_recipe(recipe_id):
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), debug=True)
 
-# TODO: user votes
 # TODO: you can use a Python library such as matplotlib, or a JS library such as d3/dc (that you learned about if you took the frontend modules) for visualisation
 # TODO: add sorted view of 'get_recipes'
