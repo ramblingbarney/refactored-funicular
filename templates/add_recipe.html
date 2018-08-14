@@ -16,10 +16,15 @@ $(document).ready(function() {
     var minus_15_button = $(".minus_15_button"); //Add button ID insstructions
     var totalTime = 0;
 
+    var plus_1_vote_button = $(".plus_1_vote_button"); //Add button ID insstructions
+    var minus_1_vote_button = $(".minus_1_vote_button"); //Add button ID insstructions
+    var recipeVotes = 0;
+
     var x = 1; //initlal text box count & used for instruction field name instruction[x]
     var y = 1; //initlal text box count & used for ingredient field name ingredient[x]
 
     document.getElementById('total-time').value =  totalTime;
+    document.getElementById('user-votes').value =  recipeVotes;
 
     $(add_button_instructions).click(function(e){ //on add input button click
         e.preventDefault();
@@ -51,6 +56,18 @@ $(document).ready(function() {
           totalTime -= 15;
           document.getElementById('total-time').value = totalTime;
         }
+    });
+
+    $(plus_1_vote_button).click(function(e){ //on add input button click
+        e.preventDefault();
+        recipeVotes += 1;
+        document.getElementById('user-votes').value = recipeVotes
+    });
+
+    $(minus_1_vote_button).click(function(e){ //on add input button click
+        e.preventDefault();
+        recipeVotes -= 1;
+        document.getElementById('user-votes').value = recipeVotes
     });
 
     $(wrapper_ingredients).on("click",".remove_field_ingredients", function(e){ //user click on remove text
@@ -111,6 +128,15 @@ $(document).ready(function() {
               <button class="plus_15_button" type="button"> + 15 mins</button>
               <button class="minus_15_button" type="button"> - 15 mins</button>
               <label for="icon_prefix">Total Time</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+              <i class="material-icons prefix">assignment</i>
+              <input id="user-votes" name="user_votes" type="text" required>
+              <button class="plus_1_vote_button" type="button"> + 1</button>
+              <button class="minus_1_vote_button" type="button"> - 1</button>
+              <label for="icon_prefix">User Votes</label>
           </div>
         </div>
         <div class="row">

@@ -45,10 +45,23 @@ function minusFifteenMinutes() {
     totalTime -= 15;
     document.getElementById('total-time').value = totalTime;
   }
+}
+
+function add1Vote() {
+
+  recipeVotes = parseInt(document.getElementById('user-votes').value);
+  recipeVotes += 1;
+  document.getElementById('user-votes').value = recipeVotes;
 
 }
 
+function minus1Vote() {
 
+  recipeVotes = parseInt(document.getElementById('user-votes').value);
+  recipeVotes -= 1;
+  document.getElementById('user-votes').value = recipeVotes;
+
+}
 
 </script>
 <h3>Edit Recipe</h3>
@@ -100,6 +113,15 @@ function minusFifteenMinutes() {
               <button class="plus_15_button" onclick="addFifteenMinutes()" type="button"> + 15 mins</button>
               <button class="minus_15_button" onclick="minusFifteenMinutes()" type="button"> - 15 mins</button>
               <label for="icon_prefix">Total Time</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+              <i class="material-icons prefix">assignment</i>
+              <input id="user-votes" name="user_votes" type="text" class="validate" value="{{recipes.user_votes}}">
+              <button class="plus_1_vote_button" onclick="add1Vote()" type="button"> + 1</button>
+              <button class="minus_1_vote_button" onclick="minus1Vote()" type="button"> - 1</button>
+              <label for="icon_prefix">User Votes</label>
           </div>
         </div>
         <div class="row">
