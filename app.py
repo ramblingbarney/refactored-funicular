@@ -154,6 +154,7 @@ def register():
     else:
         form = RegistrationForm()
         return render_template('register.html', form = form)
+# TODO: javascript check passwords match
 
 
 # somewhere to logout
@@ -387,7 +388,8 @@ def insert_recipe():
             'recipe_description': request.form.to_dict()['recipe_description'],
             'category_id': category_id,
             'cuisine_id': cuisine_id,
-            'total_time': request.form.to_dict()['total_time']}
+            'total_time': request.form.to_dict()['total_time'],
+            'user_votes': request.form.to_dict()['user_votes']}
 
     # recipes record insertion
     _recipe_id = recipes.insert_one(recipe_doc)
@@ -444,7 +446,8 @@ def update_recipe(recipe_id):
             'recipe_description': request.form.to_dict()['recipe_description'],
             'category_id': category_id,
             'cuisine_id': cuisine_id,
-            'total_time': request.form.to_dict()['total_time']}
+            'total_time': request.form.to_dict()['total_time'],
+            'user_votes': request.form.to_dict()['user_votes']}
 
     # recipes record update
     recipes.update({'_id': ObjectId(recipe_id)},recipe_doc)

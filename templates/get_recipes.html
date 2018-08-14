@@ -6,9 +6,7 @@
           <li>
               <div class="collapsible-header">
                   <div class="recipe-header col s9">
-                      <strong>{{recipe.recipe_name}} - {{recipe.category_name[0]['category_name']}} - {{recipe.cuisine_name[0]['cuisine_name']}} - {{recipe.total_time}} Minutes to Prepare</strong>
-
-                      <!-- TODO: votes to the recipe header -->
+                      <strong>{{recipe.recipe_name}} - {{recipe.category_name[0]['category_name']}} - {{recipe.cuisine_name[0]['cuisine_name']}} - {{recipe.total_time}} Minutes to Prepare - User Votes: {{recipe.user_votes}}</strong>
                   </div>
               </div>
               <div class="collapsible-body recipe-description">

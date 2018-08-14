@@ -287,6 +287,39 @@ You will need the following things properly installed on your computer.
   * Clicking button '- 15 mins'
   * The recipe Total Time will increase to 30 mins and then decrease to 0 mins
 
+### Add Recipe Increase User Votes
+
+* As a user I want to increase the User Vote by 1.
+
+* Example acceptance criteria:
+  * Entering text into the input box Recipe Description
+  * Clicking button '+ 1' User Vote
+  * The recipe User Votes will be 1
+
+### Add Recipe Decrease User Votes
+
+* As a user I want to decrease the User Votes by 1.
+
+* Example acceptance criteria:
+  * Entering text into the input box Recipe Description
+  * Clicking button '+ 1' User Vote
+  * Clicking button '+ 1' User Vote
+  * Clicking button '- 1' User Vote
+  * The recipe Total User Votes will increase to 2 and then decrease to 1
+
+### Add Recipe User Votes can be negative
+
+* As a user I want the total User Votes to be negative.
+
+* Example acceptance criteria:
+  * Entering text into the input box Recipe Description
+  * Clicking button '+ 1' User Vote
+  * Clicking button '+ 1' User Vote
+  * Clicking button '- 1' User Vote
+  * Clicking button '- 1' User Vote
+  * Clicking button '- 1' User Vote
+  * The recipe User Votes will increase to 3 and then decrease to - 1
+
 ### Show Recipe
 
 * As a user I want to click on the 'show' recipe link/button and be shown the full recipe (name, description, instructions and ingredients).
@@ -459,9 +492,9 @@ You will need the following things properly installed on your computer.
   * Click save
   * Clicking 'Show' loads page with the removed ingredient not showing
 
-### Edit Recipe Add Time
+### Edit First Recipe Add Time
 
-* As a user I want to change the recipe total time
+* As a user I want to change the first recipe total time
 
 * Example acceptance criteria:
   * Clicking 'Show' loads page with;
@@ -472,6 +505,7 @@ You will need the following things properly installed on your computer.
     * Recipe category
     * Recipe cuisine
     * Recipe Total Time
+    * Recipe User Votes
 
   * Clicking 'Edit' loads page with:
     * Recipe name
@@ -481,13 +515,14 @@ You will need the following things properly installed on your computer.
     * Recipe category
     * Recipe cuisine
     * Recipe Total Time
+    * Recipe User Votes
   * Click '+ 15 mins' button
   * Click save
   * Clicking 'Show' loads page with the Total Time increased by 15 minutes
 
-### Edit Recipe Remove Time
+### Edit First Recipe Remove Time
 
-* As a user I want to change the recipe total time
+* As a user I want to change the first recipe total time
 
 * Example acceptance criteria:
   * Clicking 'Show' loads page with;
@@ -498,6 +533,7 @@ You will need the following things properly installed on your computer.
     * Recipe category
     * Recipe cuisine
     * Recipe Total Time
+    * Recipe User Votes
 
   * Clicking 'Edit' loads page with:
     * Recipe name
@@ -507,13 +543,14 @@ You will need the following things properly installed on your computer.
     * Recipe category
     * Recipe cuisine
     * Recipe Total Time
+    * Recipe User Votes
   * Click '- 15 mins' button
   * Click save
   * Clicking 'Show' loads page with the Total Time decreased by 15 minutes
 
-### Edit Recipe Remove All Time
+### Edit First Recipe Remove All Time
 
-* As a user I want to change the recipe total time to zero and not be able to set a negative time
+* As a user I want to change the first recipe total time to zero and not be able to set a negative time
 
 * Example acceptance criteria:
   * Clicking 'Show' loads page with;
@@ -524,6 +561,7 @@ You will need the following things properly installed on your computer.
     * Recipe category
     * Recipe cuisine
     * Recipe Total Time
+    * Recipe User Votes
 
   * Clicking 'Edit' loads page with:
     * Recipe name
@@ -533,7 +571,92 @@ You will need the following things properly installed on your computer.
     * Recipe category
     * Recipe cuisine
     * Recipe Total Time
+    * Recipe User Votes
   * Click '- 15 mins' button more times than the result of the initial total time divided by 15
+  * Click save
+  * Clicking 'Show' loads page with the Total Time of zero
+
+### Edit First Recipe Add User Votes
+
+* As a user I want to change the first recipe user votes
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+    * Recipe User Votes
+
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+    * Recipe User Votes
+  * Click '+ 1' User Vote button
+  * Click save
+  * Clicking 'Show' loads page with the User Votes increased by 1
+
+### Edit First Recipe Remove User Votes
+
+* As a user I want to change the first recipe user votes
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+    * Recipe User Votes
+
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+    * Recipe User Votes
+  * Click '- 1' User Vote button
+  * Click save
+  * Clicking 'Show' loads page with the User Votes decreased by 1
+
+### Edit First Recipe Negative User Votes
+
+* As a user I want to change the first recipe user votes to negative
+
+* Example acceptance criteria:
+  * Clicking 'Show' loads page with;
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+    * Recipe User Votes
+
+  * Clicking 'Edit' loads page with:
+    * Recipe name
+    * Recipe description
+    * Recipe instructions
+    * Recipe ingredients
+    * Recipe category
+    * Recipe cuisine
+    * Recipe Total Time
+    * Recipe User Votes
+  * Click '- 1' User Votes button as many times as required to enter a negative vote figure
   * Click save
   * Clicking 'Show' loads page with the Total Time of zero
 

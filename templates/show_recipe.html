@@ -54,6 +54,11 @@
   </div>
 </div>
 <div class="row">
+  <div class="user-votes col s9">User Votes:
+      <strong>{{recipes.user_votes}}</strong>
+  </div>
+</div>
+<div class="row">
   <a href="{{url_for('edit_recipe', recipe_id=recipes._id)}}" class="waves-effect waves-light btn btn_small blue edit_recipe_button">Edit</a>
   <a href="{{url_for('delete_recipe', recipe_id=recipes._id)}}" class="waves-effect waves-light btn btn_small blue delete_recipe_button">Delete</a>
   <a href="{{url_for('get_recipes')}}" class="waves-effect waves-light btn btn_small blue show_all_recipes_button">Show All Recipes</a>
