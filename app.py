@@ -434,7 +434,7 @@ def search_recipes():
                                             'as' : 'cuisine_name'}
                                     }
                                     ,{'$unwind': '$cuisine_name'}
-                                    ,{'$match':{search_column: search_text}}
+                                    ,{'$match':{search_column: {'$regex': search_text, '$options': 'i'}}}
                                     ,{'$sort': SON([(sort_column, sort_order)])}]))
 
 @app.route('/insert_recipe', methods=['POST'])

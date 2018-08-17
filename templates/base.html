@@ -17,9 +17,9 @@
         <div>
           <ul>
             <li>Microblog:</li>
-            <li><a href="/index">Home</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
+            <li><a href="{{ url_for('get_recipes')}}">Home</a></li>
+            <li><a href="{{ url_for('login')}}">Login</a></li>
+            <li><a href="{{ url_for('register')}}">Register</a></li>
             <li><form action="{{ url_for('search_recipes') }}" method="POST" class="col s12">
               <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
               <input id="search-text" name="search_text" type="text" placeholder="Search" required>
