@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from forms import LoginForm, RegistrationForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from bson.son import SON
 import random
 import string
 import urllib.parse
@@ -72,6 +73,15 @@ class FILTER_KEYS(enum.Enum):
 class ID_NAME(enum.Enum):
     RECIPE_ID = 'recipe_id'
 
+class SEARCH_TYPE(enum.Enum):
+    CATEGORY_NAME = 'category_name.category_name'
+    CUISINE_NAME = 'cuisine_name.cuisine_name'
+    USER_VOTES = 'user_votes'
+
+class SORT_COLUMN(enum.Enum):
+
+    USER_VOTES = 'user_votes'
+    TOTAL_TIME = 'total_time'
 
 @app.before_request
 def csrf_protect():
@@ -124,38 +134,38 @@ def login():
 @app.route("/register", methods=["GET", "POST"])
 def register():
 
+    form = RegistrationForm()
     if request.method == 'POST':
+        if form.validate_on_submit():
 
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
+            username = request.form['username']
+            email = request.form['email']
+            password = request.form['password']
 
-        existing_user = mongo.db.users.find_one({'email': email})
+            existing_user = mongo.db.users.find_one({'email': email})
 
-        hashpass = generate_password_hash(request.form['password'], method='pbkdf2:sha512')
+            hashpass = generate_password_hash(request.form['password'], method='pbkdf2:sha512')
 
-        if existing_user:
+            if existing_user:
 
-            register_record = mongo.db.users.update({'_id': ObjectId(existing_user['_id'])}, {'username': username, 'email': email, 'password': hashpass})
+                register_record = mongo.db.users.update({'_id': ObjectId(existing_user['_id'])}, {'username': username, 'email': email, 'password': hashpass})
 
-            user = User(str(existing_user['_id']))
+                user = User(str(existing_user['_id']))
 
-        else:
+            else:
 
-            user_doc = {'username': username, 'email': email, 'password': hashpass}
+                user_doc = {'username': username, 'email': email, 'password': hashpass}
 
-            register_record = mongo.db.users.insert_one(user_doc)
+                register_record = mongo.db.users.insert_one(user_doc)
 
-            user = User(register_record.inserted_id)
+                user = User(register_record.inserted_id)
 
-        login_user(user)
+            login_user(user)
         return redirect('/add_category')
 
     else:
-        form = RegistrationForm()
-        return render_template('register.html', form = form)
-# TODO: javascript check passwords match
-
+        return render_template('register.html', form=form)
+# TODO: WTF form validation not working
 
 # somewhere to logout
 @app.route("/logout")
@@ -373,6 +383,60 @@ def get_recipes():
                                             'as' : 'cuisine_name'}
                                     }]))
 
+@app.route('/search_recipes', methods=["POST"])
+def search_recipes():
+
+    search_text = request.form['search_text']
+
+    if SEARCH_TYPE.CATEGORY_NAME.value == request.form['search_selected']:
+
+        search_column = 'category_name.category_name'
+
+    elif SEARCH_TYPE.CUISINE_NAME.value == request.form['search_selected']:
+
+        search_column = 'cuisine_name.cuisine_name'
+
+    elif SEARCH_TYPE.USER_VOTES.value == request.form['search_selected']:
+
+        search_column = 'user_votes'
+
+    if  request.form['order_selected'] == 'UserVotesAscending':
+
+        sort_column = SORT_COLUMN.USER_VOTES.value
+        sort_order = 1
+
+    elif  request.form['order_selected'] == 'UserVotesDescending':
+
+        sort_column = SORT_COLUMN.USER_VOTES.value
+        sort_order = -1
+
+    elif  request.form['order_selected'] == 'TotalTimeAscending':
+
+        sort_column = SORT_COLUMN.TOTAL_TIME.value
+        sort_order = 1
+
+    elif  request.form['order_selected'] == 'TotalTimeDescending':
+
+        sort_column = SORT_COLUMN.TOTAL_TIME.value
+        sort_order = -1
+
+    return render_template('search_recipes.html'
+                                ,recipes=mongo.db.recipes.aggregate([
+                                    {'$lookup': {'from' : 'categories',
+                                            'localField' : 'category_id',
+                                            'foreignField' : '_id',
+                                            'as' : 'category_name'}
+                                    }
+                                    ,{'$unwind': '$category_name'}
+                                    ,{'$lookup': {'from' : 'cuisines',
+                                            'localField' : 'cuisine_id',
+                                            'foreignField' : '_id',
+                                            'as' : 'cuisine_name'}
+                                    }
+                                    ,{'$unwind': '$cuisine_name'}
+                                    ,{'$match':{search_column: search_text}}
+                                    ,{'$sort': SON([(sort_column, sort_order)])}]))
+
 @app.route('/insert_recipe', methods=['POST'])
 @login_required
 def insert_recipe():
@@ -475,4 +539,3 @@ if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), debug=True)
 
 # TODO: you can use a Python library such as matplotlib, or a JS library such as d3/dc (that you learned about if you took the frontend modules) for visualisation
-# TODO: add sorted view of 'get_recipes'
