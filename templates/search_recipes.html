@@ -1,0 +1,25 @@
+{% extends 'base.html'%} {% block content %}
+<div class="row">
+    <ul class="collapsible" data-collapsible="accordion">
+      <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+        {% for recipe in recipes %}
+          <li>
+              <div class="collapsible-header">
+                  <div class="recipe-header col s9">
+                      <strong>{{recipe.recipe_name}} - {{recipe.category_name['category_name']}} - {{recipe.cuisine_name['cuisine_name']}} - {{recipe.total_time}} Minutes to Prepare - User Votes: {{recipe.user_votes}}</strong>
+                  </div>
+              </div>
+              <div class="collapsible-body recipe-description">
+                  <span>
+                  {{recipe.recipe_description}}
+              </span>
+              </div>
+              <a href="{{url_for('show_recipe', recipe_id=recipe._id)}}" class="waves-effect waves-light btn btn_small blue show_recipe_button">Show</a>
+          </li>
+        {% endfor %}
+        {% if recipes is zero_result %}
+        <p>No Recipes found</p>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

@@ -97,6 +97,106 @@ def generate_csrf_token():
 
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
+def get_collection_id(collection_name, search_field, search_value):
+
+    field_name = urllib.parse.quote_plus(search_field)
+
+    collection_record = mongo.db[collection_name].find_one({field_name : search_value})
+
+    return collection_record['_id']
+
+
+def insert_record(id_name, insert_record_id, record_set_dict, filter_key, collection_name):
+    '''Insert an Instruction or Ingredient record using using foreign key id'''
+
+    if (filter_key == FILTER_KEYS.INGREDIENT.value
+        or filter_key == FILTER_KEYS.INSTRUCTION.value):
+
+        key_name = urllib.parse.quote_plus(filter_key)
+
+    else:
+
+        sys.stderr.write('filter key ingredient/instruction :: error %s' % (filter_key))
+
+    if (collection_name == COLLECTION_NAMES.INSTRUCTIONS.value
+        or collection_name == COLLECTION_NAMES.INGREDIENTS.value):
+
+        sub_record_name = urllib.parse.quote_plus(collection_name)
+
+    else:
+
+        sys.stderr.write('collection name categories/cuisines/instructions/ingredients not found :: error %s' % (collection_name))
+
+    if (id_name == ID_NAME.RECIPE_ID.value):
+
+        primary_record_id = urllib.parse.quote_plus(id_name)
+
+    else:
+
+        sys.stderr.write('id name recipe_id not found :: error %s' % (id_name))
+
+    filtered_dict = {k: v for (k, v) in record_set_dict
+                                                if key_name in k}
+
+    record_doc = {primary_record_id: insert_record_id,
+                    sub_record_name: list(filtered_dict.values())}
+
+    mongo.db[collection_name].insert_one(record_doc)
+
+
+def update_record(id_name, update_record_id, record_set_dict, filter_key, collection_name):
+    '''Update an Instruction or Ingredient record using using foreign key id'''
+
+    if (filter_key == FILTER_KEYS.INGREDIENT.value
+        or filter_key == FILTER_KEYS.INSTRUCTION.value):
+
+        key_name = urllib.parse.quote_plus(filter_key)
+
+    else:
+
+        sys.stderr.write('filter key ingredient/instruction :: error %s' % (filter_key))
+
+    if (collection_name == COLLECTION_NAMES.INSTRUCTIONS.value
+        or collection_name == COLLECTION_NAMES.INGREDIENTS.value):
+
+        sub_record_name = urllib.parse.quote_plus(collection_name)
+
+    else:
+
+        sys.stderr.write('collection name categories/cuisines/instructions/ingredients not found :: error %s' % (collection_name))
+
+    if ( id_name == ID_NAME.RECIPE_ID.value):
+
+        primary_record_id = urllib.parse.quote_plus(id_name)
+
+    else:
+
+        sys.stderr.write('id name recipe_id not found :: error %s' % (id_name))
+
+    filtered_dict = {k: v for (k, v) in record_set_dict
+                                                if key_name in k}
+
+    record_doc = {primary_record_id: ObjectId(update_record_id),
+                        sub_record_name: list(filtered_dict.values())}
+
+    record_tobe_updated = mongo.db[collection_name].find_one({'recipe_id': ObjectId(update_record_id)})
+
+    mongo.db[collection_name].update({'_id': ObjectId(record_tobe_updated['_id'])}, record_doc)
+
+
+def zero_result_cursor(c):
+
+    if len(list(c)) == 0:
+
+        return True
+    else:
+
+        return False
+
+app.jinja_env.tests['zero_result'] = zero_result_cursor
+
+
+
 # some protected url
 @app.route('/')
 def home():
@@ -185,92 +285,6 @@ def page_not_found(e):
 @login_manager.user_loader
 def load_user(userid):
     return User(userid)
-
-def get_collection_id(collection_name, search_field, search_value):
-
-    field_name = urllib.parse.quote_plus(search_field)
-
-    collection_record = mongo.db[collection_name].find_one({field_name : search_value})
-
-    return collection_record['_id']
-
-
-def insert_record(id_name, insert_record_id, record_set_dict, filter_key, collection_name):
-    '''Insert an Instruction or Ingredient record using using foreign key id'''
-
-    if (filter_key == FILTER_KEYS.INGREDIENT.value
-        or filter_key == FILTER_KEYS.INSTRUCTION.value):
-
-        key_name = urllib.parse.quote_plus(filter_key)
-
-    else:
-
-        sys.stderr.write('filter key ingredient/instruction :: error %s' % (filter_key))
-
-    if (collection_name == COLLECTION_NAMES.INSTRUCTIONS.value
-        or collection_name == COLLECTION_NAMES.INGREDIENTS.value):
-
-        sub_record_name = urllib.parse.quote_plus(collection_name)
-
-    else:
-
-        sys.stderr.write('collection name categories/cuisines/instructions/ingredients not found :: error %s' % (collection_name))
-
-    if (id_name == ID_NAME.RECIPE_ID.value):
-
-        primary_record_id = urllib.parse.quote_plus(id_name)
-
-    else:
-
-        sys.stderr.write('id name recipe_id not found :: error %s' % (id_name))
-
-    filtered_dict = {k: v for (k, v) in record_set_dict
-                                                if key_name in k}
-
-    record_doc = {primary_record_id: insert_record_id,
-                    sub_record_name: list(filtered_dict.values())}
-
-    mongo.db[collection_name].insert_one(record_doc)
-
-
-def update_record(id_name, update_record_id, record_set_dict, filter_key, collection_name):
-    '''Update an Instruction or Ingredient record using using foreign key id'''
-
-    if (filter_key == FILTER_KEYS.INGREDIENT.value
-        or filter_key == FILTER_KEYS.INSTRUCTION.value):
-
-        key_name = urllib.parse.quote_plus(filter_key)
-
-    else:
-
-        sys.stderr.write('filter key ingredient/instruction :: error %s' % (filter_key))
-
-    if (collection_name == COLLECTION_NAMES.INSTRUCTIONS.value
-        or collection_name == COLLECTION_NAMES.INGREDIENTS.value):
-
-        sub_record_name = urllib.parse.quote_plus(collection_name)
-
-    else:
-
-        sys.stderr.write('collection name categories/cuisines/instructions/ingredients not found :: error %s' % (collection_name))
-
-    if ( id_name == ID_NAME.RECIPE_ID.value):
-
-        primary_record_id = urllib.parse.quote_plus(id_name)
-
-    else:
-
-        sys.stderr.write('id name recipe_id not found :: error %s' % (id_name))
-
-    filtered_dict = {k: v for (k, v) in record_set_dict
-                                                if key_name in k}
-
-    record_doc = {primary_record_id: ObjectId(update_record_id),
-                        sub_record_name: list(filtered_dict.values())}
-
-    record_tobe_updated = mongo.db[collection_name].find_one({'recipe_id': ObjectId(update_record_id)})
-
-    mongo.db[collection_name].update({'_id': ObjectId(record_tobe_updated['_id'])}, record_doc)
 
 
 @app.route('/add_category')
