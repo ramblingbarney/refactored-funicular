@@ -183,20 +183,6 @@ def update_record(id_name, update_record_id, record_set_dict, filter_key, collec
 
     mongo.db[collection_name].update({'_id': ObjectId(record_tobe_updated['_id'])}, record_doc)
 
-
-def zero_result_cursor(c):
-
-    if len(list(c)) == 0:
-
-        return True
-    else:
-
-        return False
-
-app.jinja_env.tests['zero_result'] = zero_result_cursor
-
-
-
 # some protected url
 @app.route('/')
 def home():
@@ -434,6 +420,22 @@ def search_recipes():
         sort_column = SORT_COLUMN.TOTAL_TIME.value
         sort_order = -1
 
+    results = mongo.db.recipes.aggregate([
+        {'$lookup': {'from' : 'categories',
+                'localField' : 'category_id',
+                'foreignField' : '_id',
+                'as' : 'category_name'}
+        }
+        ,{'$unwind': '$category_name'}
+        ,{'$lookup': {'from' : 'cuisines',
+                'localField' : 'cuisine_id',
+                'foreignField' : '_id',
+                'as' : 'cuisine_name'}
+        }
+        ,{'$unwind': '$cuisine_name'}
+        ,{'$match':{search_column: {'$regex': search_text, '$options': 'i'}}}
+        ,{'$sort': SON([(sort_column, sort_order)])}])
+
     return render_template('search_recipes.html'
                                 ,recipes=mongo.db.recipes.aggregate([
                                     {'$lookup': {'from' : 'categories',
@@ -449,7 +451,8 @@ def search_recipes():
                                     }
                                     ,{'$unwind': '$cuisine_name'}
                                     ,{'$match':{search_column: {'$regex': search_text, '$options': 'i'}}}
-                                    ,{'$sort': SON([(sort_column, sort_order)])}]))
+                                    ,{'$sort': SON([(sort_column, sort_order)])}]), number_results=len(list(results)))
+
 
 @app.route('/insert_recipe', methods=['POST'])
 @login_required

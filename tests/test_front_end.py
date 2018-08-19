@@ -105,11 +105,33 @@ class RecipeBuddyUITests(unittest.TestCase):
                 'cuisine_id': insert_cuisine_3.inserted_id,
                 'total_time': '15', 'user_votes': '-1'}
 
+        recipe_4 = {'recipe_name': 'Apple and Tuna Tapas',
+                'recipe_description': 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.',
+                'category_id': insert_category_1.inserted_id,
+                'cuisine_id': insert_cuisine_1.inserted_id,
+                'total_time': '60', 'user_votes': '4'}
+
+
+        recipe_5 = {'recipe_name': 'German Pepper Steak',
+                'recipe_description': 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.',
+                'category_id': insert_category_2.inserted_id,
+                'cuisine_id': insert_cuisine_2.inserted_id,
+                'total_time': '30', 'user_votes': '4'}
+
+        recipe_6 = {'recipe_name': 'Italian Pizza',
+                'recipe_description': 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.',
+                'category_id': insert_category_3.inserted_id,
+                'cuisine_id': insert_cuisine_3.inserted_id,
+                'total_time': '15', 'user_votes': '1'}
+
         # insert recipes collection
 
         insert_recipe_1 = self.collection_recipes.insert_one(recipe_1)
         insert_recipe_2 = self.collection_recipes.insert_one(recipe_2)
         insert_recipe_3 = self.collection_recipes.insert_one(recipe_3)
+        insert_recipe_4 = self.collection_recipes.insert_one(recipe_4)
+        insert_recipe_5 = self.collection_recipes.insert_one(recipe_5)
+        insert_recipe_6 = self.collection_recipes.insert_one(recipe_6)
 
         instructions_1 = {'recipe_id': insert_recipe_1.inserted_id, 'instructions' : ["mix 3 eggs", "whisk", "put on low heat"]}
 
@@ -123,15 +145,27 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         ingredients_3 = {'recipe_id': insert_recipe_3.inserted_id, 'ingredients' : ["200g carrots", "drop of olive oil", "200g brown onions"]}
 
+        instructions_4 = {'recipe_id': insert_recipe_4.inserted_id, 'instructions' : ["mix 3 eggs", "whisk", "put on low heat"]}
+
+        ingredients_4 = {'recipe_id': insert_recipe_4.inserted_id, 'ingredients' : ["3 eggs", "100g butter", "0.5l water"]}
+
+        instructions_5 = {'recipe_id': insert_recipe_5.inserted_id, 'instructions' : ["peel 2 oranges", "add flour", "put on high heat"]}
+
+        ingredients_5 = {'recipe_id': insert_recipe_5.inserted_id, 'ingredients' : ["2 oranges", "100g butter", "1l water", "200g flour"]}
+
+        instructions_6 = {'recipe_id': insert_recipe_6.inserted_id, 'instructions' : ["chop carrots", "fry on high heat with olive oil", "chop onions", "add onions once carrots soft"]}
+
+        ingredients_6 = {'recipe_id': insert_recipe_6.inserted_id, 'ingredients' : ["200g carrots", "drop of olive oil", "200g brown onions"]}
+
         # create the 'instructions' collection in MongoDB
         self.collection_instructions = self.DB.instructions
         # insert
-        self.collection_instructions.insert_many([instructions_1, instructions_2, instructions_3])
+        self.collection_instructions.insert_many([instructions_1, instructions_2, instructions_3, instructions_4, instructions_5, instructions_6])
 
         # create the 'ingredients' collection in MongoDB
         self.collection_ingredients = self.DB.ingredients
         # insert
-        self.collection_ingredients.insert_many([ingredients_1, ingredients_2, ingredients_3])
+        self.collection_ingredients.insert_many([ingredients_1, ingredients_2, ingredients_3, ingredients_4, ingredients_5, ingredients_6])
 
         # create the 'users' collection in mongodb
         self.collection_users = self.DB.users
@@ -588,30 +622,30 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertEqual(self.driver.current_url,
                         'http://localhost:5000/get_cuisines')
 
-    def test_three_recipes_headings(self):
-        ''' Test 3 recipes headings present '''
+    def test_six_recipes_headings(self):
+        ''' Test 6 recipes headings present '''
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
         self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
 
-        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1']
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4', 'Italian Pizza - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: 1']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
 
         self.assertListEqual(test_list, self.li_span_text)
 
-    def test_three_recipes_description(self):
-        ''' Test 3 recipes headings present '''
+    def test_six_recipes_description(self):
+        ''' Test 6 recipes headings present '''
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
         self.elements = self.driver.find_elements_by_xpath("//div[contains(@class, 'recipe-description')]/span")
 
-        self.assertEqual(len(self.elements), 3)
+        self.assertEqual(len(self.elements), 6)
 
     def test_add_recipe_headings(self):
         ''' Test Adding a Recipe Heading'''
@@ -647,7 +681,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
 
-        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Vietnamese Grilled Lemongrass Chicken - Evening Meal for 2 - Spanish - 15 Minutes to Prepare - User Votes: 1']
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4', 'Italian Pizza - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: 1', 'Vietnamese Grilled Lemongrass Chicken - Evening Meal for 2 - Spanish - 15 Minutes to Prepare - User Votes: 1']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -688,7 +722,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.elements = self.driver.find_elements_by_xpath("//div[contains(@class, 'recipe-description')]/span")
 
-        self.assertEqual(len(self.elements), 4)
+        self.assertEqual(len(self.elements), 7)
 
     def test_total_time_plus_add_recipe(self):
         ''' Test Adding 15 minute Time increment to a Recipe'''
@@ -1659,7 +1693,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
 
-        test_list = ['Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1']
+        test_list = ['Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4', 'Italian Pizza - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: 1']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -1689,7 +1723,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
 
         self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
-        self.elements[2].click()
+        self.elements[5].click()
         self.driver.implicitly_wait(0)  # seconds
 
         try:
@@ -1702,7 +1736,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
 
-        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5']
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -1795,6 +1829,283 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
 
         self.assertEqual(self.driver.current_url,'http://localhost:5000/add_category')
+
+    def test_search_recipes_no_search_results(self):
+        ''' Test searching for recipes that return no results '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('test12345')
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_id("no-recipes-found")
+
+        self.assertEqual(element.text,'No Recipes found')
+
+    def test_search_recipes_search_results(self):
+        ''' Test searching for recipes that return results '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('meal for 1')
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_id("no-recipes-found")
+
+        self.assertEqual(len(self.elements), 0)
+
+    def test_search_recipes_categories_ascending_user_votes_results(self):
+        ''' Test searching for categories recipes with ascending user votes results '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('Meal for 1')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('Categories')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(0)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_categories_descending_user_votes_results(self):
+        ''' Test searching for categories recipes with descending user votes results '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('Meal for 1')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('Categories')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(1)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = [ 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_categories_ascending_total_time_results(self):
+        ''' Test searching for categories recipes with ascending total time results '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('Meal for 1')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('Categories')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(2)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3','Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_categories_descending_total_time_results(self):
+        ''' Test searching for categories recipes with descending total time results '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('Meal for 1')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('Categories')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(3)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_cuisines_ascending_user_votes_results(self):
+        ''' Test searching for cuisines recipes with ascending user votes results '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('thai')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('Cuisines')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(0)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_cuisines_descending_user_votes_results(self):
+        ''' Test searching for cuisines recipes with descending user votes results '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('thai')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('Cuisines')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(1)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = [ 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+
+    def test_search_recipes_cuisines_ascending_total_time_results(self):
+        ''' Test searching for cuisines recipes with ascending total time results '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('thai')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('Cuisines')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(2)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3','Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_cuisines_descending_total_time_results(self):
+        ''' Test searching for cuisines recipes with descending total time results '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('thai')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('Cuisines')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(3)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_cuisines_descending_total_time_results_then_show_first(self):
+        ''' Test searching for cuisines recipes with descending total time results '''
+
+        self.driver.get("http://localhost:5000/get_recipes")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('thai')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('Cuisines')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(3)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+
+        test_list = ['mix 3 eggs', 'whisk', 'put on low heat']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
 
 
 

@@ -722,6 +722,113 @@ You will need the following things properly installed on your computer.
   * You then click logout or visit 'http://localhost:5000/logout'
   * If you then visit 'http://localhost:5000/add_category' you are redirected to 'http://localhost:5000/login'
 
+### Search No Recipe Results found
+
+* As a user I want to enter text into the search box to search for Categories/Cuisines/User Votes and no recipes will be found/shown
+
+* Example acceptance criteria:
+  * Enter text to search for in the navigation bar that is known not to exist
+  * Click 'Search'
+  * The user is shown the text 'No Recipes found'
+
+
+### Search Recipe Results found
+
+* As a user I want to enter text into the search box to search for Categories/Cuisines/User Votes and recipes will be found/shown
+
+* Example acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist
+  * Click 'Search'
+  * The user is shown the Recipe header and description
+  * The user is not shown the text 'No Recipes found'
+
+### Search Recipes by Category, Results with Ascending User Votes
+
+* As a user I want to enter text into the search box to search for Categories and the results to be returned with ascending user votes
+
+* Example acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for categories
+  * select the 'Categories' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching category with the first result having the lowest number of user votes with the rest of the results in ascending user vote order
+
+### Search Recipes by Category, Results with Descending User Votes
+
+* As a user I want to enter text into the search box to search for Categories and the results to be returned with descending user votes
+
+* Example acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for categories
+  * select the 'Categories' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching category with the first result having the lowest number of user votes with the rest of the results in descending user vote order
+
+
+### Search Recipes by Category, Results with Ascending Total Time
+
+* As a user I want to enter text into the search box to search for Categories and the results to be returned with ascending total time
+
+* Example acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for categories
+  * select the 'Categories' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching category with the first result having the lowest total time with the rest of the results in ascending total time order
+
+### Search Recipes by Category, Results with Descending Total Time
+
+* As a user I want to enter text into the search box to search for Categories and the results to be returned with descending total time
+
+* Example acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for categories
+  * select the 'Categories' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching category with the first result having the lowest total time with the rest of the results in descending total time order
+
+### Search Recipes by Cuisine, Results with Ascending User Votes
+
+* As a user I want to enter text into the search box to search for Cuisines and the results to be returned with ascending user votes
+
+* Example acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for cuisines
+  * select the 'Cuisines' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching cuisine with the first result having the lowest number of user votes with the rest of the results in ascending user vote order
+
+### Search Recipes by Cuisine, Results with Descending User Votes
+
+* As a user I want to enter text into the search box to search for Cuisines and the results to be returned with descending user votes
+
+* Example acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for cuisines
+  * select the 'Cuisines' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching cuisine with the first result having the lowest number of user votes with the rest of the results in descending user vote order
+
+
+### Search Recipes by Cuisine, Results with Ascending Total Time
+
+* As a user I want to enter text into the search box to search for Cuisines and the results to be returned with ascending total time
+
+* Example acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for Cuisines
+  * select the 'Cuisines' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching Cuisine with the first result having the lowest total time with the rest of the results in ascending total time order
+
+### Search Recipes by Cuisine, Results with Descending Total Time
+
+* As a user I want to enter text into the search box to search for Cuisines and the results to be returned with descending total time
+
+* Example acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for cuisines
+  * select the 'Cuisines' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching cuisine with the first result having the lowest total time with the rest of the results in descending total time order
+
+
+
+
+
+
 
 ## Manual Testing
 

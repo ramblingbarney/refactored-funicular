@@ -17,8 +17,8 @@
               <a href="{{url_for('show_recipe', recipe_id=recipe._id)}}" class="waves-effect waves-light btn btn_small blue show_recipe_button">Show</a>
           </li>
         {% endfor %}
-        {% if recipes is zero_result %}
-        <p>No Recipes found</p>
+        {% if number_results == 0 %}
+          <p id="no-recipes-found">No Recipes found</p>
         {% endif %}
     </ul>
 </div>

@@ -2,7 +2,7 @@
     <head>
       <style>
 
-      li{
+      .nav-single-line{
         display: inline-block;
       }
 
@@ -16,11 +16,11 @@
     <body>
         <div>
           <ul>
-            <li>Microblog:</li>
-            <li><a href="{{ url_for('get_recipes')}}">Home</a></li>
-            <li><a href="{{ url_for('login')}}">Login</a></li>
-            <li><a href="{{ url_for('register')}}">Register</a></li>
-            <li><form action="{{ url_for('search_recipes') }}" method="POST" class="col s12">
+            <li class="nav-single-line">Microblog:</li>
+            <li class="nav-single-line"><a href="{{ url_for('get_recipes')}}">Home</a></li>
+            <li class="nav-single-line"><a href="{{ url_for('login')}}">Login</a></li>
+            <li class="nav-single-line"><a href="{{ url_for('register')}}">Register</a></li>
+            <li class="nav-single-line"><form action="{{ url_for('search_recipes') }}" method="POST" class="col s12">
               <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
               <input id="search-text" name="search_text" type="text" placeholder="Search" required>
               <select id="search_option" name="search_selected">
@@ -34,7 +34,7 @@
                 <option value="TotalTimeAscending">Total Time &uarr;</option>
                 <option value="TotalTimeDescending">Total Time &darr;</option>
               </select>
-              <button class="btn waves-effect waves-light" id="add-recipe" type="submit" name="action">Search</button>
+              <button class="btn waves-effect waves-light" id="search-button" type="submit" name="action">Search</button>
             </form></li>
           </ul>
         </div>
