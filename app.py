@@ -9,11 +9,11 @@ from forms import LoginForm, RegistrationForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from bson.son import SON
+from bson.json_util import dumps
 import random
 import string
 import urllib.parse
 import urllib.request
-
 
 if os.getenv('FLASK_CONFIG') == "production":
     app = Flask(__name__)
@@ -183,11 +183,33 @@ def update_record(id_name, update_record_id, record_set_dict, filter_key, collec
 
     mongo.db[collection_name].update({'_id': ObjectId(record_tobe_updated['_id'])}, record_doc)
 
-# some protected url
 @app.route('/')
 def home():
-    return redirect(url_for('get_recipes'))
+    chart_data = mongo.db.recipes.aggregate([
+            {'$lookup': {'from' : 'categories',
+                    'localField' : 'category_id',
+                    'foreignField' : '_id',
+                    'as' : 'category_name'}
+            }
+            ,{'$unwind': '$category_name'}
+            ,{'$lookup': {'from' : 'cuisines',
+                    'localField' : 'cuisine_id',
+                    'foreignField' : '_id',
+                    'as' : 'cuisine_name'}
+            }
+            ,{'$unwind': '$cuisine_name'}
+            , {'$group': {'_id': '$cuisine_name', 'total_votes': {'$sum': '$user_votes'}}}
+            , {'$sort': SON([('total_votes', -1), ('_id', -1)])}
+            ])
 
+    result_cleaned = []
+
+    for x in chart_data:
+        result_cleaned.append({'name': x['_id']['cuisine_name'], 'value': x['total_votes']})
+
+    chart_data = dumps({'name': 'A1', 'children': result_cleaned}, indent=2)
+
+    return render_template('index.html',resultData=chart_data)
 
 # somewhere to login
 @app.route("/login", methods=["GET", "POST"])
@@ -443,15 +465,16 @@ def search_recipes():
                                             'foreignField' : '_id',
                                             'as' : 'category_name'}
                                     }
-                                    ,{'$unwind': '$category_name'}
-                                    ,{'$lookup': {'from' : 'cuisines',
+                                    , {'$unwind': '$category_name'}
+                                    , {'$lookup': {'from' : 'cuisines',
                                             'localField' : 'cuisine_id',
                                             'foreignField' : '_id',
                                             'as' : 'cuisine_name'}
                                     }
-                                    ,{'$unwind': '$cuisine_name'}
-                                    ,{'$match':{search_column: {'$regex': search_text, '$options': 'i'}}}
-                                    ,{'$sort': SON([(sort_column, sort_order)])}]), number_results=len(list(results)))
+                                    , {'$unwind': '$cuisine_name'}
+                                    , {'$match':{search_column: {'$regex': search_text, '$options': 'i'}}}
+                                    # , {'$project': {'cuisine_name': 1, 'user_votes': 1}}
+                                    , {'$sort': SON([(sort_column, sort_order)])}]), number_results=len(list(results)))
 
 
 @app.route('/insert_recipe', methods=['POST'])
@@ -542,7 +565,6 @@ def update_recipe(recipe_id):
                 record_set_dict=request.form.to_dict().items(), filter_key='instruction',collection_name='instructions')
 
     return redirect(url_for('get_recipes'))
-
 
 @app.route('/delete_recipe/<recipe_id>')
 @login_required

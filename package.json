@@ -1,0 +1,27 @@
+{
+  "name": "stream-2b-flask-material-ui-0.1",
+  "version": "1.0.0",
+  "description": "The purpose of this application is provide an easy way to store, rate and use cooking recipes.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramblingbarney/refactored-funicular.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramblingbarney/refactored-funicular/issues"
+  },
+  "homepage": "https://github.com/ramblingbarney/refactored-funicular#readme",
+  "dependencies": {
+    "d3": "^5.5.0"
+  }
+}

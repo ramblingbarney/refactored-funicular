@@ -1,0 +1,62 @@
+{% extends 'base.html'%} {% block content %}
+
+<script src="{{ url_for('static', filename='node_modules/d3/dist/d3.min.js') }}"></script>
+
+<style>
+circle {
+  fill: indianred;
+  opacity: 0.3;
+  stroke: white;
+}
+text {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  fill: white;
+  font-size: 10px;
+  text-anchor: middle;
+}
+</style>
+
+  <svg width="400" height="400">
+    <g></g>
+  </svg>
+
+  <script>
+  // Chart code taken from http://d3indepth.com/layouts/
+
+var data = JSON.parse({{ resultData|tojson|safe }});
+
+var packLayout = d3.pack()
+  .size([400, 400])
+  .padding(10)
+
+var rootNode = d3.hierarchy(data)
+
+rootNode.sum(function(d) {
+  return d.value;
+});
+
+packLayout(rootNode);
+
+var nodes = d3.select('svg g')
+  .selectAll('g')
+  .data(rootNode.descendants())
+  .enter()
+  .append('g')
+  .attr('transform', function(d) {return 'translate(' + [d.x, d.y] + ')'})
+
+
+nodes
+  .append('circle')
+  .attr('r', function(d) { return d.r; })
+
+
+nodes
+  .append('text')
+  .attr('dy', 4)
+  .text(function(d) {
+    return d.children === undefined ? d.data.name : '';
+  })
+
+
+  </script>
+{% endblock %}
