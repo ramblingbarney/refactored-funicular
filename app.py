@@ -205,7 +205,7 @@ def home():
     result_cleaned = []
 
     for x in chart_data:
-        result_cleaned.append({'name': x['_id']['cuisine_name'], 'value': x['total_votes']})
+        result_cleaned.append({'name': x['_id']['cuisine_name'], 'value': x['total_votes'], 'url': 'http://localhost:5000/chart_search_recipes/' + x['_id']['cuisine_name']})
 
     chart_data = dumps({'name': 'A1', 'children': result_cleaned}, indent=2)
 
@@ -477,6 +477,52 @@ def search_recipes():
                                     , {'$sort': SON([(sort_column, sort_order)])}]), number_results=len(list(results)))
 
 
+@app.route('/chart_search_recipes/<name>')
+def chart_search_recipes(name):
+
+    search_text = name
+
+    search_column = 'cuisine_name.cuisine_name'
+
+    sort_column = 'user_votes'
+
+    sort_order = -1
+
+    results = mongo.db.recipes.aggregate([
+        {'$lookup': {'from' : 'categories',
+                'localField' : 'category_id',
+                'foreignField' : '_id',
+                'as' : 'category_name'}
+        }
+        ,{'$unwind': '$category_name'}
+        ,{'$lookup': {'from' : 'cuisines',
+                'localField' : 'cuisine_id',
+                'foreignField' : '_id',
+                'as' : 'cuisine_name'}
+        }
+        ,{'$unwind': '$cuisine_name'}
+        ,{'$match':{search_column: {'$regex': search_text, '$options': 'i'}}}
+        ,{'$sort': SON([(sort_column, sort_order)])}])
+
+    return render_template('search_recipes.html'
+                                ,recipes=mongo.db.recipes.aggregate([
+                                    {'$lookup': {'from' : 'categories',
+                                            'localField' : 'category_id',
+                                            'foreignField' : '_id',
+                                            'as' : 'category_name'}
+                                    }
+                                    , {'$unwind': '$category_name'}
+                                    , {'$lookup': {'from' : 'cuisines',
+                                            'localField' : 'cuisine_id',
+                                            'foreignField' : '_id',
+                                            'as' : 'cuisine_name'}
+                                    }
+                                    , {'$unwind': '$cuisine_name'}
+                                    , {'$match':{search_column: {'$regex': search_text, '$options': 'i'}}}
+                                    # , {'$project': {'cuisine_name': 1, 'user_votes': 1}}
+                                    , {'$sort': SON([(sort_column, sort_order)])}]), number_results=len(list(results)))
+
+
 @app.route('/insert_recipe', methods=['POST'])
 @login_required
 def insert_recipe():
@@ -576,5 +622,3 @@ def delete_recipe(recipe_id):
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), debug=True)
-
-# TODO: you can use a Python library such as matplotlib, or a JS library such as d3/dc (that you learned about if you took the frontend modules) for visualisation

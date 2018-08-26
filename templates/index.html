@@ -1,8 +1,10 @@
 {% extends 'base.html'%} {% block content %}
 
 <script src="{{ url_for('static', filename='node_modules/d3/dist/d3.min.js') }}"></script>
+<script src="{{ url_for('static', filename='node_modules/d3-tip/dist/index.js') }}"></script>
 
 <style>
+
 circle {
   fill: indianred;
   opacity: 0.3;
@@ -14,6 +16,36 @@ text {
   font-size: 10px;
   text-anchor: middle;
 }
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
 </style>
 
   <svg width="400" height="400">
@@ -21,7 +53,15 @@ text {
   </svg>
 
   <script>
-  // Chart code taken from http://d3indepth.com/layouts/
+// Chart code taken from http://d3indepth.com/layouts/
+
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return d.children === undefined ? "<strong>User Votes:</strong> <span style='color:red'>" + d.data.value + "</span>" : '';
+    // return "<strong>User Votes:</strong> <span style='color:red'>" + d.data.value + "</span>";
+  })
 
 var data = JSON.parse({{ resultData|tojson|safe }});
 
@@ -44,11 +84,9 @@ var nodes = d3.select('svg g')
   .append('g')
   .attr('transform', function(d) {return 'translate(' + [d.x, d.y] + ')'})
 
-
 nodes
   .append('circle')
   .attr('r', function(d) { return d.r; })
-
 
 nodes
   .append('text')
@@ -56,7 +94,15 @@ nodes
   .text(function(d) {
     return d.children === undefined ? d.data.name : '';
   })
+  .style("cursor", "pointer")
+  .on('mouseover', tip.show)
+  .on('mouseout', tip.hide)
+  .on("click",function(d){
+    window.location = d.data.url});
+
+nodes.call(tip);
 
 
-  </script>
+</script>
+
 {% endblock %}
