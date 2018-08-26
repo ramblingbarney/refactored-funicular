@@ -2106,7 +2106,40 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertListEqual(test_list, self.li_span_text)
 
+    def test_bubble_graph_label_onclick_show_filtered_thai_recipes(self):
+        ''' Test clicking on 'Thai' graph bubble label shows filtered Thai cuisine recipes '''
 
+        self.driver.get("http://localhost:5000/")
+        self.driver.implicitly_wait(0)  # seconds
 
+        self.driver.find_element_by_xpath("//*[starts-with(., 'Thai')]").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_bubble_graph_label_onclick_show_filtered_indian_recipes(self):
+        ''' Test clicking on 'Indian' graph bubble label shows filtered Indian cuisine recipes '''
+
+        self.driver.get("http://localhost:5000/")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_xpath("//*[starts-with(., 'Indian')]").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
+
+        test_list = ['Italian Pizza - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: 1', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
 
 # TODO: check tests for assigned variables not required and poor naming conventions recipe using categoory etc, self.elements

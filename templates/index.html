@@ -60,7 +60,6 @@ var tip = d3.tip()
   .offset([-10, 0])
   .html(function(d) {
     return d.children === undefined ? "<strong>User Votes:</strong> <span style='color:red'>" + d.data.value + "</span>" : '';
-    // return "<strong>User Votes:</strong> <span style='color:red'>" + d.data.value + "</span>";
   })
 
 var data = JSON.parse({{ resultData|tojson|safe }});

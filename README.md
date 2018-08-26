@@ -824,10 +824,13 @@ You will need the following things properly installed on your computer.
   * Click 'Search'
   * The user is shown the Recipe header and description for matching the matching cuisine with the first result having the lowest total time with the rest of the results in descending total time order
 
+### Click on Bubble Graph Label with Cuisine results with Descending User Votes
 
+* As a user I want to click on the graph bubble label and be shown that cuisine recipes by User Votes descending
 
-
-
+* Example acceptance criteria:
+  * Click on bubble graph label
+  * The user is shown the Recipe header and description for matching the matching cuisine with the first result having the highest User Votes with the rest of the results in descending User Votes order
 
 
 ## Manual Testing
@@ -848,3 +851,4 @@ You will need the following things properly installed on your computer.
 * Cuisines, Cateogries, Total Time, Recipes can have duplicates, I would recommend either having an index in the names and then using a switch to an update statement when the insert fails or using javascript checkon the page with a dummy route as used in my Stream 2A project
 * If a user attempts to register the same email address twice the record is updated with the last password as the site doesn't have a lost password functionality
 * The Bubble chart on the index page will show label text for 'Cuisines' without 'User Votes' but without a bubble
+* The 'Spanish' label cannot be tested using the same unit tests as 'Indian' and 'Thai', I suspect the label has padding or leading spaces

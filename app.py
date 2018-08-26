@@ -422,6 +422,8 @@ def search_recipes():
 
         search_column = 'user_votes'
 
+# TODO: correct below code as its not following     elif SEARCH_TYPE.USER_VOTES.value == request.form['search_selected']:
+
     if  request.form['order_selected'] == 'UserVotesAscending':
 
         sort_column = SORT_COLUMN.USER_VOTES.value
