@@ -79,9 +79,14 @@ class SEARCH_TYPE(enum.Enum):
     USER_VOTES = 'user_votes'
 
 class SORT_COLUMN(enum.Enum):
-
     USER_VOTES = 'user_votes'
     TOTAL_TIME = 'total_time'
+
+class SORT_ORDER(enum.Enum):
+    USER_VOTES_ASCENDING = 'UserVotesAscending'
+    USER_VOTES_DESCENDING = 'UserVotesDescending'
+    TOTAL_TIME_ASCENDING = 'TotalTimeAscending'
+    TOTAL_TIME_DESCENDING = 'TotalTimeDescending'
 
 @app.before_request
 def csrf_protect():
@@ -422,34 +427,34 @@ def search_recipes():
 
     search_text = request.form['search_text']
 
-    if SEARCH_TYPE.CATEGORY_NAME.value == request.form['search_selected']:
+    if (SEARCH_TYPE.CATEGORY_NAME.value == request.form['search_selected']):
 
-        search_column = 'category_name.category_name'
+        search_column = urllib.parse.quote_plus(SEARCH_TYPE.CATEGORY_NAME.value)
 
-    elif SEARCH_TYPE.CUISINE_NAME.value == request.form['search_selected']:
+    elif (SEARCH_TYPE.CUISINE_NAME.value == request.form['search_selected']):
 
-        search_column = 'cuisine_name.cuisine_name'
+        search_column = urllib.parse.quote_plus(SEARCH_TYPE.CUISINE_NAME.value)
 
-    elif SEARCH_TYPE.USER_VOTES.value == request.form['search_selected']:
+    elif (SEARCH_TYPE.USER_VOTES.value == request.form['search_selected']):
 
-        search_column = 'user_votes'
+        search_column = urllib.parse.quote_plus(SEARCH_TYPE.USER_VOTES.value)
 
-    if  request.form['order_selected'] == 'UserVotesAscending':
+    if  (SORT_ORDER.USER_VOTES_ASCENDING.value == request.form['order_selected']):
 
         sort_column = SORT_COLUMN.USER_VOTES.value
         sort_order = 1
 
-    elif  request.form['order_selected'] == 'UserVotesDescending':
+    elif (SORT_ORDER.USER_VOTES_DESCENDING.value == request.form['order_selected']):
 
         sort_column = SORT_COLUMN.USER_VOTES.value
         sort_order = -1
 
-    elif  request.form['order_selected'] == 'TotalTimeAscending':
+    elif (SORT_ORDER.TOTAL_TIME_ASCENDING.value == request.form['order_selected']):
 
         sort_column = SORT_COLUMN.TOTAL_TIME.value
         sort_order = 1
 
-    elif  request.form['order_selected'] == 'TotalTimeDescending':
+    elif (SORT_ORDER.TOTAL_TIME_DESCENDING.value == request.form['order_selected']):
 
         sort_column = SORT_COLUMN.TOTAL_TIME.value
         sort_order = -1
