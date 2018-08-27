@@ -441,22 +441,22 @@ def search_recipes():
 
     if  (SORT_ORDER.USER_VOTES_ASCENDING.value == request.form['order_selected']):
 
-        sort_column = SORT_COLUMN.USER_VOTES.value
+        sort_column = urllib.parse.quote_plus(SORT_COLUMN.USER_VOTES.value)
         sort_order = 1
 
     elif (SORT_ORDER.USER_VOTES_DESCENDING.value == request.form['order_selected']):
 
-        sort_column = SORT_COLUMN.USER_VOTES.value
+        sort_column = urllib.parse.quote_plus(SORT_COLUMN.USER_VOTES.value)
         sort_order = -1
 
     elif (SORT_ORDER.TOTAL_TIME_ASCENDING.value == request.form['order_selected']):
 
-        sort_column = SORT_COLUMN.TOTAL_TIME.value
+        sort_column = urllib.parse.quote_plus(SORT_COLUMN.TOTAL_TIME.value)
         sort_order = 1
 
     elif (SORT_ORDER.TOTAL_TIME_DESCENDING.value == request.form['order_selected']):
 
-        sort_column = SORT_COLUMN.TOTAL_TIME.value
+        sort_column = urllib.parse.quote_plus(SORT_COLUMN.TOTAL_TIME.value)
         sort_order = -1
 
     results = mongo.db.recipes.aggregate([
