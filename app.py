@@ -109,19 +109,25 @@ def get_collection_id(collection_name, search_field, search_value):
 def insert_record(id_name, insert_record_id, record_set_dict, filter_key, collection_name):
     '''Insert an Instruction or Ingredient record using using foreign key id'''
 
-    if (filter_key == FILTER_KEYS.INGREDIENT.value
-        or filter_key == FILTER_KEYS.INSTRUCTION.value):
+    if (filter_key == FILTER_KEYS.INGREDIENT.value):
 
-        key_name = urllib.parse.quote_plus(filter_key)
+        key_name = urllib.parse.quote_plus(FILTER_KEYS.INGREDIENT.value)
+
+    elif (filter_key == FILTER_KEYS.INSTRUCTION.value):
+
+        key_name = urllib.parse.quote_plus(FILTER_KEYS.INSTRUCTION.value)
 
     else:
 
         sys.stderr.write('filter key ingredient/instruction :: error %s' % (filter_key))
 
-    if (collection_name == COLLECTION_NAMES.INSTRUCTIONS.value
-        or collection_name == COLLECTION_NAMES.INGREDIENTS.value):
+    if (collection_name == COLLECTION_NAMES.INSTRUCTIONS.value):
 
-        sub_record_name = urllib.parse.quote_plus(collection_name)
+        sub_record_name = urllib.parse.quote_plus(COLLECTION_NAMES.INSTRUCTIONS.value)
+
+    elif (collection_name == COLLECTION_NAMES.INGREDIENTS.value):
+
+        sub_record_name = urllib.parse.quote_plus(COLLECTION_NAMES.INGREDIENTS.value)
 
     else:
 
@@ -129,7 +135,7 @@ def insert_record(id_name, insert_record_id, record_set_dict, filter_key, collec
 
     if (id_name == ID_NAME.RECIPE_ID.value):
 
-        primary_record_id = urllib.parse.quote_plus(id_name)
+        primary_record_id = urllib.parse.quote_plus(ID_NAME.RECIPE_ID.value)
 
     else:
 
@@ -421,8 +427,6 @@ def search_recipes():
     elif SEARCH_TYPE.USER_VOTES.value == request.form['search_selected']:
 
         search_column = 'user_votes'
-
-# TODO: correct below code as its not following     elif SEARCH_TYPE.USER_VOTES.value == request.form['search_selected']:
 
     if  request.form['order_selected'] == 'UserVotesAscending':
 
