@@ -1812,8 +1812,8 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertEqual(self.driver.current_url,'http://localhost:5000/login?next=%2Fadd_category')
 
-    def test_register(self):
-        ''' Test registering on the website'''
+    def test_register_existing_user(self):
+        ''' Test registering an existing user on the website'''
 
         self.driver.get("http://localhost:5000/register")
         self.driver.implicitly_wait(0)  # seconds
@@ -1822,6 +1822,24 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
         self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("password2").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.get("http://localhost:5000/add_category")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.assertEqual(self.driver.current_url,'http://localhost:5000/add_category')
+
+    def test_register_new_user(self):
+        ''' Test registering a new user on the website'''
+
+        self.driver.get("http://localhost:5000/register")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("username").send_keys('tomf')
+        self.driver.find_element_by_id("email").send_keys('tom123f@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnVf')
+        self.driver.find_element_by_id("password2").send_keys('3$l<qpY01PsWDSc9KLnVf')
         self.driver.find_element_by_id("submit").click()
         self.driver.implicitly_wait(0)  # seconds
 

@@ -19,6 +19,7 @@
             <li class="nav-single-line">Microblog:</li>
             <li class="nav-single-line"><a href="{{ url_for('home')}}">Home</a></li>
             <li class="nav-single-line"><a href="{{ url_for('login')}}">Login</a></li>
+            <li class="nav-single-line"><a href="{{ url_for('logout')}}">Logout</a></li>
             <li class="nav-single-line"><a href="{{ url_for('register')}}">Register</a></li>
             <li class="nav-single-line"><form action="{{ url_for('search_recipes') }}" method="POST" class="col s12">
               <input name=_csrf_token type=hidden value="{{ csrf_token() }}">

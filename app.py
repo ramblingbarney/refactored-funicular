@@ -45,9 +45,6 @@ class User(UserMixin):
 
         user_record = mongo.db.users.find_one({'_id': ObjectId(self.id)})
 
-        self.email = user_record['email']
-        self.username = user_record['username']
-
     def get_id(self):
 
         return self.id
@@ -57,7 +54,7 @@ class User(UserMixin):
         return check_password_hash(password_hash, password)
 
     def __repr__(self):
-        return "%s/%s/%s" % (self.id, self.username, self.email)
+        return "%s" % (self.id)
 
 
 class COLLECTION_NAMES(enum.Enum):
@@ -263,9 +260,11 @@ def register():
     if request.method == 'POST':
 
         if not form.validate_on_submit():
+
             return render_template('register.html', form=form)
 
         else:
+
             username = request.form['username']
             email = request.form['email']
             password = request.form['password']
@@ -286,7 +285,8 @@ def register():
 
                 register_record = mongo.db.users.insert_one(user_doc)
 
-                user = User(register_record.inserted_id)
+                user = User(str(register_record.inserted_id))
+                print(user)
 
             login_user(user)
         return redirect('/add_category')
@@ -299,7 +299,7 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return Response('<p>Logged out</p>')
+    return render_template('logout.html')
 
 
 # handle login failed

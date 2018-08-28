@@ -15,8 +15,3 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', [DataRequired()])
     password2  = PasswordField('Repeat Password',[EqualTo('password', message='Passwords must match')])
     submit = SubmitField('Register')
-
-    # def validate_email(self, email):
-    #     user = User.query.filter_by(email=email.data).first()
-    #     if user is not None:
-    #         raise ValidationError('Please use a different email address.')

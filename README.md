@@ -696,7 +696,7 @@ You will need the following things properly installed on your computer.
   * Open http://localhost:5000/add_category
   * You are then redirected to http://localhost:5000/login
 
-### Register
+### Register (New & Existing User)
 
 * As a user I want to enter username, email, password on the 'http://localhost:5000/register' page and then be redirected to the 'http://localhost:5000/add_category' page
 
