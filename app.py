@@ -256,13 +256,16 @@ def login():
         return render_template('login.html', form=form)
 
 # somewhere to regiser
-@app.route("/register", methods=["GET", "POST"])
+@app.route("/register", methods=['GET', 'POST'])
 def register():
 
     form = RegistrationForm()
     if request.method == 'POST':
-        if form.validate_on_submit():
 
+        if not form.validate_on_submit():
+            return render_template('register.html', form=form)
+
+        else:
             username = request.form['username']
             email = request.form['email']
             password = request.form['password']
@@ -290,7 +293,6 @@ def register():
 
     else:
         return render_template('register.html', form=form)
-# TODO: WTF form validation not working
 
 # somewhere to logout
 @app.route("/logout")
