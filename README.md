@@ -15,6 +15,7 @@ You will need the following things properly installed on your computer.
 * ```git clone git@github.com:ramblingbarney/refactored-funicular.git```
 * ```cd refactored-funicular```
 * ```pip3 install -r /path/to/requirements.txt```
+* ```npm install```
 * ```export YOURAPPLICATION_SETTINGS=config.py``` to load app configuration file to the environment variables
 * ```export FLASK_CONFIG=development``` to create FLASK_CONFIG environment variable for development version of the app
 * ```export FLASK_CONFIG=production``` to create FLASK_CONFIG environment variable for production version of the app
