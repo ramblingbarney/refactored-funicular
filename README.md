@@ -698,11 +698,29 @@ You will need the following things properly installed on your computer.
 
 ### Register (New & Existing User)
 
-* As a user I want to enter username, email, password on the 'http://localhost:5000/register' page and then be redirected to the 'http://localhost:5000/add_category' page
+* As a user I want to enter username, email, passwords on the 'http://localhost:5000/register' page and then be redirected to the 'http://localhost:5000/' page
 
 * Example acceptance criteria:
-* Enter username, email, password on the 'http://localhost:5000/register' page
-* You are then redirected to http://localhost:5000/add_category
+* Enter username, email, passwords on the 'http://localhost:5000/register' page
+* You are then redirected to http://localhost:5000/
+
+### Register (Password Validation Error)
+
+* As a user I want to enter username, email, passwords on the 'http://localhost:5000/register' page and then be redirected to the 'http://localhost:5000/' page
+
+* Example acceptance criteria:
+* Enter username, email and two different passwords on the 'http://localhost:5000/register' page
+* You are then shown the error message '[Passwords must match]'
+* You are then redirected to http://localhost:5000/
+
+### Register (Validation Errors)
+
+* As a user I want to not enter in details and be shown the 'http://localhost:5000/register' page with validation error messages
+
+* Example acceptance criteria:
+  * No details are entered on http://localhost:5000/register and submit is clicked
+  * Below the username and password field the error message '[This field is required.]' is shown in red
+  * You are then redirected to http://localhost:5000/register
 
 ### Login (Success)
 

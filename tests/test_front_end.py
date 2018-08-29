@@ -1809,7 +1809,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
 
         element = self.driver.find_element_by_xpath("//*[starts-with(., 'Sorry login failed')]")
-        print(element.text)
+
         self.assertEqual(element.text, 'Sorry login failed')
 
     def test_login_failure_user_email(self):
@@ -1897,6 +1897,43 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
 
         self.assertEqual(self.driver.current_url,'http://localhost:5000/add_category')
+
+    def test_register_new_user_password_validation(self):
+        ''' Test registering a new user on the website'''
+
+        self.driver.get("http://localhost:5000/register")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("username").send_keys('tomf')
+        self.driver.find_element_by_id("email").send_keys('tom123f@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnVf')
+        self.driver.find_element_by_id("password2").send_keys('3$l<qpY01PsWDSc9KLnVfs')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//*[starts-with(., '[Passwords must match]')]")
+
+        self.assertEqual(element.text, '[Passwords must match]')
+
+
+    def test_register_validation(self):
+        ''' Test registering a new user on the website'''
+
+        self.driver.get("http://localhost:5000/register")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//*[starts-with(., '[This field is required.]')]")
+
+        test_list = ['[This field is required.]', '[This field is required.]', '[This field is required.]']
+
+        for element in self.elements:
+
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
 
     def test_search_recipes_no_search_results(self):
         ''' Test searching for recipes that return no results '''
