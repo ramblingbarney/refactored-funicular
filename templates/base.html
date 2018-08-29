@@ -40,6 +40,15 @@
           </ul>
         </div>
         <hr>
-        {% block content %}{% endblock %}
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+      {% block content %}{% endblock %}
     </body>
 </html>

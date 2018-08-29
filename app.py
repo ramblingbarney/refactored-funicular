@@ -226,30 +226,49 @@ def home():
     return render_template('index.html',resultData=chart_data)
 
 # somewhere to login
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
+
+    form = LoginForm()
     if request.method == 'POST':
-        email = request.form['email']
-        form_password = request.form['password']
 
-        login_user_record = mongo.db.users.find_one({'email': email})
+        if not form.validate_on_submit():
 
-        user = User(str(login_user_record['_id']))
-
-        is_valid_user = user.validate_login(login_user_record['password'], form_password)
-
-        if is_valid_user is True:
-
-            login_user(user, remember=request.form.get('remember_me', False))
+            return render_template('login.html', form=form)
 
         else:
 
-            return abort(401)
+            email = request.form['email']
+            form_password = request.form['password']
 
-        return redirect('/add_category')
+            try:
+
+                login_user_record = mongo.db.users.find_one({'email': email})
+
+                user = User(str(login_user_record['_id']))
+
+            except:
+
+                flash('Sorry login failed')
+                return render_template('login.html', form=form)
+
+            login_user(user, remember=request.form.get('remember_me', False))
+
+            is_valid_user = user.validate_login(login_user_record['password'], form_password)
+
+            if is_valid_user is True:
+
+                login_user(user, remember=request.form.get('remember_me', False))
+
+                flash('Welcome back, your logged in')
+                return redirect('/')
+            else:
+
+                flash('Sorry login failed')
+                return render_template('login.html', form=form)
 
     else:
-        form = LoginForm()
+        print('no validation done')
         return render_template('login.html', form=form)
 
 # somewhere to regiser
@@ -300,13 +319,6 @@ def register():
 def logout():
     logout_user()
     return render_template('logout.html')
-
-
-# handle login failed
-@app.errorhandler(401)
-def page_not_found(e):
-    return Response('<p>Login failed</p>')
-
 
 # callback to reload the user object
 @login_manager.user_loader

@@ -704,12 +704,31 @@ You will need the following things properly installed on your computer.
 * Enter username, email, password on the 'http://localhost:5000/register' page
 * You are then redirected to http://localhost:5000/add_category
 
-### Login
+### Login (Success)
 
-* As a user I want to enter in registered user details and be shown the 'http://localhost:5000/add_category' page
+* As a user I want to enter in registered user details and be shown the 'http://localhost:5000/' page
 
 * Example acceptance criteria:
   * Registered user enters email and password on http://localhost:5000/login
+  * The flash message 'Welcome back, your logged in' is shown
+  * You are then redirected to http://localhost:5000/
+
+### Login (Failure)
+
+* As a user I want to enter in registered user details and be shown the 'http://localhost:5000/login' page
+
+* Example acceptance criteria:
+  * Registered user enters email and password on http://localhost:5000/login
+  * The flash message 'Sorry login failed' is shown
+  * You are then redirected to http://localhost:5000/login
+
+### Login (Validation Errors)
+
+* As a user I want to not enter in registered user details and be shown the 'http://localhost:5000/login' page with validation error messages
+
+* Example acceptance criteria:
+  * No details are entered on http://localhost:5000/login and submit is clicked
+  * Below the username and password field the error message '[This field is required.]' is shown in red
   * You are then redirected to http://localhost:5000/login
 
 ### Logout

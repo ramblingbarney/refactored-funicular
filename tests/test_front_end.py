@@ -1782,7 +1782,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertEqual(self.driver.current_url,'http://localhost:5000/login?next=%2Fadd_category')
 
-    def test_login(self):
+    def test_login_success(self):
         ''' Test logging into the website'''
 
         self.driver.get("http://localhost:5000/login")
@@ -1793,7 +1793,57 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("submit").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.assertEqual(self.driver.current_url,'http://localhost:5000/add_category')
+        element = self.driver.find_element_by_xpath("//*[starts-with(., 'Welcome back, your logged in')]")
+
+        self.assertEqual(element.text, 'Welcome back, your logged in')
+
+    def test_login_failure_password(self):
+        ''' Test logging into the website using an incorrect password'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('kkk')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//*[starts-with(., 'Sorry login failed')]")
+        print(element.text)
+        self.assertEqual(element.text, 'Sorry login failed')
+
+    def test_login_failure_user_email(self):
+        ''' Test logging into the website using an email not found'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("email").send_keys('tom123PPP@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys('kkk')
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//*[starts-with(., 'Sorry login failed')]")
+        self.assertEqual(element.text, 'Sorry login failed')
+
+    def test_login_validation(self):
+        ''' Test logging into the website with no input details triggers field validation'''
+
+        self.driver.get("http://localhost:5000/login")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("submit").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath("//*[starts-with(., '[This field is required.]')]")
+
+        test_list = ['[This field is required.]', '[This field is required.]']
+
+        for element in self.elements:
+
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
 
     def test_logout(self):
         ''' Test logout of the website'''
