@@ -6,10 +6,17 @@
 <style>
 
 circle {
-  fill: indianred;
   opacity: 0.3;
   stroke: white;
 }
+
+.plot-div{
+  width: 50%;
+  display: block;
+  margin: auto;
+  clear: both;
+}
+
 text {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   fill: white;
@@ -46,14 +53,35 @@ text {
   left: 0;
 }
 
+.title-text {
+  float: right;
+  /*clear: both;*/
+}
+
 </style>
 
-  <svg width="400" height="400">
+<div class="title-text">
+  <p>Welcome to Recipe Buddy, register to start adding your favourite recipes by cuisines.</p>
+</div>
+<div class="plot-div">
+  <svg class="plot-svg" width="100%" height="100%">
     <g></g>
   </svg>
-
+</div>
   <script>
 // Chart code taken from http://d3indepth.com/layouts/
+
+var data = JSON.parse({{ resultData|tojson|safe }});
+
+var color = d3.scaleOrdinal(d3.schemeCategory20c);
+
+var margin = {top: 100, right: 150, bottom: 100, left: 150}
+
+var outerWidth  = 1600,
+    outerHeight = 900;
+
+var width  = outerWidth - margin.right - margin.left,
+    height = outerHeight - margin.top - margin.bottom;
 
 var tip = d3.tip()
   .attr('class', 'd3-tip')
@@ -62,7 +90,6 @@ var tip = d3.tip()
     return d.children === undefined ? "<strong>User Votes:</strong> <span style='color:red'>" + d.data.value + "</span>" : '';
   })
 
-var data = JSON.parse({{ resultData|tojson|safe }});
 
 var packLayout = d3.pack()
   .size([400, 400])
@@ -76,16 +103,31 @@ rootNode.sum(function(d) {
 
 packLayout(rootNode);
 
+d3.select(".plot-svg")
+  .append("text")
+  .attr("x", 200)
+  .attr("y", margin.top - 50)
+  .attr("text-anchor", "middle")
+  .style("color", "black")
+  .style("font-size", "1em")
+  .style("text-decoration", "underline")
+  .text("Recipe Cuisine w/ User Votes");
+
 var nodes = d3.select('svg g')
+  .attr("width", "100%")
+  .attr("viewBox", "0 0 " + outerWidth + " " + outerHeight)
   .selectAll('g')
   .data(rootNode.descendants())
   .enter()
   .append('g')
-  .attr('transform', function(d) {return 'translate(' + [d.x, d.y] + ')'})
+  .attr("class", "plot-space")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+  .attr('transform', function(d) {return 'translate(' + [d.x, d.y] + ')'});
 
 nodes
   .append('circle')
   .attr('r', function(d) { return d.r; })
+  .attr("fill", color);
 
 nodes
   .append('text')
@@ -105,5 +147,3 @@ nodes.call(tip);
 </script>
 
 {% endblock %}
-
-<!-- TODO: no data default text for no recipes chart-->

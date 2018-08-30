@@ -870,6 +870,13 @@ You will need the following things properly installed on your computer.
   * Click on bubble graph label
   * The user is shown the Recipe header and description for matching the matching cuisine with the first result having the highest User Votes with the rest of the results in descending User Votes order
 
+### Bubble Graph Label for no recipes stored
+
+* As a user I want to see 'No Recipes, register to add recipes' as the graph bubble label when no recipes have been stored
+
+* Example acceptance criteria:
+  * The 1 bubble visible has the label 'No Recipes, register to add recipes'
+
 
 ## Manual Testing
 

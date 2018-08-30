@@ -221,9 +221,12 @@ def home():
     for x in chart_data:
         result_cleaned.append({'name': x['_id']['cuisine_name'], 'value': x['total_votes'], 'url': 'http://localhost:5000/chart_search_recipes/' + x['_id']['cuisine_name']})
 
+    if (len(result_cleaned) == 0):
+        result_cleaned.append({'name': 'No Recipes, register to add recipes', 'value': 1, 'url': 'http://localhost:5000/register'})
+
     chart_data = dumps({'name': 'A1', 'children': result_cleaned}, indent=2)
 
-    return render_template('index.html',resultData=chart_data)
+    return render_template('index.html',resultData=chart_data, chart_switch=len(result_cleaned))
 
 # somewhere to login
 @app.route("/login", methods=['GET', 'POST'])
@@ -268,7 +271,6 @@ def login():
                 return render_template('login.html', form=form)
 
     else:
-        print('no validation done')
         return render_template('login.html', form=form)
 
 # somewhere to regiser
@@ -305,7 +307,6 @@ def register():
                 register_record = mongo.db.users.insert_one(user_doc)
 
                 user = User(str(register_record.inserted_id))
-                print(user)
 
             login_user(user)
         return redirect('/add_category')

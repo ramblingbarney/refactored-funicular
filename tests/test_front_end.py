@@ -191,7 +191,6 @@ class RecipeBuddyUITests(unittest.TestCase):
         options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=options)
 
-        self.elements = []
         self.li_span_text = []
 
     def tearDown(self):
@@ -2246,5 +2245,21 @@ class RecipeBuddyUITests(unittest.TestCase):
             self.li_span_text.append(element.text)
 
         self.assertListEqual(test_list, self.li_span_text)
+
+    def test_bubble_graph_label_no_data(self):
+        ''' Test the no data default chart is shown '''
+
+        self.DB.categories.delete_many({})
+        self.DB.recipes.delete_many({})
+        self.DB.instructions.delete_many({})
+        self.DB.ingredients.delete_many({})
+        self.DB.users.delete_many({})
+
+        self.driver.get("http://localhost:5000/")
+        self.driver.implicitly_wait(0)  # seconds
+
+        element = self.driver.find_element_by_xpath("//*[starts-with(., 'No Recipes, register to add recipes')]")
+
+        self.assertEqual(element.text, 'No Recipes, register to add recipes')
 
 # TODO: check tests for assigned variables not required and poor naming conventions recipe using categoory etc, self.elements
