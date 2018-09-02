@@ -1,23 +1,24 @@
 {% extends 'base.html'%} {% block content %}
 <div class="row">
-    <ul class="collapsible" data-collapsible="accordion">
+    <ul class="collapsible expandable">
       <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
         {% for recipe in recipes %}
           <li>
-              <div class="collapsible-header">
-                  <div class="recipe-header col s9">
-                      <strong>{{recipe.recipe_name}} - {{recipe.category_name[0]['category_name']}} - {{recipe.cuisine_name[0]['cuisine_name']}} - {{recipe.total_time}} Minutes to Prepare - User Votes: {{recipe.user_votes}}</strong>
-                  </div>
+            <div class="collapsible-header recipe-header wrapper">
+              <div class="content">
+                <strong>
+                  {{recipe.recipe_name}} - {{recipe.category_name[0]['category_name']}} - {{recipe.cuisine_name[0]['cuisine_name']}} - {{recipe.total_time}} Minutes to Prepare - User Votes: {{recipe.user_votes}}
+                </strong>
               </div>
-              <div class="collapsible-body recipe-description">
-                  <span>
-                  {{recipe.recipe_description}}
-              </span>
+                <div class="sidebar">
+                  <a href="{{url_for('show_recipe', recipe_id=recipe._id)}}"><span class="new badge" data-badge-caption="Show Recipe"></span></a>
               </div>
-              <a href="{{url_for('show_recipe', recipe_id=recipe._id)}}" class="waves-effect waves-light btn btn_small blue show_recipe_button">Show</a>
-          </li>
-        {% endfor %}
-
+            </div>
+            <div class="collapsible-body recipe-description">
+                {{recipe.recipe_description}}
+            </div>
+        </li>
+      {% endfor %}
     </ul>
 </div>
 {% endblock %}

@@ -1,18 +1,18 @@
 <html>
     <head>
-      <style>
-
-      .nav-single-line{
-        display: inline-block;
-      }
-
-      </style>
-        {% if title %}
-        <title>{{ title }} - microblog</title>
-        {% else %}
-        <title>microblog</title>
-        {% endif %}
+      <title>Recipe Buddy</title>
+          <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='vendor/materialize/css/materialize.min.css') }}">
+          <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
     </head>
+    <script src="{{ url_for('static', filename='vendor/materialize/js/materialize.min.js') }}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var elem = document.querySelector('.collapsible.expandable');
+        var instance = M.Collapsible.init(elem, {
+          accordion: false
+        });
+      });
+    </script>
     <body>
         <div>
           <ul>
@@ -21,6 +21,7 @@
             <li class="nav-single-line"><a href="{{ url_for('login')}}">Login</a></li>
             <li class="nav-single-line"><a href="{{ url_for('logout')}}">Logout</a></li>
             <li class="nav-single-line"><a href="{{ url_for('register')}}">Register</a></li>
+            <li class="nav-single-line"><a href="{{ url_for('get_recipes')}}">All Recipes</a></li>
             <li class="nav-single-line"><form action="{{ url_for('search_recipes') }}" method="POST" class="col s12">
               <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
               <input id="search-text" name="search_text" type="text" placeholder="Search" required>

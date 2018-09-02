@@ -1,11 +1,25 @@
-.btn_small {
-    height: 24px;
-    width: 60px;
-    line-height: 24px;
-    margin: 5px 5px;
-    padding: 0 0.5em;
+.nav-single-line{
+  display: inline-block;
 }
 
-.task_header {
+.reacipe_header {
     margin-top: 5px;
+}
+
+.wrapper {
+  margin-right: 6%;
+}
+
+.content {
+  float: left;
+  width: 100%;
+  padding-right: 25px;
+}
+
+.sidebar {
+  float: right;
+  width: 6%;
+  margin-right: -6%;
+  margin-top: 0 auto;
+  margin-bottom: 0 auto;
 }
