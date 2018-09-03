@@ -1,24 +1,30 @@
 {% extends "base.html" %}{% block content %}
-    <h1>Sign In</h1>
+<div class="form-container">
+  <div class="left-column"></div>
+  <div class="central-column">
+    <h3 class="form-heading">Sign In</h3>
     <form action="" method="post" novalidate>
       <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
         {{ form.hidden_tag() }}
         <p>
-            {{ form.email.label }}<br>
+            {{ form.email.label(class_='form-label') }}<br>
             {{ form.email(size=32) }}<br>
             {% for error in form.email.errors %}
               <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.password.label }}<br>
+            {{ form.password.label(class_='form-label') }}<br>
             {{ form.password(size=32) }}<br>
             {% for error in form.password.errors %}
               <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
+        <p><label>{{ form.remember_me() }} <span>{{ form.remember_me.label(class_='form-label') }}</span></label></p>
+        <p>{{ form.submit(class='waves-effect waves-light btn-small', id='form-button') }}</p>
     </form>
-    <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+    <p class="form-label">New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+  </div>
+  <div class="right-column"></div>
+</div>
 {% endblock %}
