@@ -28,6 +28,30 @@
   padding-left: 20px;
 }
 
+.form-heading {
+  font-size: 2.5vw;
+}
 
+.form-label {
+font-size: 2vw;
+}
 
+#form-button {
+  color: white;
+  line-height: 2.5;
+  font-size: 2vh;
+}
+
+.form-container {
+  display: flex;
+}
+
+.left-column, .right-column {
+  flex-grow: 3;
+  flex-shrink: 3;
+}
+
+.central-column {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
