@@ -62,7 +62,7 @@
   margin-bottom: 0 auto;
 }
 
-#no-recipes-found{
+#no-recipes-found, #logout-confirmation {
   padding-left: 20px;
 }
 
