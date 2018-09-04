@@ -6,9 +6,7 @@
           <li>
             <div class="collapsible-header recipe-header wrapper">
               <div class="content">
-                <strong>
-                  {{recipe.recipe_name}} - {{recipe.category_name[0]['category_name']}} - {{recipe.cuisine_name[0]['cuisine_name']}} - {{recipe.total_time}} Minutes to Prepare - User Votes: {{recipe.user_votes}}
-                </strong>
+                <strong>{{recipe.recipe_name}} - {{recipe.category_name['category_name']}} - {{recipe.cuisine_name['cuisine_name']}} - {{recipe.total_time}} Minutes to Prepare - User Votes: {{recipe.user_votes}}</strong>
               </div>
                 <div class="sidebar">
                   <a href="{{url_for('show_recipe', recipe_id=recipe._id)}}"><span class="new badge" data-badge-caption="Show Recipe"></span></a>
@@ -22,5 +20,3 @@
     </ul>
 </div>
 {% endblock %}
-
-<!-- TODO: take the mongo query from search and apply it to get all recipes -->

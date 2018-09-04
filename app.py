@@ -430,12 +430,14 @@ def get_recipes():
                                             'localField' : 'category_id',
                                             'foreignField' : '_id',
                                             'as' : 'category_name'}
-                                            }
-                                    ,{'$lookup': {'from' : 'cuisines',
+                                    }
+                                    , {'$unwind': '$category_name'}
+                                    , {'$lookup': {'from' : 'cuisines',
                                             'localField' : 'cuisine_id',
                                             'foreignField' : '_id',
                                             'as' : 'cuisine_name'}
-                                    }]))
+                                    }
+                                    , {'$unwind': '$cuisine_name'}]))
 
 @app.route('/search_recipes', methods=["POST"])
 def search_recipes():
