@@ -1,3 +1,41 @@
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/vendor/materialize/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(/static/vendor/materialize/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+    url(/static/vendor/materialize/iconfont/MaterialIcons-Regular.woff) format('woff'),
+    url(/static/vendor/materialize/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 .nav-single-line{
   display: inline-block;
 }
@@ -29,17 +67,17 @@
 }
 
 .form-heading {
-  font-size: 2.5vw;
+  font-size: 4vh;
 }
 
 .form-label {
-font-size: 2vw;
+font-size: 3vh;
 }
 
 #form-button {
   color: white;
-  line-height: 2.5;
-  font-size: 2vh;
+  line-height: 2.2;
+  font-size: 2.5vh;
 }
 
 .form-container {
@@ -54,4 +92,14 @@ font-size: 2vw;
 .central-column {
   flex-grow: 1;
   flex-shrink: 1;
+}
+
+.last-button-row {
+
+  margin-top: 1em;
+
+}
+
+#category_name, #cuisine_name {
+  margin-top: 2em;
 }
