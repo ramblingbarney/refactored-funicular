@@ -1,66 +1,77 @@
 {% extends 'base.html'%} {% block content %}
-<div class="row">
-    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-    <div class="recipe-header col s9">Recipe Name
-        <strong>{{recipes.recipe_name}}</strong>
-    </div>
-    <div class="recipe-description">Description
-      <span>
-        {{recipes.recipe_description}}
-      </span>
-    </div>
-</div>
-<div class="row">
-    <div class="category-name">Category:
-      <span>
-        {{categories.category_name}}
-      </span>
-    </div>
-</div>
-<div class="row">
-    <div class="cuisine-name">Cuisine:
-      <span>
-        {{cuisines.cuisine_name}}
-      </span>
-    </div>
-</div>
-<div class="row">
-  <div class="instruction-header col s9">
-      <strong>Instructions</strong>
+
+<div class="form-container">
+  <div class="left-column"></div>
+  <div class="central-column">
+      <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+      <table>
+        <tr>
+          <td class="recipe-header"><p class="bold-heading">Recipe Name</p></td>
+          <td>{{recipes.recipe_name}}</td>
+          <td></td>
+        </tr>
+      <tr>
+        <td class="recipe-description"><p class="bold-heading">Description</p></td>
+        <td></td>
+        <td></td>
+      <tr>
+        <td colspan="3">{{recipes.recipe_description}}</td>
+      </tr>
+      <tr>
+        <td class="category-name"><p class="bold-heading">Category</p></td>
+        <td>{{categories.category_name}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="cuisine-name"><p class="bold-heading">Cuisine</p></td>
+        <td>{{cuisines.cuisine_name}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="instruction-header"><p class="bold-heading">Instructions</p></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <ol class="input_fields_wrap_instructions">
+            {% for i in instructions %}
+              <li>{{i}}</li>
+            {% endfor %}
+          </ol>
+        </td>
+      </tr>
+      <tr>
+        <td class="ingredients-header"><p class="bold-heading">Ingredients</p></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <ol class="input_fields_wrap_ingredients">
+            {% for ing in ingredients %}
+              <li>{{ing}}</li>
+            {% endfor %}
+          </ol>
+        </td>
+      </tr>
+      <tr>
+        <td class="total-time"><p class="bold-heading">Total Time</p></td>
+        <td>{{recipes.total_time}} Mins</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="user-votes"><p class="bold-heading">User Votes</p></td>
+        <td>{{recipes.user_votes}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td collspan="3">
+          <a href="{{url_for('edit_recipe', recipe_id=recipes._id)}}" class="waves-effect waves-light btn-small edit_recipe_button">Edit</a>
+          <a href="{{url_for('delete_recipe', recipe_id=recipes._id)}}" class="waves-effect waves-light btn-small delete_recipe_button">Delete</a>
+        </td>
+      </tr>
+    </table>
   </div>
-</div>
-<div class="row">
-  <ol class="input_fields_wrap_instructions">
-    {% for i in instructions %}
-      <li>{{i}}</li>
-    {% endfor %}
-  </ol>
-</div>
-<div class="row">
-  <div class="ingredients-header col s9">
-      <strong>Ingredients</strong>
-  </div>
-</div>
-<div class="row">
-  <ol class="input_fields_wrap_ingredients">
-    {% for ing in ingredients %}
-      <li>{{ing}}</li>
-    {% endfor %}
-  </ol>
-</div>
-<div class="row">
-  <div class="total-time col s9">Total Time
-      <strong>{{recipes.total_time}}</strong> Mins
-  </div>
-</div>
-<div class="row">
-  <div class="user-votes col s9">User Votes:
-      <strong>{{recipes.user_votes}}</strong>
-  </div>
-</div>
-<div class="row">
-  <a href="{{url_for('edit_recipe', recipe_id=recipes._id)}}" class="waves-effect waves-light btn btn_small blue edit_recipe_button">Edit</a>
-  <a href="{{url_for('delete_recipe', recipe_id=recipes._id)}}" class="waves-effect waves-light btn btn_small blue delete_recipe_button">Delete</a>
-  <a href="{{url_for('get_recipes')}}" class="waves-effect waves-light btn btn_small blue show_all_recipes_button">Show All Recipes</a>
+  <div class="right-column"></div>
 </div>
 {% endblock %}

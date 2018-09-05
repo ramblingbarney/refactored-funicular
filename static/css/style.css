@@ -92,14 +92,17 @@ font-size: 3vh;
 .central-column {
   flex-grow: 1;
   flex-shrink: 1;
+  max-width: 500px;
 }
 
 .last-button-row {
-
   margin-top: 1em;
-
 }
 
 #category_name, #cuisine_name {
   margin-top: 2em;
+}
+
+.bold-heading {
+  font-weight: bold;
 }
