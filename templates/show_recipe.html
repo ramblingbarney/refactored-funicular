@@ -65,9 +65,10 @@
         <td></td>
       </tr>
       <tr>
-        <td collspan="3">
+        <td colspan="3">
           <a href="{{url_for('edit_recipe', recipe_id=recipes._id)}}" class="waves-effect waves-light btn-small edit_recipe_button">Edit</a>
           <a href="{{url_for('delete_recipe', recipe_id=recipes._id)}}" class="waves-effect waves-light btn-small delete_recipe_button">Delete</a>
+         <a href="{{url_for('get_recipes')}}" class="waves-effect waves-light btn-small show_all_recipes_button">Show All Recipes</a>
         </td>
       </tr>
     </table>
