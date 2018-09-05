@@ -8,7 +8,7 @@ function addFieldInstructions() {
   var numberInstructions = document.getElementsByClassName("input_fields_wrap_instructions");
 
   // Give the new div some content
-  elChild.innerHTML = `<input name="instruction[${numberInstructions.length}]" type="text" class="validate input_fields_wrap_instructions" value="{{ing}}"/><button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" type="button">Remove</button>`;
+  elChild.innerHTML = `<input name="instruction[${numberInstructions.length}]" type="text" class="validate input_fields_wrap_instructions" value="{{ing}}"/><button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" type="button" class="waves-effect waves-light btn-small">Remove</button>`;
 
   // Jug it into the parent element
   el.appendChild(elChild);
@@ -22,7 +22,7 @@ function addFieldIngredients() {
   var numberIngredients = document.getElementsByClassName("input_fields_wrap_ingredients");
 
   // Give the new div some content
-  elChild.innerHTML = `<input name="ingredient[${numberIngredients.length}]" type="text" class="validate input_fields_wrap_ingredients" value="{{ing}}"/><button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" type="button">Remove</button>`;
+  elChild.innerHTML = `<input name="ingredient[${numberIngredients.length}]" type="text" class="validate input_fields_wrap_ingredients" value="{{ing}}"/><button onclick="this.parentNode.parentNode.removeChild(this.parentNode);" type="button" class="waves-effect waves-light btn-small">Remove</button>`;
 
   // Jug it into the parent element
   el.appendChild(elChild);
@@ -65,91 +65,126 @@ function minus1Vote() {
 }
 
 </script>
-<h3>Add Recipe</h3>
-<div class="row">
-    <form action="{{ url_for('insert_recipe') }}" method="POST" class="col s12">
-      <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-        <div class="row">
-          <div class="input-field col s12">
-              <i class="material-icons prefix">assignment</i>
-              <input id="recipe-name" name="recipe_name" type="text" required>
-              <label for="icon_prefix">Recipe Name</label>
-          </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <i class="material-icons prefix">subject</i>
-                <textarea id="recipe-description" name="recipe_description"  class="materialize-textarea" required></textarea>
-                <label for="icon_telephone">Recipe Description</label>
-            </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <i class="material-icons prefix">poll</i>
-            <select id="category" name="category_name" required>
+<div class="form-container">
+  <div class="left-column"></div>
+  <div class="central-column">
+    <h2 class="form-heading">Add Recipe</h2>
+      <form action="{{ url_for('insert_recipe') }}" method="POST" class="col s12">
+        <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+        <table class="noborder">
+          <tr>
+            <td class="recipe-header"><p class="bold-heading">Recipe Name</p></td>
+            <td><input id="recipe-name" name="recipe_name" type="text" required></td>
+            <td></td>
+          </tr>
+        <tr>
+          <td class="recipe-description"><p class="bold-heading">Description</p></td>
+          <td></td>
+          <td></td>
+        <tr>
+          <td colspan="3"><textarea id="recipe-description" name="recipe_description"  class="materialize-textarea" required></textarea></td>
+        </tr>
+        <tr>
+          <td class="category-name"><p class="bold-heading">Category</p></td>
+          <td>
+            <select id="category" name="category_name" class="browser-default" required>
               <option value="" disabled selected>Choose Category</option>
               {% for cat in categories %}
-              <option value="{{cat.category_name}}">{{cat.category_name}}</option>
+                <option value="{{cat.category_name}}">{{cat.category_name}}</option>
               {% endfor %}
             </select>
-            <label>Recipe Category</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <i class="material-icons prefix">poll</i>
-            <select id="cuisine" name="cuisine_name" required>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="cuisine-name">
+            <p class="bold-heading">Cuisine</p>
+          </td>
+          <td>
+            <select id="cuisine" name="cuisine_name" class="browser-default" required>
               <option value="" disabled selected>Choose Cuisine</option>
               {% for cui in cuisines %}
-              <option value="{{cui.cuisine_name}}">{{cui.cuisine_name}}</option>
+                <option value="{{cui.cuisine_name}}">{{cui.cuisine_name}}</option>
               {% endfor %}
             </select>
-            <label>Recipe Cuisine</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-              <i class="material-icons prefix">assignment</i>
-              <input id="total-time" name="total_time" type="text" value="0" required>
-              <button class="plus_15_button" onclick="addFifteenMinutes()" type="button"> + 15 mins</button>
-              <button class="minus_15_button" onclick="minusFifteenMinutes()" type="button"> - 15 mins</button>
-              <label for="icon_prefix">Total Time</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-              <i class="material-icons prefix">assignment</i>
-              <input id="user-votes" name="user_votes" type="text" value="0" required>
-              <button class="plus_1_vote_button" onclick="add1Vote()" type="button"> + 1</button>
-              <button class="minus_1_vote_button" onclick="minus1Vote()" type="button"> - 1</button>
-              <label for="icon_prefix">User Votes</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <button class="add_field_button_instructions" onclick="addFieldInstructions()" type="button">Add More Instructions</button>
-            <div>
-              <ol id="li-instructions" class="input_fields_wrap_instructions">
-                <li><input type="text" name="instructions[0]" required></li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <button class="add_field_button_ingredients" onclick="addFieldIngredients()" type="button">Add More Ingredients</button>
-            <div>
-              <ol class="input_fields_wrap_ingredients" id="li-ingredients">
-                <li><input type="text" name="ingredient[0]" required></li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-            <button class="btn waves-effect waves-light" id="add-recipe" type="submit" name="action">Add Recipe
-                <i class="material-icons right">playlist_add</i>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="instruction-header"><p class="bold-heading">Instructions</p></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <ol id="li-instructions" class="input_fields_wrap_instructions">
+              <li><input type="text" name="instructions[0]" required></li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="add_field_button_instructions waves-effect waves-light btn-small" onclick="addFieldInstructions()" type="button">Add More Instructions</button>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="ingredients-header"><p class="bold-heading">Ingredients</p></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <ol class="input_fields_wrap_ingredients" id="li-ingredients">
+              <li><input type="text" name="ingredient[0]" required></li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="add_field_button_ingredients waves-effect waves-light btn-small" onclick="addFieldIngredients()" type="button">Add More Ingredients</button>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="total-time"><p class="bold-heading">Total Time</p></td>
+          <td><input id="total-time" name="total_time" type="text" value="0" required></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <button class="plus_15_button waves-effect waves-light btn-small" onclick="addFifteenMinutes()" type="button"> + 15 mins</button>
+            <button class="minus_15_button waves-effect waves-light btn-small" onclick="minusFifteenMinutes()" type="button"> - 15 mins</button>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="user-votes"><p class="bold-heading">User Votes</p></td>
+          <td><input id="user-votes" name="user_votes" type="text" value="0" required></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <button class="plus_1_vote_button waves-effect waves-light btn-small" onclick="add1Vote()" type="button"> + 1</button>
+            <button class="minus_1_vote_button waves-effect waves-light btn-small" onclick="minus1Vote()" type="button"> - 1</button>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <button class="waves-effect waves-light btn-small" id="add-recipe" type="submit" name="action">Add Recipe
+              <i class="material-icons right">add_box</i>
              </button>
-        </div>
+           <a href="{{url_for('get_recipes')}}" class="waves-effect waves-light btn-small show_all_recipes_button">Cancel</a>
+          </td>
+        </tr>
+      </table>
     </form>
+  </div>
+  <div class="right-column"></div>
 </div>
+
 {% endblock %}
