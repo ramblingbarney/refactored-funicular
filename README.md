@@ -888,6 +888,10 @@ You will need the following things properly installed on your computer.
 
 * Open 'http:://localhost:5000/register.html' template, enter username, email, password and repeat password fields.  Go to 'http:://localhost:5000/logout' url and then go to 'http:://localhost:5000/login.html' and enter the same email and password with the 'remember_me' checkbox ticked.  Close the browser tab and then reopen and go to 'http:://localhost:5000/get_recipes', you should be shown the Recipes list page 'http:://localhost:5000/get_recipes.html' and not the 'http:://localhost:5000/login' page.
 
+### Small Screen / Mobile menu
+
+* Reduce the size of the webpage on any page and the menu bar links on the right should disappear and the 'hamburger' on the left will appear, click on the 'hamburger' and the slideout mobile menu with all links should appear, click on a menu link and the required page will load and the side menu will close.
+
 ## Known Issues
 
 * Mongo DB admin password has not been set & database setup is for local testing only

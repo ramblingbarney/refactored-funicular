@@ -6,6 +6,7 @@
     </head>
     <script src="{{ url_for('static', filename='vendor/materialize/js/materialize.min.js') }}"></script>
     <script>
+
       document.addEventListener('DOMContentLoaded', function() {
         var elem = document.querySelector('.collapsible.expandable');
         var instance = M.Collapsible.init(elem, {
@@ -13,35 +14,60 @@
         });
       });
 
+      document.addEventListener('DOMContentLoaded', function() {
+        var elem = document.querySelectorAll('.dropdown-trigger');
+        var instance = M.Dropdown.init(elem, {});
+      });
+
+      document.addEventListener('DOMContentLoaded', function() {
+          var elems = document.querySelectorAll('.sidenav');
+          var instances = M.Sidenav.init(elems, {
+            menuWidth:240, // Default is 240
+            edge: 'right', // Choose the horizontal origin
+            closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+          });
+      });
+
     </script>
     <body>
-        <div>
-          <ul>
-            <li class="nav-single-line">Microblog:</li>
-            <li class="nav-single-line"><a href="{{ url_for('home')}}">Home</a></li>
-            <li class="nav-single-line"><a href="{{ url_for('login')}}">Login</a></li>
-            <li class="nav-single-line"><a href="{{ url_for('logout')}}">Logout</a></li>
-            <li class="nav-single-line"><a href="{{ url_for('register')}}">Register</a></li>
-            <li class="nav-single-line"><a href="{{ url_for('get_recipes')}}">All Recipes</a></li>
-            <li class="nav-single-line"><form action="{{ url_for('search_recipes') }}" method="POST" class="col s12">
-              <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-              <input id="search-text" name="search_text" type="text" placeholder="Search" required>
-              <select id="search_option" name="search_selected" class="browser-default">
-                <option value="category_name.category_name">Categories</option>
-                <option value="cuisine_name.cuisine_name">Cuisines</option>
-                <option value="user_votes">User Votes</option>
-              </select>
-              <select id="order_option" name="order_selected" class="browser-default">
-                <option value="UserVotesAscending">User Votes &uarr;</option>
-                <option value="UserVotesDescending">User Votes &darr;</option>
-                <option value="TotalTimeAscending">Total Time &uarr;</option>
-                <option value="TotalTimeDescending">Total Time &darr;</option>
-              </select>
-              <button class="btn waves-effect waves-light" id="search-button" type="submit" name="action">Search</button>
-            </form></li>
+      <!-- Dropdown Structure -->
+      <ul id="login1" class="dropdown-content">
+        <li><a href="{{ url_for('login')}}">Login</a></li>
+        <li><a href="{{ url_for('logout')}}">Logout</a></li>
+      </ul>
+      <ul id="addRecipe1" class="dropdown-content">
+        <li><a href="{{ url_for('add_recipe')}}">Add Recipe</a></li>
+        <li><a href="{{ url_for('add_cuisine')}}">Add Cuisine</a></li>
+        <li><a href="{{ url_for('add_category')}}">Add Category</a></li>
+        <li><a href="{{ url_for('get_cuisines')}}">All Cuisines</a></li>
+        <li><a href="{{ url_for('get_categories')}}">All Categories</a></li>
+      </ul>
+      <nav>
+        <div class="nav-wrapper teal">
+          <a href="{{ url_for('home')}}" class="logo-text">Recipe Buddy</a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="{{ url_for('get_recipes')}}">All Recipes</a></li>
+            <li><a href="{{ url_for('register')}}">Register</a></li>
+            <!-- Dropdown Trigger -->
+            <li><a class="dropdown-trigger" href="#!" data-target="login1">Login<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-trigger" href="#!" data-target="addRecipe1">Add Recipe<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a href="{{ url_for('search')}}">Search</a></li>
           </ul>
+          <ul id="slide-out" class="sidenav teal">
+            <li><a href="{{ url_for('get_recipes')}}"><span class="sidebar-menu-text">All Recipes</span></a></li>
+            <li><a href="{{ url_for('register')}}"><span class="sidebar-menu-text">Register</span></a></li>
+            <li><a href="{{ url_for('login')}}"><span class="sidebar-menu-text">Login</span></a></li>
+            <li><a href="{{ url_for('logout')}}"><span class="sidebar-menu-text">Logout</span></a></li>
+            <li><a href="{{ url_for('add_recipe')}}"><span class="sidebar-menu-text">Add Recipe</span></a></li>
+            <li><a href="{{ url_for('add_cuisine')}}"><span class="sidebar-menu-text">Add Cuisine</span></a></li>
+            <li><a href="{{ url_for('add_category')}}"><span class="sidebar-menu-text">Add Category</span></a></li>
+            <li><a href="{{ url_for('get_cuisines')}}"><span class="sidebar-menu-text">All Cuisines</span></a></li>
+            <li><a href="{{ url_for('get_categories')}}"><span class="sidebar-menu-text">All Categories</span></a></li>
+            <li><a href="{{ url_for('search')}}"><span class="sidebar-menu-text">Search</span></a></li>
+          </ul>
+          <a href="#" data-target="slide-out" class="sidenav-trigger show-on-small"><i class="material-icons">menu</i></a>
         </div>
-        <hr>
+      </nav>
         {% with messages = get_flashed_messages() %}
           {% if messages %}
             <ul class=flashes>

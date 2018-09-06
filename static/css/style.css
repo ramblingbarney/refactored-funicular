@@ -99,7 +99,7 @@ font-size: 3vh;
   margin-top: 1em;
 }
 
-#category_name, #cuisine_name {
+.search-button, #order_option, #search_option, #category_name, #cuisine_name {
   margin-top: 2em;
 }
 
@@ -109,4 +109,13 @@ font-size: 3vh;
 
 .noborder tr {
   border:none;
+}
+
+.logo-text {
+  font-size: 5vh;
+  margin-left: 2em;
+}
+
+.sidebar-menu-text {
+  color: white;
 }

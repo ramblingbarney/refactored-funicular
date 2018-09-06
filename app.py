@@ -439,6 +439,11 @@ def get_recipes():
                                     }
                                     , {'$unwind': '$cuisine_name'}]))
 
+
+@app.route('/search')
+def search():
+    return render_template('search.html')
+
 @app.route('/search_recipes', methods=["POST"])
 def search_recipes():
 
