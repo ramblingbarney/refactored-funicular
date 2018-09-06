@@ -14,7 +14,6 @@ circle {
   width: 50%;
   display: block;
   margin: auto;
-  clear: both;
 }
 
 text {
@@ -28,9 +27,9 @@ text {
   line-height: 1;
   font-weight: bold;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
+  background: teal;
   color: #fff;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 /* Creates a small triangle extender for the tooltip */
@@ -55,7 +54,7 @@ text {
 
 .title-text {
   float: right;
-  /*clear: both;*/
+  clear: both;
 }
 
 </style>
@@ -68,7 +67,7 @@ text {
     <g></g>
   </svg>
 </div>
-  <script>
+<script>
 // Chart code taken from http://d3indepth.com/layouts/
 
 var data = JSON.parse({{ resultData|tojson|safe }});
@@ -87,7 +86,7 @@ var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return d.children === undefined ? "<strong>User Votes:</strong> <span style='color:red'>" + d.data.value + "</span>" : '';
+    return d.children === undefined ? "<strong>User Votes:</strong> <span style='color:white'>" + d.data.value + "</span>" : '';
   })
 
 
@@ -108,7 +107,6 @@ d3.select(".plot-svg")
   .attr("x", 200)
   .attr("y", margin.top - 50)
   .attr("text-anchor", "middle")
-  .style("color", "black")
   .style("font-size", "1em")
   .style("text-decoration", "underline")
   .text("Recipe Cuisine w/ User Votes");
