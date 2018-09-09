@@ -6,25 +6,25 @@
       <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
       <table class="noborder">
         <tr>
-          <td class="recipe-header"><p class="bold-heading">Recipe Name</p></td>
-          <td>{{recipes.recipe_name}}</td>
+          <td><p class="bold-heading">Recipe Name</p></td>
+          <td class="recipe-header">{{recipes.recipe_name}}</td>
           <td></td>
         </tr>
       <tr>
-        <td class="recipe-description"><p class="bold-heading">Description</p></td>
+        <td><p class="bold-heading">Description</p></td>
         <td></td>
         <td></td>
       <tr>
-        <td colspan="3">{{recipes.recipe_description}}</td>
+        <td colspan="3" class="recipe-description">{{recipes.recipe_description}}</td>
       </tr>
       <tr>
-        <td class="category-name"><p class="bold-heading">Category</p></td>
-        <td>{{categories.category_name}}</td>
+        <td><p class="bold-heading">Category</p></td>
+        <td class="category-name">{{categories.category_name}}</td>
         <td></td>
       </tr>
       <tr>
-        <td class="cuisine-name"><p class="bold-heading">Cuisine</p></td>
-        <td>{{cuisines.cuisine_name}}</td>
+        <td><p class="bold-heading">Cuisine</p></td>
+        <td class="cuisine-name">{{cuisines.cuisine_name}}</td>
         <td></td>
       </tr>
       <tr>
@@ -55,13 +55,13 @@
         </td>
       </tr>
       <tr>
-        <td class="total-time"><p class="bold-heading">Total Time</p></td>
-        <td>{{recipes.total_time}} Mins</td>
+        <td><p class="bold-heading">Total Time</p></td>
+        <td class="total-time">{{recipes.total_time}} Mins</td>
         <td></td>
       </tr>
       <tr>
-        <td class="user-votes"><p class="bold-heading">User Votes</p></td>
-        <td>{{recipes.user_votes}}</td>
+        <td><p class="bold-heading">User Votes</p></td>
+        <td class="user-votes">{{recipes.user_votes}}</td>
         <td></td>
       </tr>
       <tr>
