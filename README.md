@@ -901,4 +901,3 @@ You will need the following things properly installed on your computer.
 * If a user attempts to register the same email address twice the record is updated with the last password as the site doesn't have a lost password functionality
 * The Bubble chart on the index page will show label text for 'Cuisines' without 'User Votes' but without a bubble
 * The 'Spanish' label cannot be tested using the same unit tests as 'Indian' and 'Thai', I suspect the label has padding or leading spaces
-* D3 chart on home page is not responsive and is cut off when the page size is reduced
