@@ -7,14 +7,14 @@
   <form action="{{ url_for('search_recipes') }}" method="POST" class="col s12">
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <input id="search-text" name="search_text" type="text" placeholder="Search" required>
-    <select id="search_option" name="search_selected" class="browser-default">
-      <option value="default" selected="selected">Search by</option>
+    <select id="search_option" name="search_selected" class="browser-default" required>
+      <option value="" selected="selected">Search by</option>
       <option value="category_name.category_name">Categories</option>
       <option value="cuisine_name.cuisine_name">Cuisines</option>
       <option value="user_votes">User Votes</option>
     </select>
-    <select id="order_option" name="order_selected" class="browser-default">
-      <option value="default" selected="selected">Results order</option>
+    <select id="order_option" name="order_selected" class="browser-default" required>
+      <option value="" selected="selected">Results order</option>
       <option value="UserVotesAscending">User Votes &uarr;</option>
       <option value="UserVotesDescending">User Votes &darr;</option>
       <option value="TotalTimeAscending">Total Time &uarr;</option>

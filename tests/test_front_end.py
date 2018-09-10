@@ -195,11 +195,11 @@ class RecipeBuddyUITests(unittest.TestCase):
 
     def tearDown(self):
         # delete fixture collections
-        # self.DB.categories.delete_many({})
-        # self.DB.recipes.delete_many({})
-        # self.DB.instructions.delete_many({})
-        # self.DB.ingredients.delete_many({})
-        # self.DB.users.delete_many({})
+        self.DB.categories.delete_many({})
+        self.DB.recipes.delete_many({})
+        self.DB.instructions.delete_many({})
+        self.DB.ingredients.delete_many({})
+        self.DB.users.delete_many({})
         self.driver.get("http://localhost:5000/logout")
         self.driver.quit()
 
@@ -1939,6 +1939,13 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.find_element_by_id("search-text").send_keys('test12345')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('Categories')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+        select.select_by_index(1)
+
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1973,7 +1980,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         select = Select(self.driver.find_element_by_id("order_option"))
 
-        select.select_by_index(0)
+        select.select_by_index(1)
 
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
@@ -2000,7 +2007,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         select = Select(self.driver.find_element_by_id("order_option"))
 
-        select.select_by_index(1)
+        select.select_by_index(2)
 
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
@@ -2027,7 +2034,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         select = Select(self.driver.find_element_by_id("order_option"))
 
-        select.select_by_index(2)
+        select.select_by_index(3)
 
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
@@ -2054,7 +2061,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         select = Select(self.driver.find_element_by_id("order_option"))
 
-        select.select_by_index(3)
+        select.select_by_index(4)
 
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
@@ -2081,7 +2088,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         select = Select(self.driver.find_element_by_id("order_option"))
 
-        select.select_by_index(0)
+        select.select_by_index(1)
 
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
@@ -2108,7 +2115,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         select = Select(self.driver.find_element_by_id("order_option"))
 
-        select.select_by_index(1)
+        select.select_by_index(2)
 
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
@@ -2136,7 +2143,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         select = Select(self.driver.find_element_by_id("order_option"))
 
-        select.select_by_index(2)
+        select.select_by_index(3)
 
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
@@ -2163,7 +2170,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         select = Select(self.driver.find_element_by_id("order_option"))
 
-        select.select_by_index(3)
+        select.select_by_index(4)
 
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds

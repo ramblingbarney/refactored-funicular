@@ -885,6 +885,11 @@ You will need the following things properly installed on your computer.
 
 * Open 'http:://localhost:5000/add_recipe.html' template, add text to all fields and select an option in the category select box, leave a different field empty or unselected select box each time and attempt to submit the form, a hover message should appear on the empty field or unselected select box stating input text required or selection required.
 
+### Required fields Search
+
+* Open 'http:://localhost:5000/search.html' template, add text to the 'search' field, then click the search button, a hover message should appear prompting a 'search by' option to be selected to, choose one of the options, a hover message should appear prompting a 'Results' order to be selected
+* Open 'http:://localhost:5000/search.html' template, click search, a hover message should appear prompting a search term to be added to the 'search' field
+
 ### Remember Me
 
 * Open 'http:://localhost:5000/register.html' template, enter username, email, password and repeat password fields.  Go to 'http:://localhost:5000/logout' url and then go to 'http:://localhost:5000/login.html' and enter the same email and password with the 'remember_me' checkbox ticked.  Close the browser tab and then reopen and go to 'http:://localhost:5000/get_recipes', you should be shown the Recipes list page 'http:://localhost:5000/get_recipes.html' and not the 'http:://localhost:5000/login' page.
