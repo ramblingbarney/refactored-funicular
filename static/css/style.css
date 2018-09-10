@@ -62,7 +62,7 @@
   margin-bottom: 0 auto;
 }
 
-#no-recipes-found, #logout-confirmation {
+#no-recipes-found, #logout-confirmation, .flash-message {
   padding-left: 20px;
 }
 

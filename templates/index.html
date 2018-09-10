@@ -55,7 +55,7 @@ text {
 .title-text {
   float: right;
   clear: both;
-  padding-right: 20px;
+  padding: 0 20px 0 20px;
 }
 
 .plot-svg {
@@ -64,7 +64,7 @@ text {
 }
 
 .bubble-labels {
-  font-size: 1.85vw;
+  font-size: 1.5vw;
 }
 
 </style>
@@ -133,7 +133,7 @@ function drawGraph(viewPortWidth, viewPortHeight){
 
 
   var packLayout = d3.pack()
-    .size([(viewPortWidth/2.1), (viewPortWidth/2.1)])
+    .size([(viewPortWidth/2.6), (viewPortWidth/2.6)])
     .padding(10)
 
   var rootNode = d3.hierarchy(data)
@@ -176,9 +176,6 @@ function drawGraph(viewPortWidth, viewPortHeight){
   nodes.call(tip);
 
 };
-
-
-
 
 </script>
 

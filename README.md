@@ -892,6 +892,7 @@ You will need the following things properly installed on your computer.
 ### Small Screen / Mobile menu
 
 * Reduce the size of the webpage on any page and the menu bar links on the right should disappear and the 'hamburger' on the left will appear, click on the 'hamburger' and the slideout mobile menu with all links should appear, click on a menu link and the required page will load and the side menu will close.
+* The bubble graph should be resized on the 'index.html' template window as the window size is increased/decreased
 
 ## Known Issues
 
