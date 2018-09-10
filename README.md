@@ -9,6 +9,7 @@ You will need the following things properly installed on your computer.
 * [Git](https://git-scm.com/)
 * [Python3](https://www.python.org/) (with HomeBrew & Venv)
 * [Google Chrome](https://google.com/chrome/)
+* [Pencil](http://pencil.evolus.vn) (wireframes file: receipe_buddy_0-1.epgz)
 
 ## Installation
 
