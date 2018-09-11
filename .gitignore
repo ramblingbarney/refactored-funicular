@@ -6,5 +6,4 @@ selenium*
 pyvenv.cfg
 ghostdriver.log
 pip-selfcheck.json
-config.py
 node_modules*
