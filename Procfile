@@ -1,1 +1,1 @@
-web: heroku local
+web: python app.py
