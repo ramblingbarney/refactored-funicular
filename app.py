@@ -37,6 +37,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
+
 class User(UserMixin):
 
     def __init__(self, id):
@@ -63,27 +64,33 @@ class COLLECTION_NAMES(enum.Enum):
     INSTRUCTIONS = 'instructions'
     INGREDIENTS = 'ingredients'
 
+
 class FILTER_KEYS(enum.Enum):
     INGREDIENT = 'ingredient'
     INSTRUCTION = 'instruction'
 
+
 class ID_NAME(enum.Enum):
     RECIPE_ID = 'recipe_id'
+
 
 class SEARCH_TYPE(enum.Enum):
     CATEGORY_NAME = 'category_name.category_name'
     CUISINE_NAME = 'cuisine_name.cuisine_name'
     USER_VOTES = 'user_votes'
 
+
 class SORT_COLUMN(enum.Enum):
     USER_VOTES = 'user_votes'
     TOTAL_TIME = 'total_time'
+
 
 class SORT_ORDER(enum.Enum):
     USER_VOTES_ASCENDING = 'UserVotesAscending'
     USER_VOTES_DESCENDING = 'UserVotesDescending'
     TOTAL_TIME_ASCENDING = 'TotalTimeAscending'
     TOTAL_TIME_DESCENDING = 'TotalTimeDescending'
+
 
 @app.before_request
 def csrf_protect():
@@ -92,18 +99,23 @@ def csrf_protect():
         if not token or token != request.form.get('_csrf_token'):
             abort(403)
 
+
 def generate_csrf_token():
     if '_csrf_token' not in session:
-        session['_csrf_token'] = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(64)])
+        session['_csrf_token'] = ''.join([random.choice(string.ascii_letters
+                                        + string.digits) for n in range(64)])
     return session['_csrf_token']
 
+
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
+
 
 def get_collection_id(collection_name, search_field, search_value):
 
     field_name = urllib.parse.quote_plus(search_field)
 
-    collection_record = mongo.db[collection_name].find_one({field_name : search_value})
+    collection_record = mongo.db[collection_name].find_one({field_name:
+                                                                search_value})
 
     return collection_record['_id']
 
@@ -125,11 +137,13 @@ def insert_record(id_name, insert_record_id, record_set_dict, filter_key, collec
 
     if (collection_name == COLLECTION_NAMES.INSTRUCTIONS.value):
 
-        sub_record_name = urllib.parse.quote_plus(COLLECTION_NAMES.INSTRUCTIONS.value)
+        sub_record_name = urllib.parse.quote_plus(
+                                        COLLECTION_NAMES.INSTRUCTIONS.value)
 
     elif (collection_name == COLLECTION_NAMES.INGREDIENTS.value):
 
-        sub_record_name = urllib.parse.quote_plus(COLLECTION_NAMES.INGREDIENTS.value)
+        sub_record_name = urllib.parse.quote_plus(
+                                            COLLECTION_NAMES.INGREDIENTS.value)
 
     else:
 
@@ -169,17 +183,19 @@ def update_record(id_name, update_record_id, record_set_dict, filter_key, collec
 
     if (collection_name == COLLECTION_NAMES.INSTRUCTIONS.value):
 
-        sub_record_name = urllib.parse.quote_plus(COLLECTION_NAMES.INSTRUCTIONS.value)
+        sub_record_name = urllib.parse.quote_plus(
+                                        COLLECTION_NAMES.INSTRUCTIONS.value)
 
     elif (collection_name == COLLECTION_NAMES.INGREDIENTS.value):
 
-        sub_record_name = urllib.parse.quote_plus(COLLECTION_NAMES.INGREDIENTS.value)
+        sub_record_name = urllib.parse.quote_plus(
+                                            COLLECTION_NAMES.INGREDIENTS.value)
 
     else:
 
         sys.stderr.write('collection name categories/cuisines/instructions/ingredients not found :: error %s' % (collection_name))
 
-    if ( id_name == ID_NAME.RECIPE_ID.value):
+    if (id_name == ID_NAME.RECIPE_ID.value):
 
         primary_record_id = urllib.parse.quote_plus(ID_NAME.RECIPE_ID.value)
 
@@ -193,40 +209,49 @@ def update_record(id_name, update_record_id, record_set_dict, filter_key, collec
     record_doc = {primary_record_id: ObjectId(update_record_id),
                         sub_record_name: list(filtered_dict.values())}
 
-    record_tobe_updated = mongo.db[collection_name].find_one({'recipe_id': ObjectId(update_record_id)})
+    record_tobe_updated = mongo.db[collection_name].find_one({'recipe_id':
+                                                ObjectId(update_record_id)})
 
-    mongo.db[collection_name].update({'_id': ObjectId(record_tobe_updated['_id'])}, record_doc)
+    mongo.db[collection_name].update({'_id':
+                            ObjectId(record_tobe_updated['_id'])}, record_doc)
+
 
 @app.route('/')
 def home():
     chart_data = mongo.db.recipes.aggregate([
-            {'$lookup': {'from' : 'categories',
-                    'localField' : 'category_id',
-                    'foreignField' : '_id',
-                    'as' : 'category_name'}
+            {'$lookup': {'from': 'categories',
+                    'localField': 'category_id',
+                    'foreignField': '_id',
+                    'as': 'category_name'}
             }
-            ,{'$unwind': '$category_name'}
-            ,{'$lookup': {'from' : 'cuisines',
-                    'localField' : 'cuisine_id',
-                    'foreignField' : '_id',
-                    'as' : 'cuisine_name'}
+            , {'$unwind': '$category_name'}
+            , {'$lookup': {'from': 'cuisines',
+                    'localField': 'cuisine_id',
+                    'foreignField': '_id',
+                    'as': 'cuisine_name'}
             }
-            ,{'$unwind': '$cuisine_name'}
-            , {'$group': {'_id': '$cuisine_name', 'total_votes': {'$sum': '$user_votes'}}}
+            , {'$unwind': '$cuisine_name'}
+            , {'$group': {'_id': '$cuisine_name', 'total_votes': {'$sum': ''$user_votes'}}}
             , {'$sort': SON([('total_votes', -1), ('_id', -1)])}
             ])
 
     result_cleaned = []
 
     for x in chart_data:
-        result_cleaned.append({'name': x['_id']['cuisine_name'], 'value': x['total_votes'], 'url': 'http://localhost:5000/chart_search_recipes/' + x['_id']['cuisine_name']})
+        result_cleaned.append({'name': x['_id']['cuisine_name'], 'value':
+            x['total_votes'],
+            'url': 'http://localhost:5000/chart_search_recipes/' +
+                                                    x['_id']['cuisine_name']})
 
     if (len(result_cleaned) == 0):
-        result_cleaned.append({'name': 'No Recipes, register to add recipes', 'value': 1, 'url': 'http://localhost:5000/register'})
+        result_cleaned.append({'name': 'No Recipes, register to add recipes',
+                        'value': 1, 'url': 'http://localhost:5000/register'})
 
     chart_data = dumps({'name': 'A1', 'children': result_cleaned}, indent=2)
 
-    return render_template('index.html',resultData=chart_data, chart_switch=len(result_cleaned))
+    return render_template('index.html', resultData=chart_data,
+                                            chart_switch=len(result_cleaned))
+
 
 # somewhere to login
 @app.route("/login", methods=['GET', 'POST'])
@@ -247,21 +272,22 @@ def login():
             try:
 
                 login_user_record = mongo.db.users.find_one({'email': email})
-
                 user = User(str(login_user_record['_id']))
 
-            except:
+            except(TypeError):
 
                 flash('Sorry login failed')
                 return render_template('login.html', form=form)
 
             login_user(user, remember=request.form.get('remember_me', False))
 
-            is_valid_user = user.validate_login(login_user_record['password'], form_password)
+            is_valid_user = user.validate_login(login_user_record['password'],
+                                                                form_password)
 
             if is_valid_user is True:
 
-                login_user(user, remember=request.form.get('remember_me', False))
+                login_user(user, remember=request.form.get('remember_me',
+                                                                        False))
 
                 flash('Welcome back, your logged in')
                 return redirect('/')
@@ -272,6 +298,7 @@ def login():
 
     else:
         return render_template('login.html', form=form)
+
 
 # somewhere to regiser
 @app.route("/register", methods=['GET', 'POST'])
@@ -292,17 +319,21 @@ def register():
 
             existing_user = mongo.db.users.find_one({'email': email})
 
-            hashpass = generate_password_hash(request.form['password'], method='pbkdf2:sha512')
+            hashpass = generate_password_hash(request.form['password'],
+                                                        method='pbkdf2:sha512')
 
             if existing_user:
 
-                register_record = mongo.db.users.update({'_id': ObjectId(existing_user['_id'])}, {'username': username, 'email': email, 'password': hashpass})
+                register_record = mongo.db.users.update({'_id':
+                        ObjectId(existing_user['_id'])}, {'username': username,
+                        'email': email, 'password': hashpass})
 
                 user = User(str(existing_user['_id']))
 
             else:
 
-                user_doc = {'username': username, 'email': email, 'password': hashpass}
+                user_doc = {'username': username, 'email': email,
+                                                        'password': hashpass}
 
                 register_record = mongo.db.users.insert_one(user_doc)
 
@@ -314,12 +345,14 @@ def register():
     else:
         return render_template('register.html', form=form)
 
+
 # somewhere to logout
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
     return render_template('logout.html')
+
 
 # callback to reload the user object
 @login_manager.user_loader
@@ -422,20 +455,21 @@ def add_recipe():
                         categories=mongo.db.categories.find(),
                         cuisines=mongo.db.cuisines.find())
 
+
 @app.route('/get_recipes')
 def get_recipes():
     return render_template('get_recipes.html'
-                                ,recipes=mongo.db.recipes.aggregate([
-                                    {'$lookup': {'from' : 'categories',
-                                            'localField' : 'category_id',
-                                            'foreignField' : '_id',
-                                            'as' : 'category_name'}
+                                , recipes=mongo.db.recipes.aggregate([
+                                    {'$lookup': {'from': 'categories',
+                                            'localField': 'category_id',
+                                            'foreignField': '_id',
+                                            'as': 'category_name'}
                                     }
                                     , {'$unwind': '$category_name'}
-                                    , {'$lookup': {'from' : 'cuisines',
-                                            'localField' : 'cuisine_id',
-                                            'foreignField' : '_id',
-                                            'as' : 'cuisine_name'}
+                                    , {'$lookup': {'from': 'cuisines',
+                                            'localField': 'cuisine_id',
+                                            'foreignField': '_id',
+                                            'as': 'cuisine_name'}
                                     }
                                     , {'$unwind': '$cuisine_name'}]))
 
@@ -443,6 +477,7 @@ def get_recipes():
 @app.route('/search')
 def search():
     return render_template('search.html')
+
 
 @app.route('/search_recipes', methods=["POST"])
 def search_recipes():
@@ -461,7 +496,7 @@ def search_recipes():
 
         search_column = urllib.parse.quote_plus(SEARCH_TYPE.USER_VOTES.value)
 
-    if  (SORT_ORDER.USER_VOTES_ASCENDING.value == request.form['order_selected']):
+    if (SORT_ORDER.USER_VOTES_ASCENDING.value == request.form['order_selected']):
 
         sort_column = urllib.parse.quote_plus(SORT_COLUMN.USER_VOTES.value)
         sort_order = 1
@@ -482,37 +517,36 @@ def search_recipes():
         sort_order = -1
 
     results = mongo.db.recipes.aggregate([
-        {'$lookup': {'from' : 'categories',
-                'localField' : 'category_id',
-                'foreignField' : '_id',
-                'as' : 'category_name'}
+        {'$lookup': {'from': 'categories',
+                'localField': 'category_id',
+                'foreignField': '_id',
+                'as': 'category_name'}
         }
-        ,{'$unwind': '$category_name'}
-        ,{'$lookup': {'from' : 'cuisines',
-                'localField' : 'cuisine_id',
-                'foreignField' : '_id',
-                'as' : 'cuisine_name'}
+        , {'$unwind': '$category_name'}
+        , {'$lookup': {'from': 'cuisines',
+                'localField': 'cuisine_id',
+                'foreignField': '_id',
+                'as': 'cuisine_name'}
         }
-        ,{'$unwind': '$cuisine_name'}
-        ,{'$match':{search_column: {'$regex': search_text, '$options': 'i'}}}
-        ,{'$sort': SON([(sort_column, sort_order)])}])
+        , {'$unwind': '$cuisine_name'}
+        , {'$match': {search_column: {'$regex': search_text, '$options': 'i'}}}
+        , {'$sort': SON([(sort_column, sort_order)])}])
 
     return render_template('search_recipes.html'
-                                ,recipes=mongo.db.recipes.aggregate([
-                                    {'$lookup': {'from' : 'categories',
-                                            'localField' : 'category_id',
-                                            'foreignField' : '_id',
-                                            'as' : 'category_name'}
+                                , recipes=mongo.db.recipes.aggregate([
+                                    {'$lookup': {'from': 'categories',
+                                            'localField': 'category_id',
+                                            'foreignField': '_id',
+                                            'as': 'category_name'}
                                     }
                                     , {'$unwind': '$category_name'}
-                                    , {'$lookup': {'from' : 'cuisines',
-                                            'localField' : 'cuisine_id',
-                                            'foreignField' : '_id',
-                                            'as' : 'cuisine_name'}
+                                    , {'$lookup': {'from': 'cuisines',
+                                            'localField': 'cuisine_id',
+                                            'foreignField': '_id',
+                                            'as': 'cuisine_name'}
                                     }
                                     , {'$unwind': '$cuisine_name'}
-                                    , {'$match':{search_column: {'$regex': search_text, '$options': 'i'}}}
-                                    # , {'$project': {'cuisine_name': 1, 'user_votes': 1}}
+                                    , {'$match': {search_column: {'$regex': search_text, '$options': 'i'}}}
                                     , {'$sort': SON([(sort_column, sort_order)])}]), number_results=len(list(results)))
 
 
@@ -528,37 +562,36 @@ def chart_search_recipes(name):
     sort_order = -1
 
     results = mongo.db.recipes.aggregate([
-        {'$lookup': {'from' : 'categories',
-                'localField' : 'category_id',
-                'foreignField' : '_id',
-                'as' : 'category_name'}
+        {'$lookup': {'from': 'categories',
+                'localField': 'category_id',
+                'foreignField': '_id',
+                'as': 'category_name'}
         }
-        ,{'$unwind': '$category_name'}
-        ,{'$lookup': {'from' : 'cuisines',
-                'localField' : 'cuisine_id',
-                'foreignField' : '_id',
-                'as' : 'cuisine_name'}
+        , {'$unwind': '$category_name'}
+        , {'$lookup': {'from': 'cuisines',
+                'localField': 'cuisine_id',
+                'foreignField': '_id',
+                'as': 'cuisine_name'}
         }
-        ,{'$unwind': '$cuisine_name'}
-        ,{'$match':{search_column: {'$regex': search_text, '$options': 'i'}}}
-        ,{'$sort': SON([(sort_column, sort_order)])}])
+        , {'$unwind': '$cuisine_name'}
+        , {'$match': {search_column: {'$regex': search_text, '$options': 'i'}}}
+        , {'$sort': SON([(sort_column, sort_order)])}])
 
     return render_template('search_recipes.html'
-                                ,recipes=mongo.db.recipes.aggregate([
-                                    {'$lookup': {'from' : 'categories',
-                                            'localField' : 'category_id',
-                                            'foreignField' : '_id',
-                                            'as' : 'category_name'}
+                                , recipes=mongo.db.recipes.aggregate([
+                                    {'$lookup': {'from': 'categories',
+                                            'localField': 'category_id',
+                                            'foreignField': '_id',
+                                            'as': 'category_name'}
                                     }
                                     , {'$unwind': '$category_name'}
-                                    , {'$lookup': {'from' : 'cuisines',
-                                            'localField' : 'cuisine_id',
-                                            'foreignField' : '_id',
-                                            'as' : 'cuisine_name'}
+                                    , {'$lookup': {'from': 'cuisines',
+                                            'localField': 'cuisine_id',
+                                            'foreignField': '_id',
+                                            'as': 'cuisine_name'}
                                     }
                                     , {'$unwind': '$cuisine_name'}
-                                    , {'$match':{search_column: {'$regex': search_text, '$options': 'i'}}}
-                                    # , {'$project': {'cuisine_name': 1, 'user_votes': 1}}
+                                    , {'$match': {search_column: {'$regex': search_text, '$options': 'i'}}}
                                     , {'$sort': SON([(sort_column, sort_order)])}]), number_results=len(list(results)))
 
 
@@ -571,7 +604,7 @@ def insert_recipe():
 
     category_id = get_collection_id('categories', 'category_name', request.form.to_dict()['category_name'])
 
-    cuisine_id = get_collection_id('cuisines','cuisine_name', request.form.to_dict()['cuisine_name'])
+    cuisine_id = get_collection_id('cuisines', 'cuisine_name', request.form.to_dict()['cuisine_name'])
 
     recipe_doc = {'recipe_name': request.form.to_dict()['recipe_name'],
             'recipe_description': request.form.to_dict()['recipe_description'],
@@ -584,19 +617,23 @@ def insert_recipe():
     _recipe_id = recipes.insert_one(recipe_doc)
 
     # ingredients record insertion
-    insert_record(id_name='recipe_id', insert_record_id=_recipe_id.inserted_id, record_set_dict=request.form.to_dict().items(), filter_key='ingredient', collection_name='ingredients')
+    insert_record(id_name='recipe_id', insert_record_id=_recipe_id.inserted_id,
+                        record_set_dict=request.form.to_dict().items(),
+                        filter_key='ingredient', collection_name='ingredients')
 
     # instructions record insertion
-    insert_record(id_name='recipe_id', insert_record_id=_recipe_id.inserted_id, record_set_dict=request.form.to_dict().items(), filter_key='instruction', collection_name='instructions')
+    insert_record(id_name='recipe_id', insert_record_id=_recipe_id.inserted_id,
+                    record_set_dict=request.form.to_dict().items(),
+                    filter_key='instruction', collection_name='instructions')
 
     return redirect(url_for('get_recipes'))
 
 
 @app.route('/show_recipe/<recipe_id>')
 def show_recipe(recipe_id):
-    recipe_record=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
-    ingredients=mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
-    instructions=mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
+    recipe_record = mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
+    ingredients = mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
+    instructions = mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
     return render_template('show_recipe.html',
         recipes=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)}),
         categories=mongo.db.categories.find_one({'_id': recipe_record['category_id']}),
@@ -608,9 +645,9 @@ def show_recipe(recipe_id):
 @app.route('/edit_recipe/<recipe_id>')
 @login_required
 def edit_recipe(recipe_id):
-    recipe_record=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
-    ingredients=mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
-    instructions=mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
+    recipe_record = mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
+    ingredients = mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
+    instructions = mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
     return render_template('edit_recipe.html',
         recipes=mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)}),
         categories=mongo.db.categories.find(),
@@ -627,9 +664,11 @@ def update_recipe(recipe_id):
 
     recipes = mongo.db.recipes
 
-    category_id = get_collection_id('categories', 'category_name', request.form.to_dict()['category_name'])
+    category_id = get_collection_id('categories', 'category_name',
+                                    request.form.to_dict()['category_name'])
 
-    cuisine_id = get_collection_id('cuisines','cuisine_name', request.form.to_dict()['cuisine_name'])
+    cuisine_id = get_collection_id('cuisines', 'cuisine_name',
+                                    request.form.to_dict()['cuisine_name'])
 
     recipe_doc = {'recipe_name': request.form.to_dict()['recipe_name'],
             'recipe_description': request.form.to_dict()['recipe_description'],
@@ -639,25 +678,29 @@ def update_recipe(recipe_id):
             'user_votes': request.form.to_dict()['user_votes']}
 
     # recipes record update
-    recipes.update({'_id': ObjectId(recipe_id)},recipe_doc)
+    recipes.update({'_id': ObjectId(recipe_id)}, recipe_doc)
 
     # ingredients record update
     update_record(id_name='recipe_id', update_record_id=recipe_id,
-                record_set_dict=request.form.to_dict().items(), filter_key='ingredient',collection_name='ingredients')
+                record_set_dict=request.form.to_dict().items(),
+                filter_key='ingredient', collection_name='ingredients')
 
     # instructions record update
     update_record(id_name='recipe_id', update_record_id=recipe_id,
-                record_set_dict=request.form.to_dict().items(), filter_key='instruction',collection_name='instructions')
+                record_set_dict=request.form.to_dict().items(),
+                filter_key='instruction', collection_name='instructions')
 
     return redirect(url_for('get_recipes'))
+
 
 @app.route('/delete_recipe/<recipe_id>')
 @login_required
 def delete_recipe(recipe_id):
-    recipe_record=mongo.db.recipes.remove({'_id': ObjectId(recipe_id)})
-    ingredients=mongo.db.ingredients.remove({'recipe_id': ObjectId(recipe_id)})
-    instructions=mongo.db.instructions.remove({'recipe_id': ObjectId(recipe_id)})
+    recipe_record = mongo.db.recipes.remove({'_id': ObjectId(recipe_id)})
+    ingredients = mongo.db.ingredients.remove({'recipe_id': ObjectId(recipe_id)})
+    instructions = mongo.db.instructions.remove({'recipe_id': ObjectId(recipe_id)})
     return redirect(url_for('get_recipes'))
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), debug=True)
