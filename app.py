@@ -231,7 +231,7 @@ def home():
                     'as': 'cuisine_name'}
             }
             , {'$unwind': '$cuisine_name'}
-            , {'$group': {'_id': '$cuisine_name', 'total_votes': {'$sum': ''$user_votes'}}}
+            , {'$group': {'_id': '$cuisine_name', 'total_votes': {'$sum': '$user_votes'}}}
             , {'$sort': SON([('total_votes', -1), ('_id', -1)])}
             ])
 
