@@ -7,4 +7,3 @@ pyvenv.cfg
 config_local.py
 ghostdriver.log
 pip-selfcheck.json
-node_modules*
