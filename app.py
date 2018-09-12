@@ -610,8 +610,8 @@ def insert_recipe():
             'recipe_description': request.form.to_dict()['recipe_description'],
             'category_id': category_id,
             'cuisine_id': cuisine_id,
-            'total_time': request.form.to_dict()['total_time'],
-            'user_votes': request.form.to_dict()['user_votes']}
+            'total_time': int(request.form.to_dict()['total_time']),
+            'user_votes': int(request.form.to_dict()['user_votes'])}
 
     # recipes record insertion
     _recipe_id = recipes.insert_one(recipe_doc)
