@@ -13,9 +13,10 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    MONGO_DBNAME = os.getenv('MONGO_DBNAME', None)
-    MONGO_URI = os.getenv('MONGO_URI', None)
-    SECRET_KEY = os.getenv('SECRET_KEY', None)
+
+    MONGO_DBNAME = os.environ['MONGO_DBNAME']
+    MONGO_URI = os.environ['MONGO_URI']
+    SECRET_KEY = os.environ['SECRET_KEY']
 
 
 class TestingConfig(Config):

@@ -15,19 +15,18 @@ import string
 import urllib.parse
 import urllib.request
 
-print(os.environ['FLASK_CONFIG'])
 
-if os.getenv('FLASK_CONFIG') == "production":
+if os.environ['FLASK_CONFIG'] == "production":
     app = Flask(__name__)
     app.config.from_object('config.ProductionConfig')
     app.config.from_envvar('YOURAPPLICATION_SETTINGS')
 
-elif os.getenv('FLASK_CONFIG') == "development":
+elif os.environ['FLASK_CONFIG'] == "development":
     app = Flask(__name__)
     app.config.from_object('config.DevelopmentConfig')
     app.config.from_envvar('YOURAPPLICATION_SETTINGS')
 
-elif os.getenv('FLASK_CONFIG') == "testing":
+elif os.environ['FLASK_CONFIG'] == "testing":
     app = Flask(__name__)
     app.config.from_object('config.TestingConfig')
     app.config.from_envvar('YOURAPPLICATION_SETTINGS')
