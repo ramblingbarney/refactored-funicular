@@ -15,7 +15,7 @@ import string
 import urllib.parse
 import urllib.request
 
-print(os.getenv('FLASK_CONFIG'))
+print(os.environ['FLASK_CONFIG'])
 
 if os.getenv('FLASK_CONFIG') == "production":
     app = Flask(__name__)
