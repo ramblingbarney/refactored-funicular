@@ -17,8 +17,6 @@ class DevelopmentConfig(Config):
     MONGO_URI = os.getenv('MONGO_URI', None)
     SECRET_KEY = os.getenv('SECRET_KEY', None)
 
-    print(MONGO_URI)
-
 
 class TestingConfig(Config):
     TESTING = True
