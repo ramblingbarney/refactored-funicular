@@ -31,6 +31,7 @@ elif os.environ['FLASK_CONFIG'] == "testing":
     app.config.from_object('config.TestingConfig')
     app.config.from_envvar('YOURAPPLICATION_SETTINGS')
 
+
 mongo = PyMongo(app)
 
 # flask-login
@@ -704,4 +705,4 @@ def delete_recipe(recipe_id):
 
 
 if __name__ == '__main__':
-    app.run(host=os.environ.get('IP'), debug=True)
+    app.run(host=os.environ.get('IP'):os.environ['PORT'], debug=True)
