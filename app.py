@@ -39,6 +39,9 @@ login_manager.login_view = "login"
 
 
 class User(UserMixin):
+    '''
+    User
+    '''
 
     def __init__(self, id):
 
@@ -111,6 +114,9 @@ app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
 
 def get_collection_id(collection_name, search_field, search_value):
+    '''
+    Return collection id for a given collection name, field name containing search string
+    '''
 
     field_name = urllib.parse.quote_plus(search_field)
 
@@ -121,7 +127,9 @@ def get_collection_id(collection_name, search_field, search_value):
 
 
 def insert_record(id_name, insert_record_id, record_set_dict, filter_key, collection_name):
-    '''Insert an Instruction or Ingredient record using using foreign key id'''
+    '''
+    Insert an Instruction or Ingredient record using using foreign key id
+    '''
 
     if (filter_key == FILTER_KEYS.INGREDIENT.value):
 
@@ -167,7 +175,9 @@ def insert_record(id_name, insert_record_id, record_set_dict, filter_key, collec
 
 
 def update_record(id_name, update_record_id, record_set_dict, filter_key, collection_name):
-    '''Update an Instruction or Ingredient record using using foreign key id'''
+    '''
+    Update an Instruction or Ingredient record using using foreign key id
+    '''
 
     if (filter_key == FILTER_KEYS.INGREDIENT.value):
 
@@ -218,6 +228,10 @@ def update_record(id_name, update_record_id, record_set_dict, filter_key, collec
 
 @app.route('/')
 def home():
+    '''
+    Show home template with bubble chart
+    '''
+
     chart_data = mongo.db.recipes.aggregate([
             {'$lookup': {'from': 'categories',
                     'localField': 'category_id',
@@ -256,6 +270,9 @@ def home():
 # somewhere to login
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    '''
+    Login or show the login template
+    '''
 
     form = LoginForm()
     if request.method == 'POST':
@@ -303,6 +320,9 @@ def login():
 # somewhere to regiser
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    '''
+    Register a new user or update an existing user where email exists
+    '''
 
     form = RegistrationForm()
     if request.method == 'POST':
@@ -350,6 +370,10 @@ def register():
 @app.route("/logout")
 @login_required
 def logout():
+    '''
+    Logout
+    '''
+
     logout_user()
     return render_template('logout.html')
 
@@ -357,24 +381,39 @@ def logout():
 # callback to reload the user object
 @login_manager.user_loader
 def load_user(userid):
+    '''
+    Login
+    '''
+
     return User(userid)
 
 
 @app.route('/add_category')
 @login_required
 def add_category():
+    '''
+    Show create category template
+    '''
     return render_template('add_category.html')
 
 
 @app.route('/add_cuisine')
 @login_required
 def add_cuisine():
+    '''
+    Show create cuisine template
+    '''
+
     return render_template('add_cuisine.html')
 
 
 @app.route('/insert_category', methods=['POST'])
 @login_required
 def insert_category():
+    '''
+    Create a category
+    '''
+
     categories = mongo.db.categories
     category_doc = {'category_name': request.form['category_name']}
     categories.insert_one(category_doc)
@@ -384,6 +423,10 @@ def insert_category():
 @app.route('/insert_cuisine', methods=['POST'])
 @login_required
 def insert_cuisine():
+    '''
+    Create a cuisine
+    '''
+
     cuisines = mongo.db.cuisines
     cuisine_doc = {'cuisine_name': request.form['cuisine_name']}
     cuisines.insert_one(cuisine_doc)
@@ -392,12 +435,19 @@ def insert_cuisine():
 
 @app.route('/get_categories')
 def get_categories():
+    '''
+    Show all categories
+    '''
+
     return render_template('get_categories.html',
                         categories=mongo.db.categories.find())
 
 
 @app.route('/get_cuisines')
 def get_cuisines():
+    '''
+    Show all cuisines
+    '''
     return render_template('get_cuisines.html',
                         cuisines=mongo.db.cuisines.find())
 
@@ -405,6 +455,10 @@ def get_cuisines():
 @app.route('/edit_category/<category_id>')
 @login_required
 def edit_category(category_id):
+    '''
+    Show the edit category template
+    '''
+
     return render_template('edit_category.html',
         category=mongo.db.categories.find_one({'_id': ObjectId(category_id)}))
 
@@ -412,6 +466,10 @@ def edit_category(category_id):
 @app.route('/edit_cuisine/<cuisine_id>')
 @login_required
 def edit_cuisine(cuisine_id):
+    '''
+    Show the edit cuisine template
+    '''
+
     return render_template('edit_cuisine.html',
         cuisine=mongo.db.cuisines.find_one({'_id': ObjectId(cuisine_id)}))
 
@@ -419,6 +477,10 @@ def edit_cuisine(cuisine_id):
 @app.route('/category_item/<category_id>', methods=["POST"])
 @login_required
 def update_category(category_id):
+    '''
+    Update a category record
+    '''
+
     category_items = mongo.db.categories
     category_items.update({'_id': ObjectId(category_id)},
                             {'category_name': request.form['category_name']})
@@ -428,6 +490,10 @@ def update_category(category_id):
 @app.route('/cuisine_item/<cuisine_id>', methods=["POST"])
 @login_required
 def update_cuisine(cuisine_id):
+    '''
+    Update a cuisine record
+    '''
+
     cuisine_items = mongo.db.cuisines
     cuisine_items.update({'_id': ObjectId(cuisine_id)},
                             {'cuisine_name': request.form['cuisine_name']})
@@ -437,6 +503,10 @@ def update_cuisine(cuisine_id):
 @app.route('/delete_category/<category_id>')
 @login_required
 def delete_category(category_id):
+    '''
+    Delete a category
+    '''
+
     mongo.db.categories.remove({'_id': ObjectId(category_id)})
     return redirect(url_for("get_categories"))
 
@@ -444,6 +514,10 @@ def delete_category(category_id):
 @app.route('/delete_cuisine/<cuisine_id>')
 @login_required
 def delete_cuisine(cuisine_id):
+    '''
+    Delete a cuisine
+    '''
+
     mongo.db.cuisines.remove({'_id': ObjectId(cuisine_id)})
     return redirect(url_for("get_cuisines"))
 
@@ -451,6 +525,10 @@ def delete_cuisine(cuisine_id):
 @app.route('/add_recipe')
 @login_required
 def add_recipe():
+    '''
+    Show create recipe template
+    '''
+
     return render_template('add_recipe.html',
                         categories=mongo.db.categories.find(),
                         cuisines=mongo.db.cuisines.find())
@@ -458,6 +536,10 @@ def add_recipe():
 
 @app.route('/get_recipes')
 def get_recipes():
+    '''
+    Show all recipes
+    '''
+
     return render_template('get_recipes.html'
                                 , recipes=mongo.db.recipes.aggregate([
                                     {'$lookup': {'from': 'categories',
@@ -481,6 +563,9 @@ def search():
 
 @app.route('/search_recipes', methods=["POST"])
 def search_recipes():
+    '''
+    Search for recipes by Category/Cuisine/User Votes and containing search string
+    '''
 
     search_text = request.form['search_text']
 
@@ -552,6 +637,9 @@ def search_recipes():
 
 @app.route('/chart_search_recipes/<name>')
 def chart_search_recipes(name):
+    '''
+    Show recipes from clicked chart bubble
+    '''
 
     search_text = name
 
@@ -598,7 +686,9 @@ def chart_search_recipes(name):
 @app.route('/insert_recipe', methods=['POST'])
 @login_required
 def insert_recipe():
-
+    '''
+    Create a recipe
+    '''
     # recipe collection
     recipes = mongo.db.recipes
 
@@ -631,6 +721,10 @@ def insert_recipe():
 
 @app.route('/show_recipe/<recipe_id>')
 def show_recipe(recipe_id):
+    '''
+    Show a selected recipe
+    '''
+
     recipe_record = mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
     ingredients = mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
     instructions = mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
@@ -645,6 +739,10 @@ def show_recipe(recipe_id):
 @app.route('/edit_recipe/<recipe_id>')
 @login_required
 def edit_recipe(recipe_id):
+    '''
+    Edit recipe
+    '''
+
     recipe_record = mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
     ingredients = mongo.db.ingredients.find_one({'recipe_id': ObjectId(recipe_id)})
     instructions = mongo.db.instructions.find_one({'recipe_id': ObjectId(recipe_id)})
@@ -661,6 +759,9 @@ def edit_recipe(recipe_id):
 @app.route('/update_recipe/<recipe_id>', methods=["POST"])
 @login_required
 def update_recipe(recipe_id):
+    '''
+    Update recipe
+    '''
 
     recipes = mongo.db.recipes
 
@@ -696,6 +797,10 @@ def update_recipe(recipe_id):
 @app.route('/delete_recipe/<recipe_id>')
 @login_required
 def delete_recipe(recipe_id):
+    '''
+    Delete recipe
+    '''
+
     recipe_record = mongo.db.recipes.remove({'_id': ObjectId(recipe_id)})
     ingredients = mongo.db.ingredients.remove({'recipe_id': ObjectId(recipe_id)})
     instructions = mongo.db.instructions.remove({'recipe_id': ObjectId(recipe_id)})
@@ -703,4 +808,4 @@ def delete_recipe(recipe_id):
 
 
 if __name__ == '__main__':
-    app.run(host=os.environ.get('IP'), debug=True)
+    app.run(host=os.environ.get('IP'), debug=False)
