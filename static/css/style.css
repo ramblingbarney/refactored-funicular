@@ -36,8 +36,9 @@
   font-feature-settings: 'liga';
 }
 
-.nav-single-line{
-  display: inline-block;
+nav {
+
+  margin-bottom: 10px;
 }
 
 .reacipe_header {
@@ -82,17 +83,28 @@ font-size: 3vh;
 
 .form-container {
   display: flex;
+  background-image: url("../img/ORFF0J0_gradient.jpg");
+  background-repeat: no-repeat;
 }
 
-.left-column, .right-column {
+.left-column {
   flex-grow: 3;
   flex-shrink: 3;
+}
+
+.right-column {
+  flex-grow: 3;
+  flex-shrink: 3;
+  background-color: white;
 }
 
 .central-column {
   flex-grow: 1;
   flex-shrink: 1;
   max-width: 500px;
+  height: 90%;
+  background-color: white;
+  padding-left: 1em;
 }
 
 .last-button-row {
