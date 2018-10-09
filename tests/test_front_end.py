@@ -17,7 +17,9 @@ class RecipeBuddyUITests(unittest.TestCase):
     USERNAME = urllib.parse.quote_plus(config.MONGO_USERNAME)
     PASSWORD = urllib.parse.quote_plus(config.MONGO_PASSWORD)
 
-    CLIENT = MongoClient('mongodb://%s:%s@127.0.0.1:27017/recipe_app_testing' % (USERNAME, PASSWORD))
+    CLIENT = MongoClient(
+        'mongodb://%s:%s@127.0.0.1:27017/recipe_app_testing' %
+        (USERNAME, PASSWORD))
 
     DB = CLIENT.recipe_app_testing
 
@@ -86,43 +88,52 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         # recipes to insert
 
-        recipe_1 = {'recipe_name': 'Avocado and Tuna Tapas',
-                'recipe_description': 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.',
-                'category_id': insert_category_1.inserted_id,
-                'cuisine_id': insert_cuisine_1.inserted_id,
-                'total_time': 45, 'user_votes': 3}
+        recipe_1 = {
+            'recipe_name': 'Avocado and Tuna Tapas',
+            'recipe_description': 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.',
+            'category_id': insert_category_1.inserted_id,
+            'cuisine_id': insert_cuisine_1.inserted_id,
+            'total_time': 45,
+            'user_votes': 3}
 
+        recipe_2 = {
+            'recipe_name': 'Chinese Pepper Steak',
+            'recipe_description': 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.', 'category_id': insert_category_2.inserted_id,
+            'cuisine_id': insert_cuisine_2.inserted_id,
+            'total_time': 30,
+            'user_votes': 5}
 
-        recipe_2 = {'recipe_name': 'Chinese Pepper Steak',
-                'recipe_description': 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.',
-                'category_id': insert_category_2.inserted_id,
-                'cuisine_id': insert_cuisine_2.inserted_id,
-                'total_time': 30, 'user_votes': 5}
+        recipe_3 = {
+            'recipe_name': 'Moroccan Chicken with Saffron and Preserved Lemon',
+            'recipe_description': 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.',
+            'category_id': insert_category_3.inserted_id,
+            'cuisine_id': insert_cuisine_3.inserted_id,
+            'total_time': 15,
+            'user_votes': -1}
 
-        recipe_3 = {'recipe_name': 'Moroccan Chicken with Saffron and Preserved Lemon',
-                'recipe_description': 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.',
-                'category_id': insert_category_3.inserted_id,
-                'cuisine_id': insert_cuisine_3.inserted_id,
-                'total_time': 15, 'user_votes': -1}
+        recipe_4 = {
+            'recipe_name': 'Apple and Tuna Tapas',
+            'recipe_description': 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.',
+            'category_id': insert_category_1.inserted_id,
+            'cuisine_id': insert_cuisine_1.inserted_id,
+            'total_time': 60,
+            'user_votes': 4}
 
-        recipe_4 = {'recipe_name': 'Apple and Tuna Tapas',
-                'recipe_description': 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.',
-                'category_id': insert_category_1.inserted_id,
-                'cuisine_id': insert_cuisine_1.inserted_id,
-                'total_time': 60, 'user_votes': 4}
+        recipe_5 = {
+            'recipe_name': 'German Pepper Steak',
+            'recipe_description': 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.',
+            'category_id': insert_category_2.inserted_id,
+            'cuisine_id': insert_cuisine_2.inserted_id,
+            'total_time': 30,
+            'user_votes': 4}
 
-
-        recipe_5 = {'recipe_name': 'German Pepper Steak',
-                'recipe_description': 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.',
-                'category_id': insert_category_2.inserted_id,
-                'cuisine_id': insert_cuisine_2.inserted_id,
-                'total_time': 30, 'user_votes': 4}
-
-        recipe_6 = {'recipe_name': 'Italian Pizza',
-                'recipe_description': 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.',
-                'category_id': insert_category_3.inserted_id,
-                'cuisine_id': insert_cuisine_3.inserted_id,
-                'total_time': 15, 'user_votes': 1}
+        recipe_6 = {
+            'recipe_name': 'Italian Pizza',
+            'recipe_description': 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.',
+            'category_id': insert_category_3.inserted_id,
+            'cuisine_id': insert_cuisine_3.inserted_id,
+            'total_time': 15,
+            'user_votes': 1}
 
         # insert recipes collection
 
@@ -133,50 +144,99 @@ class RecipeBuddyUITests(unittest.TestCase):
         insert_recipe_5 = self.collection_recipes.insert_one(recipe_5)
         insert_recipe_6 = self.collection_recipes.insert_one(recipe_6)
 
-        instructions_1 = {'recipe_id': insert_recipe_1.inserted_id, 'instructions' : ["mix 3 eggs", "whisk", "put on low heat"]}
+        instructions_1 = {
+            'recipe_id': insert_recipe_1.inserted_id,
+            'instructions': ["mix 3 eggs", "whisk", "put on low heat"]}
 
-        ingredients_1 = {'recipe_id': insert_recipe_1.inserted_id, 'ingredients' : ["3 eggs", "100g butter", "0.5l water"]}
+        ingredients_1 = {
+            'recipe_id': insert_recipe_1.inserted_id,
+            'ingredients': ["3 eggs", "100g butter", "0.5l water"]}
 
-        instructions_2 = {'recipe_id': insert_recipe_2.inserted_id, 'instructions' : ["peel 2 oranges", "add flour", "put on high heat"]}
+        instructions_2 = {
+            'recipe_id': insert_recipe_2.inserted_id,
+            'instructions': [
+                "peel 2 oranges", "add flour",
+                "put on high heat"]}
 
-        ingredients_2 = {'recipe_id': insert_recipe_2.inserted_id, 'ingredients' : ["2 oranges", "100g butter", "1l water", "200g flour"]}
+        ingredients_2 = {
+            'recipe_id': insert_recipe_2.inserted_id,
+            'ingredients': [
+                "2 oranges", "100g butter",
+                "1l water", "200g flour"]}
 
-        instructions_3 = {'recipe_id': insert_recipe_3.inserted_id, 'instructions' : ["chop carrots", "fry on high heat with olive oil", "chop onions", "add onions once carrots soft"]}
+        instructions_3 = {
+            'recipe_id': insert_recipe_3.inserted_id,
+            'instructions': [
+                "chop carrots", "fry on high heat with olive oil",
+                "chop onions", "add onions once carrots soft"]}
 
-        ingredients_3 = {'recipe_id': insert_recipe_3.inserted_id, 'ingredients' : ["200g carrots", "drop of olive oil", "200g brown onions"]}
+        ingredients_3 = {
+            'recipe_id': insert_recipe_3.inserted_id,
+            'ingredients': [
+                "200g carrots", "drop of olive oil", "200g brown onions"]}
 
-        instructions_4 = {'recipe_id': insert_recipe_4.inserted_id, 'instructions' : ["mix 3 eggs", "whisk", "put on low heat"]}
+        instructions_4 = {
+            'recipe_id': insert_recipe_4.inserted_id,
+            'instructions': ["mix 3 eggs", "whisk", "put on low heat"]}
 
-        ingredients_4 = {'recipe_id': insert_recipe_4.inserted_id, 'ingredients' : ["3 eggs", "100g butter", "0.5l water"]}
+        ingredients_4 = {
+            'recipe_id': insert_recipe_4.inserted_id,
+            'ingredients': ["3 eggs", "100g butter", "0.5l water"]}
 
-        instructions_5 = {'recipe_id': insert_recipe_5.inserted_id, 'instructions' : ["peel 2 oranges", "add flour", "put on high heat"]}
+        instructions_5 = {
+            'recipe_id': insert_recipe_5.inserted_id,
+            'instructions': [
+                "peel 2 oranges", "add flour", "put on high heat"]}
 
-        ingredients_5 = {'recipe_id': insert_recipe_5.inserted_id, 'ingredients' : ["2 oranges", "100g butter", "1l water", "200g flour"]}
+        ingredients_5 = {
+            'recipe_id': insert_recipe_5.inserted_id,
+            'ingredients': [
+                "2 oranges", "100g butter", "1l water", "200g flour"]}
 
-        instructions_6 = {'recipe_id': insert_recipe_6.inserted_id, 'instructions' : ["chop carrots", "fry on high heat with olive oil", "chop onions", "add onions once carrots soft"]}
+        instructions_6 = {
+            'recipe_id': insert_recipe_6.inserted_id,
+            'instructions': [
+                "chop carrots", "fry on high heat with olive oil",
+                "chop onions", "add onions once carrots soft"]}
 
-        ingredients_6 = {'recipe_id': insert_recipe_6.inserted_id, 'ingredients' : ["200g carrots", "drop of olive oil", "200g brown onions"]}
+        ingredients_6 = {
+            'recipe_id': insert_recipe_6.inserted_id,
+            'ingredients': [
+                "200g carrots", "drop of olive oil", "200g brown onions"]}
 
         # create the 'instructions' collection in MongoDB
         self.collection_instructions = self.DB.instructions
         # insert
-        self.collection_instructions.insert_many([instructions_1, instructions_2, instructions_3, instructions_4, instructions_5, instructions_6])
+        self.collection_instructions.insert_many([
+            instructions_1, instructions_2, instructions_3,
+            instructions_4, instructions_5, instructions_6])
 
         # create the 'ingredients' collection in MongoDB
         self.collection_ingredients = self.DB.ingredients
         # insert
-        self.collection_ingredients.insert_many([ingredients_1, ingredients_2, ingredients_3, ingredients_4, ingredients_5, ingredients_6])
+        self.collection_ingredients.insert_many([
+            ingredients_1, ingredients_2, ingredients_3,
+            ingredients_4, ingredients_5, ingredients_6])
 
         # create the 'users' collection in mongodb
         self.collection_users = self.DB.users
 
-        hashed_user_password_1 = generate_password_hash('3$l<qpY01PsWDSc9KLnV', method='pbkdf2:sha512')
-        hashed_user_password_2 = generate_password_hash('*F-&l!wJ)wU*@7sHF5hC', method='pbkdf2:sha512')
-        hashed_user_password_3 = generate_password_hash('ULndonb7YOW{O)7iJ6c', method='pbkdf2:sha512')
+        hashed_user_password_1 = generate_password_hash(
+            '3$l<qpY01PsWDSc9KLnV', method='pbkdf2:sha512')
+        hashed_user_password_2 = generate_password_hash(
+            '*F-&l!wJ)wU*@7sHF5hC', method='pbkdf2:sha512')
+        hashed_user_password_3 = generate_password_hash(
+            'ULndonb7YOW{O)7iJ6c', method='pbkdf2:sha512')
 
-        users_1 = {'username' : 'tom', 'email' : 'tom123d@yahoo.com', 'password' : hashed_user_password_1}
-        users_2 = {'username' : 'dick', 'email' : 'dick123d@yahoo.com', 'password' : hashed_user_password_2}
-        users_3 = {'username' : 'harry', 'email' : 'harry123d@yahoo.com', 'password' : hashed_user_password_3}
+        users_1 = {
+            'username': 'tom', 'email': 'tom123d@yahoo.com',
+            'password': hashed_user_password_1}
+        users_2 = {
+            'username': 'dick', 'email': 'dick123d@yahoo.com',
+            'password': hashed_user_password_2}
+        users_3 = {
+            'username': 'harry', 'email': 'harry123d@yahoo.com',
+            'password': hashed_user_password_3}
 
         self.collection_users.insert_many([users_1, users_2, users_3])
 
@@ -196,6 +256,7 @@ class RecipeBuddyUITests(unittest.TestCase):
     def tearDown(self):
         # delete fixture collections
         self.DB.categories.delete_many({})
+        self.DB.cuisines.delete_many({})
         self.DB.recipes.delete_many({})
         self.DB.instructions.delete_many({})
         self.DB.ingredients.delete_many({})
@@ -212,7 +273,9 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.elements = self.driver.find_elements_by_class_name(
                                                         "category_list_item")
 
-        test_list = ['Meal for 1', 'Evening Meal for 2', 'Sunday Lunch for all the family']
+        test_list = [
+            'Meal for 1', 'Evening Meal for 2',
+            'Sunday Lunch for all the family']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -247,17 +310,20 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id("password").send_keys(
+            '3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_categories")
         self.driver.implicitly_wait(0)  # seconds
-        self.driver.find_element_by_xpath("//div[contains(@class, 'row last-button-row')]/a").click()
+        self.driver.find_element_by_xpath(
+            "//div[contains(@class, 'row last-button-row')]/a").click()
         self.driver.implicitly_wait(0)  # seconds
-        self.driver.find_element_by_id("category_name").send_keys(
-                                            'Quick evening meal for 2')
+        self.driver.find_element_by_id(
+            "category_name").send_keys('Quick evening meal for 2')
         self.driver.implicitly_wait(0)  # seconds
         self.driver.find_element_by_id("add_category").click()
 
@@ -266,7 +332,9 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.elements = self.driver.find_elements_by_class_name(
                                                         "category_list_item")
 
-        test_list = ['Meal for 1', 'Evening Meal for 2', 'Sunday Lunch for all the family', 'Quick evening meal for 2']
+        test_list = [
+            'Meal for 1', 'Evening Meal for 2',
+            'Sunday Lunch for all the family', 'Quick evening meal for 2']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -279,8 +347,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -310,8 +380,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -337,8 +409,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -368,8 +442,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -388,7 +464,9 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.elements = self.driver.find_elements_by_class_name(
                                                         "category_list_item")
 
-        test_list = ['Meal for 1', 'Evening Meal for 2', 'Sunday Lunch for all the family1']
+        test_list = [
+            'Meal for 1', 'Evening Meal for 2',
+            'Sunday Lunch for all the family1']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -401,8 +479,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -413,8 +493,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
         self.driver.find_element_by_id("cancel_category").click()
         self.driver.implicitly_wait(0)  # seconds
-        self.assertEqual(self.driver.current_url,
-                        'http://localhost:5000/get_categories')
+        self.assertEqual(
+            self.driver.current_url, 'http://localhost:5000/get_categories')
 
     def test_three_cuisines(self):
         ''' Test 3 cuisines present '''
@@ -460,22 +540,26 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_cuisines")
         self.driver.implicitly_wait(0)  # seconds
-        self.driver.find_element_by_xpath("//div[contains(@class, 'row last-button-row')]/a").click()
+        self.driver.find_element_by_xpath(
+            "//div[contains(@class, 'row last-button-row')]/a").click()
         self.driver.implicitly_wait(0)  # seconds
-        self.driver.find_element_by_id("cuisine_name").send_keys(
-                                            'Bangladeshi')
+        self.driver.find_element_by_id(
+            "cuisine_name").send_keys('Bangladeshi')
         self.driver.implicitly_wait(0)  # seconds
         self.driver.find_element_by_id("add_cuisine").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_class_name("cuisine_list_item")
+        self.elements = self.driver.find_elements_by_class_name(
+            "cuisine_list_item")
 
         test_list = ['Thai', 'Spanish', 'Indian', 'Bangladeshi']
 
@@ -490,8 +574,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -540,8 +626,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -571,8 +659,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -603,8 +693,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -615,8 +707,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
         self.driver.find_element_by_id("cancel_cuisine").click()
         self.driver.implicitly_wait(0)  # seconds
-        self.assertEqual(self.driver.current_url,
-                        'http://localhost:5000/get_cuisines')
+        self.assertEqual(
+            self.driver.current_url, 'http://localhost:5000/get_cuisines')
 
     def test_six_recipes_headings(self):
         ''' Test 6 recipes headings present '''
@@ -626,7 +718,8 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.elements = self.driver.find_elements_by_class_name("content")
 
-        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4', 'Italian Pizza - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: 1']
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5',
+        'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4', 'Italian Pizza - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: 1']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -639,7 +732,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//div[contains(@class, 'recipe-description')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[contains(@class, 'recipe-description')]")
 
         self.assertEqual(len(self.elements), 6)
 
@@ -649,16 +743,22 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/add_recipe")
         self.driver.implicitly_wait(0)  # seconds
-        self.driver.find_element_by_id("recipe-name").send_keys(
-                                            'Vietnamese Grilled Lemongrass Chicken')
-        self.driver.find_element_by_id("recipe-description").send_keys('Chicken marinated with lemongrass and grilled. Garnish with rice paper, lettuce, cucumber, bean sprouts, mint, and ground peanut.')
+        self.driver.find_element_by_id(
+            "recipe-name").send_keys('Vietnamese Grilled Lemongrass Chicken')
+        self.driver.find_element_by_id(
+            "recipe-description").send_keys(
+                'Chicken marinated with lemongrass and grilled. Garnish with \
+                rice paper, lettuce, cucumber, bean sprouts, mint, \
+                and ground peanut.')
 
         select = Select(self.driver.find_element_by_id("category"))
         select.select_by_visible_text('Evening Meal for 2')
@@ -666,8 +766,12 @@ class RecipeBuddyUITests(unittest.TestCase):
         select = Select(self.driver.find_element_by_id("cuisine"))
         select.select_by_visible_text('Spanish')
 
-        self.driver.find_element_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li/input").send_keys('Heat oil in frying pan')
-        self.driver.find_element_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li/input").send_keys('30 ml olive oil')
+        self.driver.find_element_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_instructions')]/li/input"
+                ).send_keys('Heat oil in frying pan')
+        self.driver.find_element_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_ingredients')]/li/input"
+                ).send_keys('30 ml olive oil')
         self.driver.find_element_by_class_name("plus_15_button").click()
         self.driver.find_element_by_class_name("plus_1_vote_button").click()
         self.driver.implicitly_wait(0)  # seconds
@@ -675,9 +779,11 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("add-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
 
-        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4', 'Italian Pizza - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: 1', 'Vietnamese Grilled Lemongrass Chicken - Evening Meal for 2 - Spanish - 15 Minutes to Prepare - User Votes: 1']
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5',
+        'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4', 'Italian Pizza - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: 1', 'Vietnamese Grilled Lemongrass Chicken - Evening Meal for 2 - Spanish - 15 Minutes to Prepare - User Votes: 1']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -690,16 +796,22 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/add_recipe")
         self.driver.implicitly_wait(0)  # seconds
-        self.driver.find_element_by_id("recipe-name").send_keys(
-                                            'Vietnamese Grilled Lemongrass Chicken')
-        self.driver.find_element_by_id("recipe-description").send_keys('Chicken marinated with lemongrass and grilled. Garnish with rice paper, lettuce, cucumber, bean sprouts, mint, and ground peanut.')
+        self.driver.find_element_by_id(
+            "recipe-name").send_keys('Vietnamese Grilled Lemongrass Chicken')
+        self.driver.find_element_by_id(
+            "recipe-description").send_keys(
+                'Chicken marinated with lemongrass and grilled. \
+                Garnish with rice paper, lettuce, cucumber, bean sprouts, \
+                mint, and ground peanut.')
 
         select = Select(self.driver.find_element_by_id("category"))
         select.select_by_visible_text('Evening Meal for 2')
@@ -707,8 +819,12 @@ class RecipeBuddyUITests(unittest.TestCase):
         select = Select(self.driver.find_element_by_id("cuisine"))
         select.select_by_visible_text('Spanish')
 
-        self.driver.find_element_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li/input").send_keys('Heat oil in frying pan')
-        self.driver.find_element_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li/input").send_keys('30 ml olive oil')
+        self.driver.find_element_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_instructions')]/li/input"
+                ).send_keys('Heat oil in frying pan')
+        self.driver.find_element_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_ingredients')]/li/input"
+                ).send_keys('30 ml olive oil')
         self.driver.find_element_by_class_name("plus_15_button").click()
         self.driver.find_element_by_class_name("plus_1_vote_button").click()
         self.driver.implicitly_wait(0)  # seconds
@@ -716,7 +832,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("add-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//div[contains(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[contains(@class, 'content')]")
 
         self.assertEqual(len(self.elements), 7)
 
@@ -726,8 +843,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -741,15 +860,16 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertEqual(int(time_after.get_attribute('value')), 15)
 
-
     def test_total_time_minus_add_recipe(self):
         ''' Test removing 15 minute Time increment to a Recipe'''
 
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -765,15 +885,16 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertEqual(int(time_after.get_attribute('value')), 15)
 
-
     def test_total_time_not_below_zero_add_recipe(self):
         ''' Test Total Time cannot be less than zero with a Recipe'''
 
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -797,8 +918,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -818,8 +941,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -841,8 +966,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -866,12 +993,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        self.element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'recipe-header')]")
+        self.element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'recipe-header')]")
         self.assertEqual('Avocado and Tuna Tapas', self.element.text)
 
     def test_first_show_recipe_description(self):
@@ -880,14 +1009,16 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
         description_text = 'Living in Spain I have come across a literal plethora of tapas. This is a light, healthy tapa that goes best with crisp white wines and crunchy bread. This recipe is great for experimenting with a variety of different vegetables, spices, and vinegars.'
 
-        self.element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'recipe-description')]")
+        self.element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'recipe-description')]")
 
         self.assertEqual(self.element.text, description_text)
 
@@ -897,12 +1028,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[1].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        self.element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'recipe-header')]")
+        self.element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'recipe-header')]")
         self.assertEqual('Chinese Pepper Steak', self.element.text)
 
     def test_second_show_recipe_description(self):
@@ -911,14 +1044,16 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[1].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
         description_text = 'A delicious meal, served with boiled white rice, that\'s easy and made from items that I\'ve already got in my cupboards! My mother clipped this recipe from somewhere and it became a specialty of mine; however, I\'ve been unable to find the original source.'
 
-        self.element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'recipe-description')]")
+        self.element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'recipe-description')]")
 
         self.assertEqual(self.element.text, description_text)
 
@@ -928,13 +1063,17 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[2].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        self.element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'recipe-header')]")
-        self.assertEqual('Moroccan Chicken with Saffron and Preserved Lemon', self.element.text)
+        self.element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'recipe-header')]")
+        self.assertEqual(
+            'Moroccan Chicken with Saffron and Preserved Lemon',
+            self.element.text)
 
     def test_third_show_recipe_description(self):
         ''' Test third show recipe description present '''
@@ -942,14 +1081,16 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[2].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
         description_text = 'Chicken thighs full of spice and amazing scents to take you right to the Mediterranean. Great with quinoa or brown rice and lots green veggies.'
 
-        self.element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'recipe-description')]")
+        self.element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'recipe-description')]")
 
         self.assertEqual(self.element.text, description_text)
 
@@ -959,12 +1100,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
 
         test_list = ['mix 3 eggs', 'whisk', 'put on low heat']
 
@@ -979,12 +1122,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
 
         test_list = ['3 eggs', '100g butter', '0.5l water']
 
@@ -999,12 +1144,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[contains(@class, 'total-time')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[contains(@class, 'total-time')]")
 
         self.assertEqual(element.text, '45 Mins')
 
@@ -1014,12 +1161,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'cuisine-name')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'cuisine-name')]")
 
         self.assertEqual(element.text, 'Thai')
 
@@ -1029,12 +1178,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'category-name')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'category-name')]")
 
         self.assertEqual(element.text, 'Meal for 1')
 
@@ -1044,12 +1195,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[1].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
 
         test_list = ['peel 2 oranges', 'add flour', 'put on high heat']
 
@@ -1064,12 +1217,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[1].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
 
         test_list = ['2 oranges', '100g butter', '1l water', '200g flour']
 
@@ -1084,12 +1239,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[1].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[contains(@class, 'total-time')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[contains(@class, 'total-time')]")
 
         self.assertEqual(element.text, '30 Mins')
 
@@ -1099,12 +1256,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[1].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'cuisine-name')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'cuisine-name')]")
 
         self.assertEqual(element.text, 'Spanish')
 
@@ -1114,12 +1273,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[1].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'category-name')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'category-name')]")
 
         self.assertEqual(element.text, 'Evening Meal for 2')
 
@@ -1129,14 +1290,18 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[2].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
 
-        test_list = ['chop carrots', 'fry on high heat with olive oil', 'chop onions', 'add onions once carrots soft']
+        test_list = [
+            'chop carrots', 'fry on high heat with olive oil',
+            'chop onions', 'add onions once carrots soft']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -1149,12 +1314,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[2].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
 
         test_list = ['200g carrots', 'drop of olive oil', '200g brown onions']
 
@@ -1169,12 +1336,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[2].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[contains(@class, 'total-time')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[contains(@class, 'total-time')]")
 
         self.assertEqual(element.text, '15 Mins')
 
@@ -1184,12 +1353,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[2].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'cuisine-name')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'cuisine-name')]")
 
         self.assertEqual(element.text, 'Indian')
 
@@ -1199,12 +1370,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[2].click()
 
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'category-name')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'category-name')]")
 
         self.assertEqual(element.text, 'Sunday Lunch for all the family')
 
@@ -1214,15 +1387,18 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1235,11 +1411,13 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[contains(@class, 'category-name')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[contains(@class, 'category-name')]")
 
         self.assertEqual(element.text, 'Evening Meal for 2')
 
@@ -1249,15 +1427,18 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1270,11 +1451,13 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[contains(@class, 'cuisine-name')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[contains(@class, 'cuisine-name')]")
 
         self.assertEqual(element.text, 'Spanish')
 
@@ -1284,36 +1467,43 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.find_element_by_class_name("edit_recipe_button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_class_name("add_field_button_instructions").click()
+        self.driver.find_element_by_class_name(
+            "add_field_button_instructions").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@id, 'li-instructions')]/li/input")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@id, 'li-instructions')]/li/input")
 
         self.elements[3].send_keys('set on fire')
 
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
 
         test_list = ['mix 3 eggs', 'whisk', 'put on low heat', 'set on fire']
 
@@ -1328,32 +1518,38 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.find_element_by_class_name("edit_recipe_button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@id, 'li-instructions')]/li/button")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@id, 'li-instructions')]/li/button")
         self.elements[2].click()
 
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
 
         test_list = ['mix 3 eggs', 'whisk']
 
@@ -1368,36 +1564,43 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.find_element_by_class_name("edit_recipe_button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_class_name("add_field_button_ingredients").click()
+        self.driver.find_element_by_class_name(
+            "add_field_button_ingredients").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@id, 'li-ingredients')]/li/input")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@id, 'li-ingredients')]/li/input")
 
         self.elements[3].send_keys('200g nuts')
 
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
 
         test_list = ['3 eggs', '100g butter', '0.5l water', '200g nuts']
 
@@ -1412,32 +1615,38 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.find_element_by_class_name("edit_recipe_button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@id, 'li-ingredients')]/li/button")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@id, 'li-ingredients')]/li/button")
         self.elements[2].click()
 
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_ingredients')]/li")
 
         test_list = ['3 eggs', '100g butter']
 
@@ -1452,15 +1661,18 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1473,13 +1685,15 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[contains(@class, 'total-time')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[contains(@class, 'total-time')]")
 
-        self.assertEqual(element.text,'60 Mins')
+        self.assertEqual(element.text, '60 Mins')
 
     def test_total_time_minus_first_edit_recipe(self):
         ''' Test removing 15 minute Time increment to the first Recipe'''
@@ -1487,15 +1701,18 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1508,13 +1725,15 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[contains(@class, 'total-time')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[contains(@class, 'total-time')]")
 
-        self.assertEqual(element.text,'30 Mins')
+        self.assertEqual(element.text, '30 Mins')
 
     def test_total_time_not_below_zero_first_edit_recipe(self):
         ''' Test Total Time cannot be less than zero for the first Recipe'''
@@ -1522,15 +1741,18 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1546,13 +1768,15 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[contains(@class, 'total-time')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[contains(@class, 'total-time')]")
 
-        self.assertEqual(element.text,'0 Mins')
+        self.assertEqual(element.text, '0 Mins')
 
     def test_user_votes_plus_first_edit_recipe(self):
         ''' Test Adding 1 user vote to the first Recipe'''
@@ -1560,15 +1784,18 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1581,11 +1808,13 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[starts-with(@class, 'user-votes')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[starts-with(@class, 'user-votes')]")
 
         self.assertEqual(int(element.text), 4)
 
@@ -1595,15 +1824,18 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1616,11 +1848,13 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[contains(@class, 'user-votes')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[contains(@class, 'user-votes')]")
 
         self.assertEqual(int(element.text), 2)
 
@@ -1630,15 +1864,18 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
@@ -1654,11 +1891,13 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("save-recipe").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//td[contains(@class, 'user-votes')]")
+        element = self.driver.find_element_by_xpath(
+            "//td[contains(@class, 'user-votes')]")
 
         self.assertEqual(int(element.text), -1)
 
@@ -1668,27 +1907,32 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
         try:
 
-            self.driver.find_element_by_xpath("//a[contains(@class, 'delete_recipe_button')]").click()
+            self.driver.find_element_by_xpath(
+                "//a[contains(@class, 'delete_recipe_button')]").click()
             self.driver.implicitly_wait(0)  # seconds
 
         except NoSuchElementException:
             True
 
-        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
 
         test_list = ['Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4', 'Italian Pizza - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: 1']
 
@@ -1703,37 +1947,45 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[5].click()
         self.driver.implicitly_wait(0)  # seconds
 
         try:
 
-            self.driver.find_element_by_xpath("//a[contains(@class, 'delete_recipe_button')]").click()
+            self.driver.find_element_by_xpath(
+                "//a[contains(@class, 'delete_recipe_button')]").click()
             self.driver.implicitly_wait(0)  # seconds
 
         except NoSuchElementException:
             True
 
-        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
 
-        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4']
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5',
+        'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -1746,30 +1998,36 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/get_recipes")
         self.driver.implicitly_wait(0)  # seconds
 
-        number_of_recipes = len(self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]"))
+        number_of_recipes = len(self.driver.find_elements_by_xpath(
+            "//a[contains(@class, 'show_recipe_button')]"))
 
         while number_of_recipes > 0:
 
-            self.driver.find_element_by_xpath("//a[contains(@class, 'show_recipe_button')]").click()
+            self.driver.find_element_by_xpath(
+                "//a[contains(@class, 'show_recipe_button')]").click()
             self.driver.implicitly_wait(0)  # seconds
 
             try:
-                self.driver.find_element_by_class_name("delete_recipe_button").click()
+                self.driver.find_element_by_class_name(
+                    "delete_recipe_button").click()
                 self.driver.implicitly_wait(0)  # seconds
                 number_of_recipes -= 1
 
             except NoSuchElementException:
                 True
 
-        self.assertEqual(len(self.driver.find_elements_by_xpath("//a[contains(@class, 'show_recipe_button')]")), 0)
+        self.assertEqual(len(self.driver.find_elements_by_xpath(
+            "//a[contains(@class, 'show_recipe_button')]")), 0)
 
     def test_not_logged_in_divert(self):
         ''' Test when not logged in the user is diverted to the login page'''
@@ -1777,7 +2035,9 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/add_category")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.assertEqual(self.driver.current_url,'http://localhost:5000/login?next=%2Fadd_category')
+        self.assertEqual(
+            self.driver.current_url,
+            'http://localhost:5000/login?next=%2Fadd_category')
 
     def test_login_success(self):
         ''' Test logging into the website'''
@@ -1785,14 +2045,17 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//*[starts-with(., 'Welcome back, your logged in')]")
+        element = self.driver.find_element_by_xpath(
+            "//li[contains(@class, 'flash-message')]")
 
-        self.assertEqual(element.text, 'Welcome back, your logged in')
+        self.assertEqual(element.text, 'Welcome back, you\'re logged in')
 
     def test_login_failure_password(self):
         ''' Test logging into the website using an incorrect password'''
@@ -1800,12 +2063,14 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
         self.driver.find_element_by_id("password").send_keys('kkk')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//*[starts-with(., 'Sorry login failed')]")
+        element = self.driver.find_element_by_xpath(
+            "//*[starts-with(., 'Sorry login failed')]")
 
         self.assertEqual(element.text, 'Sorry login failed')
 
@@ -1815,16 +2080,19 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123PPP@yahoo.com')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123PPP@yahoo.com')
         self.driver.find_element_by_id("password").send_keys('kkk')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//*[starts-with(., 'Sorry login failed')]")
+        element = self.driver.find_element_by_xpath(
+            "//*[starts-with(., 'Sorry login failed')]")
         self.assertEqual(element.text, 'Sorry login failed')
 
     def test_login_validation(self):
-        ''' Test logging into the website with no input details triggers field validation'''
+        ''' Test logging into the website with no input
+        details triggers field validation'''
 
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
@@ -1832,7 +2100,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//*[starts-with(., '[This field is required.]')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//*[starts-with(., '[This field is required.]')]")
 
         test_list = ['[This field is required.]', '[This field is required.]']
 
@@ -1848,8 +2117,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/login")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
         self.driver.get("http://localhost:5000/logout")
@@ -1857,7 +2128,9 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/add_category")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.assertEqual(self.driver.current_url,'http://localhost:5000/login?next=%2Fadd_category')
+        self.assertEqual(
+            self.driver.current_url,
+            'http://localhost:5000/login?next=%2Fadd_category')
 
     def test_register_existing_user(self):
         ''' Test registering an existing user on the website'''
@@ -1866,16 +2139,20 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.find_element_by_id("username").send_keys('tom')
-        self.driver.find_element_by_id("email").send_keys('tom123d@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnV')
-        self.driver.find_element_by_id("password2").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123d@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnV')
+        self.driver.find_element_by_id(
+            "password2").send_keys('3$l<qpY01PsWDSc9KLnV')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/add_category")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.assertEqual(self.driver.current_url,'http://localhost:5000/add_category')
+        self.assertEqual(
+            self.driver.current_url, 'http://localhost:5000/add_category')
 
     def test_register_new_user(self):
         ''' Test registering a new user on the website'''
@@ -1884,16 +2161,20 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.find_element_by_id("username").send_keys('tomf')
-        self.driver.find_element_by_id("email").send_keys('tom123f@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnVf')
-        self.driver.find_element_by_id("password2").send_keys('3$l<qpY01PsWDSc9KLnVf')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123f@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnVf')
+        self.driver.find_element_by_id(
+            "password2").send_keys('3$l<qpY01PsWDSc9KLnVf')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.get("http://localhost:5000/add_category")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.assertEqual(self.driver.current_url,'http://localhost:5000/add_category')
+        self.assertEqual(
+            self.driver.current_url, 'http://localhost:5000/add_category')
 
     def test_register_new_user_password_validation(self):
         ''' Test registering a new user on the website'''
@@ -1902,16 +2183,19 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.implicitly_wait(0)  # seconds
 
         self.driver.find_element_by_id("username").send_keys('tomf')
-        self.driver.find_element_by_id("email").send_keys('tom123f@yahoo.com')
-        self.driver.find_element_by_id("password").send_keys('3$l<qpY01PsWDSc9KLnVf')
-        self.driver.find_element_by_id("password2").send_keys('3$l<qpY01PsWDSc9KLnVfs')
+        self.driver.find_element_by_id(
+            "email").send_keys('tom123f@yahoo.com')
+        self.driver.find_element_by_id(
+            "password").send_keys('3$l<qpY01PsWDSc9KLnVf')
+        self.driver.find_element_by_id(
+            "password2").send_keys('3$l<qpY01PsWDSc9KLnVfs')
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//*[starts-with(., '[Passwords must match]')]")
+        element = self.driver.find_element_by_xpath(
+            "//*[starts-with(., '[Passwords must match]')]")
 
         self.assertEqual(element.text, '[Passwords must match]')
-
 
     def test_register_validation(self):
         ''' Test registering a new user on the website'''
@@ -1922,9 +2206,13 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("form-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//*[starts-with(., '[This field is required.]')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//*[starts-with(., '[This field is required.]')]")
 
-        test_list = ['[This field is required.]', '[This field is required.]', '[This field is required.]']
+        test_list = [
+            '[This field is required.]',
+            '[This field is required.]',
+            '[This field is required.]']
 
         for element in self.elements:
 
@@ -1951,7 +2239,7 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         element = self.driver.find_element_by_id("no-recipes-found")
 
-        self.assertEqual(element.text,'No Recipes found')
+        self.assertEqual(element.text, 'No Recipes found')
 
     def test_search_recipes_search_results(self):
         ''' Test searching for recipes that return results '''
@@ -1968,7 +2256,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertEqual(len(self.elements), 0)
 
     def test_search_recipes_categories_ascending_user_votes_results(self):
-        ''' Test searching for categories recipes with ascending user votes results '''
+        ''' Test searching for categories recipes
+        with ascending user votes results '''
 
         self.driver.get("http://localhost:5000/search")
         self.driver.implicitly_wait(0)  # seconds
@@ -1985,7 +2274,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
 
         test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4']
 
@@ -1995,7 +2285,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertListEqual(test_list, self.li_span_text)
 
     def test_search_recipes_categories_descending_user_votes_results(self):
-        ''' Test searching for categories recipes with descending user votes results '''
+        ''' Test searching for categories recipes with
+        descending user votes results '''
 
         self.driver.get("http://localhost:5000/search")
         self.driver.implicitly_wait(0)  # seconds
@@ -2012,9 +2303,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
 
-        test_list = [ 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
+        test_list = ['Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -2022,7 +2314,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertListEqual(test_list, self.li_span_text)
 
     def test_search_recipes_categories_ascending_total_time_results(self):
-        ''' Test searching for categories recipes with ascending total time results '''
+        ''' Test searching for categories recipes with
+        ascending total time results '''
 
         self.driver.get("http://localhost:5000/search")
         self.driver.implicitly_wait(0)  # seconds
@@ -2039,9 +2332,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
 
-        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3','Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4']
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -2049,7 +2343,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertListEqual(test_list, self.li_span_text)
 
     def test_search_recipes_categories_descending_total_time_results(self):
-        ''' Test searching for categories recipes with descending total time results '''
+        ''' Test searching for categories recipes with
+         descending total time results '''
 
         self.driver.get("http://localhost:5000/search")
         self.driver.implicitly_wait(0)  # seconds
@@ -2066,7 +2361,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
 
         test_list = ['Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
 
@@ -2076,7 +2372,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertListEqual(test_list, self.li_span_text)
 
     def test_search_recipes_cuisines_ascending_user_votes_results(self):
-        ''' Test searching for cuisines recipes with ascending user votes results '''
+        ''' Test searching for cuisines recipes with
+        ascending user votes results '''
 
         self.driver.get("http://localhost:5000/search")
         self.driver.implicitly_wait(0)  # seconds
@@ -2093,7 +2390,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
 
         test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4']
 
@@ -2103,7 +2401,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertListEqual(test_list, self.li_span_text)
 
     def test_search_recipes_cuisines_descending_user_votes_results(self):
-        ''' Test searching for cuisines recipes with descending user votes results '''
+        ''' Test searching for cuisines recipes with
+        descending user votes results '''
 
         self.driver.get("http://localhost:5000/search")
         self.driver.implicitly_wait(0)  # seconds
@@ -2120,18 +2419,19 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
 
-        test_list = [ 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
+        test_list = ['Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
 
         self.assertListEqual(test_list, self.li_span_text)
 
-
     def test_search_recipes_cuisines_ascending_total_time_results(self):
-        ''' Test searching for cuisines recipes with ascending total time results '''
+        ''' Test searching for cuisines recipes with
+        ascending total time results '''
 
         self.driver.get("http://localhost:5000/search")
         self.driver.implicitly_wait(0)  # seconds
@@ -2148,9 +2448,10 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
 
-        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3','Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4']
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4']
 
         for element in self.elements:
             self.li_span_text.append(element.text)
@@ -2158,7 +2459,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertListEqual(test_list, self.li_span_text)
 
     def test_search_recipes_cuisines_descending_total_time_results(self):
-        ''' Test searching for cuisines recipes with descending total time results '''
+        ''' Test searching for cuisines recipes with
+        descending total time results '''
 
         self.driver.get("http://localhost:5000/search")
         self.driver.implicitly_wait(0)  # seconds
@@ -2175,7 +2477,8 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'content')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
 
         test_list = ['Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
 
@@ -2184,8 +2487,9 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertListEqual(test_list, self.li_span_text)
 
-    def test_search_recipes_cuisines_descending_total_time_results_then_show_first(self):
-        ''' Test searching for cuisines recipes with descending total time results '''
+    def test_search_recipes_cuisines_des_total_time_results_show_first(self):
+        ''' Test searching for cuisines recipes with
+        descending total time results '''
 
         self.driver.get("http://localhost:5000/search")
         self.driver.implicitly_wait(0)  # seconds
@@ -2202,11 +2506,13 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
         self.elements[0].click()
         self.driver.implicitly_wait(0)  # seconds
 
-        self.elements = self.driver.find_elements_by_xpath("//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
 
         test_list = ['mix 3 eggs', 'whisk', 'put on low heat']
 
@@ -2216,17 +2522,17 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertListEqual(test_list, self.li_span_text)
 
     def test_bubble_graph_label_onclick_show_filtered_thai_recipes(self):
-        ''' Test clicking on 'Thai' graph bubble label shows filtered Thai cuisine recipes '''
+        ''' Test clicking on 'Thai' graph bubble label shows
+        filtered Thai cuisine recipes '''
 
         self.driver.get("http://localhost:5000/")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_xpath("//*[starts-with(., 'Thai')]").click()
+        self.driver.find_element_by_xpath(
+            "//*[starts-with(., 'Thai')]").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        # self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
-        self.elements = self.elements = self.driver.find_elements_by_class_name("content")
-
+        self.elements = self.driver.find_elements_by_class_name("content")
 
         test_list = ['Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3']
 
@@ -2236,16 +2542,17 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.assertListEqual(test_list, self.li_span_text)
 
     def test_bubble_graph_label_onclick_show_filtered_indian_recipes(self):
-        ''' Test clicking on 'Indian' graph bubble label shows filtered Indian cuisine recipes '''
+        ''' Test clicking on 'Indian' graph bubble label shows
+        filtered Indian cuisine recipes '''
 
         self.driver.get("http://localhost:5000/")
         self.driver.implicitly_wait(0)  # seconds
 
-        self.driver.find_element_by_xpath("//*[starts-with(., 'Indian')]").click()
+        self.driver.find_element_by_xpath(
+            "//*[starts-with(., 'Indian')]").click()
         self.driver.implicitly_wait(0)  # seconds
 
-        # self.elements = self.driver.find_elements_by_xpath("//div[starts-with(@class, 'recipe-header')]/strong")
-        self.elements = self.elements = self.driver.find_elements_by_class_name("content")
+        self.elements = self.driver.find_elements_by_class_name("content")
 
         test_list = ['Italian Pizza - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: 1', 'Moroccan Chicken with Saffron and Preserved Lemon - Sunday Lunch for all the family - Indian - 15 Minutes to Prepare - User Votes: -1']
 
@@ -2266,8 +2573,7 @@ class RecipeBuddyUITests(unittest.TestCase):
         self.driver.get("http://localhost:5000/")
         self.driver.implicitly_wait(0)  # seconds
 
-        element = self.driver.find_element_by_xpath("//*[starts-with(., 'No Recipes, register to add recipes')]")
+        element = self.driver.find_element_by_xpath(
+            "//*[starts-with(., 'No Recipes, register to add recipes')]")
 
         self.assertEqual(element.text, 'No Recipes, register to add recipes')
-
-# TODO: check tests for assigned variables not required and poor naming conventions recipe using categoory etc, self.elements
