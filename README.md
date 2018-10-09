@@ -4,22 +4,21 @@ The purpose of this application is provide an easy way to store, rate and use co
 
 ## Prerequisites
 
-You will need the following things properly installed on your computer.
+* [Python3](https://www.python.org/)
+* [NPM](https://www.npmjs.com)
 
-* [Git](https://git-scm.com/)
-* [Python3](https://www.python.org/) (with HomeBrew & Venv)
-* [Google Chrome](https://google.com/chrome/)
-* [Pencil](http://pencil.evolus.vn) (wireframes file: receipe_buddy_0-1.epgz)
+## Wireframes
+
+* [Pencil](http://pencil.evolus.vn) (wireframes/receipe_buddy_0-1.epgz wireframes/index.html)
 
 ## Installation
 
-* ```git clone git@github.com:ramblingbarney/refactored-funicular.git```
-* ```cd refactored-funicular```
 * ```pip3 install -r /path/to/requirements.txt```
-* ```npm install```
+* ```npm install --prefix ./static/```
 * ```export YOURAPPLICATION_SETTINGS=config.py``` to load app configuration file to the environment variables
-* ```export FLASK_CONFIG=development``` to create FLASK_CONFIG environment variable for development version of the app
-* ```export FLASK_CONFIG=production``` to create FLASK_CONFIG environment variable for production version of the app
+* ```export FLASK_CONFIG=development``` FLASK_CONFIG environment variable for development version of the app
+* ```export FLASK_CONFIG=production``` FLASK_CONFIG environment variable for production version of the app
+* Rename config_example.py to config.py and replace <replace> with complex passwords/keys
 
 ### Running Tests
 
@@ -78,20 +77,50 @@ You will need the following things properly installed on your computer.
     * ```db.createUser( { user: "recipeapptester", pwd: "changeme5", roles: [ "readWrite", "dbAdmin" ] } )``` Mongo Shell command
   * ```python3 -m unittest tests/test_front_end.py```
 
+## Test Coverage
+
+Module 	  statements 	missing 	excluded 	coverage
+Total 	  29912 	    16143 	  34 	      46%
+app.py 	  292 	      16 	      0 	      95%
+config.py 20 	        11 	      0 	      45%
+forms.py 	14 	        0 	      0 	      100%
+
+See htmlcov/index.html for full results
+
+## Deployment
+
+The 'development' and 'testing' of the app have been done on the 'master' branch.  'Coverage' has been calculated on the 'master' branch.
+
+The deployed version (master_heroku) on heroku has the following differences from the 'master' branch
+
+* No testing profile in the config.py file and file uses environment variables instead of hardcoded values.  The 'master' branch does not contain this file so the example version of the file requires hardcoded values as described in the Installation steps.
+
+* The deployed branch uses these heroku configuration variables
+  * CURRENT_HOST (app.py home route replacing https://localhost:5000)
+  * FLASK_CONFIG
+  * MONGO_DBNAME (config.py)
+  * MONGO_URI (config.py)
+  * SECRET_KEY (config.py)
+  * YOURAPPLICATION_SETTINGS
+
+* The webserver specified on heroku is 'gunicorn'
+* DEBUG=False and host/port taken from os.environ environment variables
+* Heroku config files are 'runtime.txt', 'Procfile' and 'requirements.txt'
+
 ## Acceptance tests
 
 ### Get Category (Show all fixture categories)
 
 * As a user I want to see the categories that have been created from fixtures ['Meal for 1', 'Evening Meal for 2', 'Sunday Lunch for all the family'].
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * 3 categories will be shown on the page ['Meal for 1', 'Evening Meal for 2', 'Sunday Lunch for all the family']
 
 ### Get Category (Show all fixture categories with Delete button)
 
 * As a user I want to see the categories that have been created and each one will be shown with a 'Delete' button.
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Each category created will have a 'Delete' link/button
     * The page will have 3 'Delete' link/buttons
 
@@ -99,7 +128,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to see the categories that have been created and each one will be shown with a 'Edit' button.
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Each category created will have a 'Edit' link/button
     * The page will have 3 'Edit' link/buttons
 
@@ -107,7 +136,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'Delete' link/button for the first category, the page refreshes and it disappears
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Click on the 'Delete' link/button for the first category line
     * The category entry is no longer shown
 
@@ -115,7 +144,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'Delete' link/button for all categories, the page refreshes and it disappears
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Click on the 'Delete' link/button for the categories shown
     * All deleted categories will disappear
     * No category entries will exist to be shown
@@ -124,7 +153,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'Delete' link/button for the last category, the page refreshes and it disappears
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Click on the 'Delete' link/button for the last category line
     * The category entry is no longer shown
 
@@ -132,13 +161,13 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'Edit' link/button on the last category and that category will be shown individually on a page where it can be edited, cancelled and amendments saved.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * An input box with the existing category text
   * links/buttons to create a 'Cancel' the amendment and 'Edit' (save) the category
 
 * As a user I want to click on the 'Edit' link/button for a category and that category will be shown individually on a page where it can be cancelled and then all categories will be shown.
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Each category created will have a 'Delete' and 'Edit' link/button
     * Clicking on Edit will show that category individually with the text in an input box
     * Clicking will return the user to the all categories shown page
@@ -147,7 +176,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to add a category.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Entering text into the input box Category Name
   * Clicking button 'Add Category'
   * The recipe name will appear on the 'get_categories' page
@@ -156,14 +185,14 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to see the cuisines that have been created from fixtures ['Thai','Chinese','Indian'].
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * 3 cuisines will be shown on the page ['Thai','Chinese','Indian']
 
 ### Get Cuisine (Show all fixture Cuisines with Delete button)
 
 * As a user I want to see the cuisines that have been created and each one will be shown with a 'Delete' button.
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Each cuisine created will have a 'Delete' link/button
     * The page will have 3 'Delete' link/buttons
 
@@ -171,7 +200,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to see the cuisines that have been created and each one will be shown with a 'Edit' button.
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Each cuisine created will have a 'Edit' link/button
     * The page will have 3 'Edit' link/buttons
 
@@ -179,7 +208,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'Delete' link/button for the first cuisine, the page refreshes and it disappears
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Click on the 'Delete' link/button for the first cuisine line
     * The cuisine entry is no longer shown
 
@@ -187,7 +216,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'Delete' link/button for all cuisines, the page refreshes and it disappears
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Click on the 'Delete' link/button for the cuisines shown
     * All deleted cuisines will disappear
     * No cuisine entries will exist to be shown
@@ -196,7 +225,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'Delete' link/button for the last cuisine, the page refreshes and it disappears
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Click on the 'Delete' link/button for the last cuisine line
     * The cuisine entry is no longer shown
 
@@ -204,13 +233,13 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'Edit' link/button on the last cuisine and that cuisine will be shown individually on a page where it can be edited, cancelled and amendments saved.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * An input box with the existing cuisine text
   * links/buttons to create a 'Cancel' the amendment and 'Edit' (save) the cuisine
 
 * As a user I want to click on the 'Edit' link/button for a cuisine and that cuisine will be shown individually on a page where it can be cancelled and then all cuisines will be shown.
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Each cuisine created will have a 'Delete' and 'Edit' link/button
     * Clicking on Edit will show that cuisine individually with the text in an input box
     * Clicking will return the user to the all cuisines shown page
@@ -219,7 +248,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to add a cuisine.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Entering text into the input box cuisine Name
   * Clicking button 'Add Cuisine'
   * The recipe name will appear on the 'get_cuisines' page
@@ -228,21 +257,21 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to see the recipe headings that have been created from fixtures ['Avocado and Tuna Tapas', 'Chinese Pepper Steak', 'Moroccan Chicken with Saffron and Preserved Lemon'].
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * 3 recipes headings will be shown on the page ['Avocado and Tuna Tapas', 'Chinese Pepper Steak', 'Moroccan Chicken with Saffron and Preserved Lemon']
 
 ### Get Recipes Descriptions (Show all fixture recipes descriptions)
 
 * As a user I want to see the recipe descriptions that have been created from fixtures.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * 3 recipe descriptions will be shown on the page
 
 ### Add Recipe Name
 
 * As a user I want to add a recipe name.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Entering text into the input box Recipe Name
   * Clicking button 'Add Recipe'
   * The recipe name will appear on the 'get_recipes' page
@@ -251,7 +280,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to add a recipe description.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Entering text into the input box Recipe Description
   * Clicking button 'Add Recipe'
   * The recipe description will appear on the 'get_recipes' page
@@ -260,7 +289,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to add a recipe total time to cook in increments of 15 minutes.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Entering text into the input box Recipe Description
   * Clicking button '+ 15 mins'
   * The recipe Total Time will be 15 mins
@@ -269,7 +298,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to decrease the recipe total time to cook in increments of 15 minutes.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Entering text into the input box Recipe Description
   * Clicking button '+ 15 mins'
   * Clicking button '+ 15 mins'
@@ -280,7 +309,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want the total time to cook to be zero or greater and never negative.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Entering text into the input box Recipe Description
   * Clicking button '+ 15 mins'
   * Clicking button '+ 15 mins'
@@ -293,7 +322,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to increase the User Vote by 1.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Entering text into the input box Recipe Description
   * Clicking button '+ 1' User Vote
   * The recipe User Votes will be 1
@@ -302,7 +331,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to decrease the User Votes by 1.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Entering text into the input box Recipe Description
   * Clicking button '+ 1' User Vote
   * Clicking button '+ 1' User Vote
@@ -313,7 +342,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want the total User Votes to be negative.
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Entering text into the input box Recipe Description
   * Clicking button '+ 1' User Vote
   * Clicking button '+ 1' User Vote
@@ -326,7 +355,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'show' recipe link/button and be shown the full recipe (name, description, instructions and ingredients).
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -340,7 +369,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to change the recipe category
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -366,7 +395,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to change the recipe cuisine
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -392,7 +421,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to add an additional instruction to an existing recipe
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -419,7 +448,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to remove an instruction for an existing recipe
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -445,7 +474,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to add an additional ingredient to an existing recipe
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -472,7 +501,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to remove an ingredient for an existing recipe
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -498,7 +527,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to change the first recipe total time
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -526,7 +555,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to change the first recipe total time
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -554,7 +583,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to change the first recipe total time to zero and not be able to set a negative time
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -582,7 +611,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to change the first recipe user votes
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -610,7 +639,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to change the first recipe user votes
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -638,7 +667,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to change the first recipe user votes to negative
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Clicking 'Show' loads page with;
     * Recipe name
     * Recipe description
@@ -666,7 +695,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'Delete' link/button for the first show recipe , the page refreshes and it disappears
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Click the show recipe button for the first recipe on the 'get_Recipes' page
     * Click on the 'Delete' link/button
     * When you return to the 'get_recipes' page it is no longer shown
@@ -675,7 +704,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'Delete' link/button for the last show recipe , the page refreshes and it disappears
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Click the show recipe button for the last recipe on the 'get_Recipes' page
     * Click on the 'Delete' link/button
     * When you return to the 'get_recipes' page it is no longer shown
@@ -684,7 +713,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the 'Delete' link/button for all the recipes on each show recipe page, the page refreshes and it is not shown on the 'get_recipes' page
 
-  * Example acceptance criteria:
+  * Acceptance criteria:
     * Click the show recipe button for each of the recipes on the 'get_Recipes' page
     * Click on the 'Delete' link/button
     * When you return to the 'get_recipes' page it is no longer shown
@@ -693,7 +722,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to go to the 'get_recipes' page and be shown the 'login' page
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * As a user that is not logged in
   * Open http://localhost:5000/add_category
   * You are then redirected to http://localhost:5000/login
@@ -702,7 +731,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter username, email, passwords on the 'http://localhost:5000/register' page and then be redirected to the 'http://localhost:5000/' page
 
-* Example acceptance criteria:
+* Acceptance criteria:
 * Enter username, email, passwords on the 'http://localhost:5000/register' page
 * You are then redirected to http://localhost:5000/
 
@@ -710,7 +739,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter username, email, passwords on the 'http://localhost:5000/register' page and then be redirected to the 'http://localhost:5000/' page
 
-* Example acceptance criteria:
+* Acceptance criteria:
 * Enter username, email and two different passwords on the 'http://localhost:5000/register' page
 * You are then shown the error message '[Passwords must match]'
 * You are then redirected to http://localhost:5000/
@@ -719,7 +748,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to not enter in details and be shown the 'http://localhost:5000/register' page with validation error messages
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * No details are entered on http://localhost:5000/register and submit is clicked
   * Below the username and password field the error message '[This field is required.]' is shown in red
   * You are then redirected to http://localhost:5000/register
@@ -728,7 +757,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter in registered user details and be shown the 'http://localhost:5000/' page
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Registered user enters email and password on http://localhost:5000/login
   * The flash message 'Welcome back, your logged in' is shown
   * You are then redirected to http://localhost:5000/
@@ -737,7 +766,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter in registered user details and be shown the 'http://localhost:5000/login' page
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Registered user enters email and password on http://localhost:5000/login
   * The flash message 'Sorry login failed' is shown
   * You are then redirected to http://localhost:5000/login
@@ -746,7 +775,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to not enter in registered user details and be shown the 'http://localhost:5000/login' page with validation error messages
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * No details are entered on http://localhost:5000/login and submit is clicked
   * Below the username and password field the error message '[This field is required.]' is shown in red
   * You are then redirected to http://localhost:5000/login
@@ -755,7 +784,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter in registered user details and be shown the 'http://localhost:5000/add_category' page and then logout by visiting 'http://localhost:5000/logout' or clicking 'logout'
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Registered user enters email and password on http://localhost:5000/login
   * You are then redirected to http://localhost:5000/add_category
   * You then click logout or visit 'http://localhost:5000/logout'
@@ -765,7 +794,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter text into the search box to search for Categories/Cuisines/User Votes and no recipes will be found/shown
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Enter text to search for in the navigation bar that is known not to exist
   * Click 'Search'
   * The user is shown the text 'No Recipes found'
@@ -775,7 +804,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter text into the search box to search for Categories/Cuisines/User Votes and recipes will be found/shown
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Enter text to search for in the navigation bar that is known to exist
   * Click 'Search'
   * The user is shown the Recipe header and description
@@ -785,7 +814,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter text into the search box to search for Categories and the results to be returned with ascending user votes
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Enter text to search for in the navigation bar that is known to exist for categories
   * select the 'Categories' search type
   * Click 'Search'
@@ -795,7 +824,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter text into the search box to search for Categories and the results to be returned with descending user votes
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Enter text to search for in the navigation bar that is known to exist for categories
   * select the 'Categories' search type
   * Click 'Search'
@@ -806,7 +835,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter text into the search box to search for Categories and the results to be returned with ascending total time
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Enter text to search for in the navigation bar that is known to exist for categories
   * select the 'Categories' search type
   * Click 'Search'
@@ -816,7 +845,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter text into the search box to search for Categories and the results to be returned with descending total time
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Enter text to search for in the navigation bar that is known to exist for categories
   * select the 'Categories' search type
   * Click 'Search'
@@ -826,7 +855,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter text into the search box to search for Cuisines and the results to be returned with ascending user votes
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Enter text to search for in the navigation bar that is known to exist for cuisines
   * select the 'Cuisines' search type
   * Click 'Search'
@@ -836,7 +865,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter text into the search box to search for Cuisines and the results to be returned with descending user votes
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Enter text to search for in the navigation bar that is known to exist for cuisines
   * select the 'Cuisines' search type
   * Click 'Search'
@@ -847,7 +876,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter text into the search box to search for Cuisines and the results to be returned with ascending total time
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Enter text to search for in the navigation bar that is known to exist for Cuisines
   * select the 'Cuisines' search type
   * Click 'Search'
@@ -857,7 +886,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to enter text into the search box to search for Cuisines and the results to be returned with descending total time
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Enter text to search for in the navigation bar that is known to exist for cuisines
   * select the 'Cuisines' search type
   * Click 'Search'
@@ -867,7 +896,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to click on the graph bubble label and be shown that cuisine recipes by User Votes descending
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * Click on bubble graph label
   * The user is shown the Recipe header and description for matching the matching cuisine with the first result having the highest User Votes with the rest of the results in descending User Votes order
 
@@ -875,7 +904,7 @@ You will need the following things properly installed on your computer.
 
 * As a user I want to see 'No Recipes, register to add recipes' as the graph bubble label when no recipes have been stored
 
-* Example acceptance criteria:
+* Acceptance criteria:
   * The 1 bubble visible has the label 'No Recipes, register to add recipes'
 
 
@@ -904,7 +933,7 @@ You will need the following things properly installed on your computer.
 * Mongo DB admin password has not been set & database setup is for local testing only
 * When running all tests a resource warning is displayed for a number of unclosed sockets
   "ResourceWarning: unclosed <socket.socket fd=9, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('127.0.0.1', 55958), raddr=('127.0.0.1', 55261)>"
-* Cuisines, Cateogries, Total Time, Recipes can have duplicates, I would recommend either having an index in the names and then using a switch to an update statement when the insert fails or using javascript checkon the page with a dummy route as used in my Stream 2A project
+* Cuisines, Categories, Total Time, Recipes can have duplicates, I would recommend either having an index in the names and then using a switch to an update statement when the insert fails or using javascript checkon the page with a dummy route as used in my Stream 2A project
 * If a user attempts to register the same email address twice the record is updated with the last password as the site doesn't have a lost password functionality
 * The Bubble chart on the index page will show label text for 'Cuisines' without 'User Votes' but without a bubble
 * The 'Spanish' label cannot be tested using the same unit tests as 'Indian' and 'Thai', I suspect the label has padding or leading spaces
