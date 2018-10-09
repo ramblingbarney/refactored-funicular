@@ -536,7 +536,10 @@ def search_recipes():
     and containing search string
     '''
 
-    search_text = request.form['search_text']
+    try:
+        search_text = int(request.form['search_text'])
+    except ValueError:
+        search_text = request.form['search_text']
 
     if (SEARCH_TYPE.CATEGORY_NAME.value == request.form['search_selected']):
         search_column = urllib.parse.quote_plus(
