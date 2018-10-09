@@ -83,7 +83,6 @@ var data = JSON.parse({{ resultData|tojson|safe }});
 
 var viewPortWidth;
 var viewPortHeight;
-var color = d3.scaleOrdinal(d3.schemeCategory20c);
 var margin = {top: 100, right: 150, bottom: 100, left: 150}
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -119,7 +118,8 @@ function removeGraph(){
 function drawGraph(viewPortWidth, viewPortHeight){
 
   var outerWidth  = (viewPortWidth * 2),
-      outerHeight = (viewPortHeight * 1.5);
+      outerHeight = (viewPortHeight * 1.5),
+      color = d3.scaleOrdinal(d3.schemeCategory20c);
 
   var width  = outerWidth - margin.right - margin.left,
       height = outerHeight - margin.top - margin.bottom;
@@ -157,8 +157,13 @@ function drawGraph(viewPortWidth, viewPortHeight){
 
   nodes
     .append('circle')
-    .attr('r', function(d) { return d.r; })
-    .attr("fill", color);
+    .attr('r', function(d) { return d.r; });
+
+  d3.selectAll('circle')
+    .filter(function(d) { return d.children === undefined ? d.data.name : ''; })
+    .style("fill",function() {
+      return "hsl(" + Math.random() * 360 + ",100%,50%)";
+    });
 
   nodes
     .append('text')
