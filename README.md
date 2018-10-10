@@ -810,7 +810,6 @@ See htmlcov/index.html for full results
   * Click 'Search'
   * The user is shown the Recipe header and description for matching the matching category with the first result having the lowest number of user votes with the rest of the results in descending user vote order
 
-
 ### Search Recipes by Category, Results with Ascending Total Time
 
 * As a user I want to enter text into the search box to search for Categories and the results to be returned with ascending total time
@@ -871,6 +870,57 @@ See htmlcov/index.html for full results
   * select the 'Cuisines' search type
   * Click 'Search'
   * The user is shown the Recipe header and description for matching the matching cuisine with the first result having the lowest total time with the rest of the results in descending total time order
+
+### Search Recipes by User Votes, Results with Ascending Total Time
+
+* As a user I want to enter text into the search box to search for User Votes greater than or equal and the results to be returned with ascending total time
+
+* Acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for categories
+  * select the 'User Votes >=' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching user votes with the first result having the lowest total time with the rest of the results in ascending total time order
+
+### Search Recipes by User Votes, Results with Descending Total Time
+
+* As a user I want to enter text into the search box to search for User Votes greater than or equal and the results to be returned with descending total time
+
+* Acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for categories
+  * select the 'User Votes >=' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching user votes with the first result having the lowest total time with the rest of the results in descending total time order
+
+### Search Recipes by User Votes, Results with Ascending User Votes
+
+* As a user I want to enter text into the search box to search for User Votes greater than or equal and the results to be returned with ascending user votes
+
+* Acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for cuisines
+  * select the 'User Votes >=' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching user votes with the first result having the lowest number of user votes with the rest of the results in ascending user vote order
+
+### Search Recipes by User Votes, Results with Descending User Votes
+
+* As a user I want to enter text into the search box to search for User Votes greater than or equal and the results to be returned with descending user votes
+
+* Acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for cuisines
+  * select the 'User Votes' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching user votes with the first result having the lowest number of user votes with the rest of the results in descending user vote order
+
+### Search Recipes by Cuisine/Category/User Votes, Results with Descending Total Time
+
+* As a user I want to enter text into the search box to search for Cuisines/Categories/User Votes, the results to be returned with descending total time and clicking on the first recipe.
+
+* Acceptance criteria:
+  * Enter text to search for in the navigation bar that is known to exist for cuisines
+  * select the 'Cuisines' or 'Categories' or 'User Votes >=' search type
+  * Click 'Search'
+  * The user is shown the Recipe header and description for matching the matching cuisine with the first result having the lowest total time with the rest of the results in descending total time order
+  * Clicking on 'Show' button for the first recipe and be shown the full details of the recipe
 
 ### Click on Bubble Graph Label with Cuisine results with Descending User Votes
 
