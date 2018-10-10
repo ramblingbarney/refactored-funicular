@@ -2487,9 +2487,125 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         self.assertListEqual(test_list, self.li_span_text)
 
-    def test_search_recipes_cuisines_des_total_time_results_show_first(self):
+    def test_search_recipes_user_votes_ascending_total_time_results(self):
+        ''' Test searching for cuisines recipes with
+        ascending total time results '''
+
+        self.driver.get("http://localhost:5000/search")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('3')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('User Votes >=')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(3)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
+
+        test_list = ['Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_user_votes_descending_total_time_results(self):
         ''' Test searching for cuisines recipes with
         descending total time results '''
+
+        self.driver.get("http://localhost:5000/search")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('3')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('User Votes >=')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(4)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
+
+        test_list = ['Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_user_votes_ascending_user_votes_results(self):
+        ''' Test searching for cuisines recipes with
+        ascending user votes results '''
+
+        self.driver.get("http://localhost:5000/search")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('3')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('User Votes >=')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(1)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
+
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_user_votes_descending_user_votes_results(self):
+        ''' Test searching for user votes recipes with
+        descending user votes results '''
+
+        self.driver.get("http://localhost:5000/search")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('3')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('User Votes >=')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(1)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath(
+            "//div[starts-with(@class, 'content')]")
+
+        test_list = ['Avocado and Tuna Tapas - Meal for 1 - Thai - 45 Minutes to Prepare - User Votes: 3', 'Apple and Tuna Tapas - Meal for 1 - Thai - 60 Minutes to Prepare - User Votes: 4', 'German Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 4', 'Chinese Pepper Steak - Evening Meal for 2 - Spanish - 30 Minutes to Prepare - User Votes: 5']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_cuisines_des_total_time_results_show_first(self):
+        ''' Test searching for cuisines recipes with
+        descending total time results and showing the first recipe '''
 
         self.driver.get("http://localhost:5000/search")
         self.driver.implicitly_wait(0)  # seconds
@@ -2501,7 +2617,75 @@ class RecipeBuddyUITests(unittest.TestCase):
 
         select = Select(self.driver.find_element_by_id("order_option"))
 
-        select.select_by_index(3)
+        select.select_by_index(4)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+
+        test_list = ['mix 3 eggs', 'whisk', 'put on low heat']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_category_des_total_time_results_show_first(self):
+        ''' Test searching for category recipes with
+        descending total time results and showing the first recipe  '''
+
+        self.driver.get("http://localhost:5000/search")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('Evening Meal for 2')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('Categories')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(4)
+
+        self.driver.find_element_by_id("search-button").click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath(
+            "//span[contains(@class, 'new badge show_recipe_button')]")
+        self.elements[0].click()
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.elements = self.driver.find_elements_by_xpath(
+            "//ol[contains(@class, 'input_fields_wrap_instructions')]/li")
+
+        test_list = ['peel 2 oranges', 'add flour', 'put on high heat']
+
+        for element in self.elements:
+            self.li_span_text.append(element.text)
+
+        self.assertListEqual(test_list, self.li_span_text)
+
+    def test_search_recipes_user_votes_des_total_time_results_show_first(self):
+        ''' Test searching for user votes recipes with
+        descending total time results and showing the first recipe '''
+
+        self.driver.get("http://localhost:5000/search")
+        self.driver.implicitly_wait(0)  # seconds
+
+        self.driver.find_element_by_id("search-text").send_keys('3')
+
+        select = Select(self.driver.find_element_by_id("search_option"))
+        select.select_by_visible_text('User Votes >=')
+
+        select = Select(self.driver.find_element_by_id("order_option"))
+
+        select.select_by_index(4)
 
         self.driver.find_element_by_id("search-button").click()
         self.driver.implicitly_wait(0)  # seconds

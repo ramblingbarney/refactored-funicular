@@ -536,11 +536,6 @@ def search_recipes():
     and containing search string
     '''
 
-    try:
-        search_text = int(request.form['search_text'])
-    except ValueError:
-        search_text = request.form['search_text']
-
     if (SEARCH_TYPE.CATEGORY_NAME.value == request.form['search_selected']):
         search_column = urllib.parse.quote_plus(
             SEARCH_TYPE.CATEGORY_NAME.value)
@@ -566,26 +561,47 @@ def search_recipes():
         sort_column = urllib.parse.quote_plus(SORT_COLUMN.TOTAL_TIME.value)
         sort_order = -1
 
-    results = mongo.db.recipes.aggregate([
-        {'$lookup': {
-            'from': 'categories',
-            'localField': 'category_id',
-            'foreignField': '_id',
-            'as': 'category_name'}},
-        {'$unwind': '$category_name'},
-        {'$lookup': {
-            'from': 'cuisines',
-            'localField': 'cuisine_id',
-            'foreignField': '_id',
-            'as': 'cuisine_name'}},
-        {'$unwind': '$cuisine_name'},
-        {'$match': {search_column: {'$regex': search_text, '$options': 'i'}}},
-        {'$sort': SON([(sort_column, sort_order)])}])
+    try:
+        # take 1 from the user value to include the value in the results
+        search_text = int(request.form['search_text']) - 1
+        results = mongo.db.recipes.aggregate([
+            {'$lookup': {
+                'from': 'categories',
+                'localField': 'category_id',
+                'foreignField': '_id',
+                'as': 'category_name'}},
+            {'$unwind': '$category_name'},
+            {'$lookup': {
+                'from': 'cuisines',
+                'localField': 'cuisine_id',
+                'foreignField': '_id',
+                'as': 'cuisine_name'}},
+            {'$unwind': '$cuisine_name'},
+            {'$match': {search_column: {'$gt': search_text}}},
+            {'$sort': SON([(sort_column, sort_order)])}])
 
-    return render_template(
-        'search_recipes.html',
-        recipes=mongo.db.recipes.aggregate([{
-            '$lookup': {
+        return render_template(
+            'search_recipes.html',
+            recipes=mongo.db.recipes.aggregate([{
+                '$lookup': {
+                    'from': 'categories',
+                    'localField': 'category_id',
+                    'foreignField': '_id',
+                    'as': 'category_name'}},
+                {'$unwind': '$category_name'},
+                {'$lookup': {
+                    'from': 'cuisines',
+                    'localField': 'cuisine_id',
+                    'foreignField': '_id',
+                    'as': 'cuisine_name'}},
+                {'$unwind': '$cuisine_name'},
+                {'$match': {search_column: {'$gt': search_text}}},
+                {'$sort': SON([(sort_column, sort_order)])}]),
+            number_results=len(list(results)))
+    except ValueError:
+        search_text = request.form['search_text']
+        results = mongo.db.recipes.aggregate([
+            {'$lookup': {
                 'from': 'categories',
                 'localField': 'category_id',
                 'foreignField': '_id',
@@ -599,8 +615,27 @@ def search_recipes():
             {'$unwind': '$cuisine_name'},
             {'$match': {search_column: {
                 '$regex': search_text, '$options': 'i'}}},
-            {'$sort': SON([(sort_column, sort_order)])}]),
-        number_results=len(list(results)))
+            {'$sort': SON([(sort_column, sort_order)])}])
+
+        return render_template(
+            'search_recipes.html',
+            recipes=mongo.db.recipes.aggregate([{
+                '$lookup': {
+                    'from': 'categories',
+                    'localField': 'category_id',
+                    'foreignField': '_id',
+                    'as': 'category_name'}},
+                {'$unwind': '$category_name'},
+                {'$lookup': {
+                    'from': 'cuisines',
+                    'localField': 'cuisine_id',
+                    'foreignField': '_id',
+                    'as': 'cuisine_name'}},
+                {'$unwind': '$cuisine_name'},
+                {'$match': {search_column: {
+                    '$regex': search_text, '$options': 'i'}}},
+                {'$sort': SON([(sort_column, sort_order)])}]),
+            number_results=len(list(results)))
 
 
 @app.route('/chart_search_recipes/<name>')
