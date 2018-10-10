@@ -80,10 +80,10 @@ The purpose of this application is provide an easy way to store, rate and use co
 ## Test Coverage
 
 Module 	  statements 	missing 	excluded 	coverage
-Total 	  29912 	    16143 	  34 	      46%
-app.py 	  292 	      16 	      0 	      95%
-config.py 20 	        11 	      0 	      45%
-forms.py 	14 	        0 	      0 	      100%
+Total 	  29915 	    16228 	  34 	      46%
+app.py  	297 	      112 	    0 	      62%
+config.py 18 	        0 	      0 	      100%
+forms.py 	14 	        0 	      0  	      100%
 
 See htmlcov/index.html for full results
 
@@ -911,7 +911,7 @@ See htmlcov/index.html for full results
   * Click 'Search'
   * The user is shown the Recipe header and description for matching the matching user votes with the first result having the lowest number of user votes with the rest of the results in descending user vote order
 
-### Search Recipes by Cuisine/Category/User Votes, Results with Descending Total Time
+### Search Recipes by Cuisine/Category/User Votes, Results with Descending Total Time, Show First Recipe
 
 * As a user I want to enter text into the search box to search for Cuisines/Categories/User Votes, the results to be returned with descending total time and clicking on the first recipe.
 
