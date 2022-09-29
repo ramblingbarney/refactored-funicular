@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/ramblingbarney/refactored-funicular#readme",
   "dependencies": {
-    "d3": "^5.5.0",
+    "d3": "^7.6.1",
     "d3-tip": "^0.9.1"
   }
 }
